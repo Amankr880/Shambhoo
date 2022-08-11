@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('order', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
-            $table->string('order_no')->autoIncrement();
+            $table->string('order_no');
             $table->date('order_date');
             $table->date('ship_date');
             $table->date('required_date');
@@ -31,7 +31,7 @@ return new class extends Migration
             $table->json('delivery_address');
             $table->string('discount_type');
             $table->integer('order_otp');
-            $table->integer('status');
+            $table->integer('status')->default('0');
             $table->string('order_type');
             $table->json('order_details');
             $table->timestamps();

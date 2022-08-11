@@ -25,7 +25,7 @@ return new class extends Migration
             $table->date('DOB')->nullable();
             $table->json('address')->nullable();
             $table->string('phone_no')->nullable();
-            $table->binary('image')->nullable();
+            $table->string('image')->nullable();
             $table->string('location')->nullable();
             $table->string('pincode')->nullable();
             $table->rememberToken();

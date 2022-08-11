@@ -16,9 +16,9 @@ class UserController extends Controller
             'last_name' => 'required',
             'user_status' => '',
             'email' => 'required|email|unique:users',
-            'password' => 'required|min:5',
+            'password' => 'required|min:5|confirmed',
             'DOB' => 'date',
-            'address' => '',
+            'address' => 'required',
             'phone_no' => 'required|numeric',
             'user_type' => '',
             'image' => 'required',
@@ -56,21 +56,28 @@ class UserController extends Controller
         return response()->json($singleUser);
     }
 
+    public function getMe(Request $phoneNo)
+    {
+        $phone = $phoneNo->input('phone_no');
+        $getMe = User::where('phone_no','=',$phone)->get();
+        return response()->json($getMe);
+    }
+
     public function update(Request $request)
     {
         $users = User::find($request->input('id'));
-        $users->username = $request->input('first_name');
-        $users->name = $request->input('last_name');
-        $users->birth_date = $request->input('DOB');
+        $users->first_name = $request->input('first_name');
+        $users->last_name = $request->input('last_name');
+        $users->DOB = $request->input('DOB');
         $users->email = $request->input('email');
         $users->address = $request->input('address');
         $users->phone_no = $request->input('phone_no');
-        $users->password = Hash::make($request->input('password'));
+        //$users->password = Hash::make($request->input('password'));
         // $users->user_type = $request->input('user_type');
         // $users->user_type = $request->input('user_status');
-        $users->user_type = $request->input('image');
-        $users->user_type = $request->input('location');
-        $users->user_type = $request->input('pincode');
+        $users->image = $request->input('image');
+        $users->location = $request->input('location');
+        $users->pincode = $request->input('pincode');
         $result = $users->save();
         if($result)
         {
@@ -102,7 +109,7 @@ class UserController extends Controller
     public function updateUserStatus(Request $request)
     {
         $users = User::find($request->input('id'));
-        $users->user_type = $request->input('user_status');
+        $users->user_status = $request->input('user_status');
         $result = $users->save();
         if($result)
         {

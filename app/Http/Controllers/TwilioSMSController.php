@@ -7,6 +7,7 @@ use Exception;
 use Twilio\Rest\Client;
 use App\Models\OtpVerification;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
   
 class TwilioSMSController extends Controller
 {
@@ -19,10 +20,27 @@ class TwilioSMSController extends Controller
     {
         $receiverNumber = $request->number;
         $otp = mt_rand(1000,9999);
-        print_r($request->number." - ".$otp);
+        // print_r($request->number." - ".$otp);
         $message = "Your OTP for Verification is " .$otp;
         if(OtpVerification::where('phone_no','=',$receiverNumber)->exists()){
-            $response = ["exists"=> 'true'];
+            try {
+                $account_sid = getenv("TWILIO_SID");
+                $auth_token = getenv("TWILIO_TOKEN");
+                $twilio_number = getenv("TWILIO_FROM");
+      
+                $client = new Client($account_sid, $auth_token);
+                $client->messages->create($receiverNumber, [
+                    'from' => $twilio_number, 
+                    'body' => $message]);
+                $token = Str::random(60);
+                OtpVerification::updateOrInsert(['phone_no' => $receiverNumber],['otp' => $otp],['token' => $token]);
+
+                $response = ["exists"=> 'true',"msg"=> 'SMS Sent Successfully.','Number'=>$receiverNumber,'Message'=>$message,'token'=>$token];
+      
+            } catch (Exception $e) {
+                // dd("Error: ". $e->getMessage());
+                $response = ["error"=> $e->getMessage()];
+            }
         }else {
             try {
   
@@ -34,10 +52,10 @@ class TwilioSMSController extends Controller
                 $client->messages->create($receiverNumber, [
                     'from' => $twilio_number, 
                     'body' => $message]);
+                $token = Str::random(60);
+                OtpVerification::updateOrInsert(['phone_no' => $receiverNumber],['otp' => $otp],['token' => $token]);
     
-                OtpVerification::updateOrInsert(['phone_no' => $receiverNumber],['otp' => $otp]);
-    
-                $response = ["exists"=> 'false',"msg"=> 'SMS Sent Successfully.','Number'=>$receiverNumber,'Message'=>$message];
+                $response = ["exists"=> 'false',"msg"=> 'SMS Sent Successfully.','Number'=>$receiverNumber,'Message'=>$message,'token'=>$token];
       
             } catch (Exception $e) {
                 // dd("Error: ". $e->getMessage());
@@ -50,13 +68,24 @@ class TwilioSMSController extends Controller
     public function otpVerify(Request $request){
         $receiverNumber = $request->number;
         $otp = $request->otp;
+        $isExists = $request->isExists;
         $data = OtpVerification::where('phone_no','=', $receiverNumber)->first();
         if($otp == $data->otp){
-            $response = ['msg'=>'otp verified'];
+            $response = ['msg'=>'otp verified','exists' => $isExists];
             // Auth::login($user, true);
         }else{
             $response = ['msg'=>'otp mismatched'];
         }   
         return response()->json(['message' => $response]); 
     }
+
+    // protected function createNewToken($token){
+    //     return response()->json([
+    //         'access_token' => $token,
+    //         'token_type' => 'bearer',
+    //         'expires_in' => auth()->factory()->getTTL() * 60,
+    //         'user' => auth()->user()
+    //     ]);
+    // }
+
 }

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('phone_no');
             $table->string('otp');
+            $table->string('token');
             $table->timestamps();
         });
     }

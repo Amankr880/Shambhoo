@@ -12,5 +12,6 @@ class OtpVerification extends Model
     protected $fillable = [
       'phone_no',
       'otp',
+      'token',
     ];
 }

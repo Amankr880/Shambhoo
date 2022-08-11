@@ -7,6 +7,10 @@ use App\Http\Controllers\TwilioSMSController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\VendorController;
+use App\Http\Controllers\PlanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +58,7 @@ Route::controller(UserController::class)->group(function () {
     Route::post('updateUserDetail', 'update');
     Route::post('updateUserType', 'updateUserType');
     Route::post('updateUserStatus', 'updateUserStatus');
+    Route::post('getMe', 'getMe');
 });
 
 Route::controller(CategoriesController::class)->group(function () {
@@ -71,4 +76,27 @@ Route::controller(ProductController::class)->group(function () {
     Route::post('getProductByCategoryId/{id}', 'getProductByCategoryId');
     Route::post('updateProduct/{id}', 'updateProduct');
     Route::post('deleteProduct/{id}', 'deleteProduct');
+});
+
+Route::controller(OrderController::class)->group(function () {
+    Route::post('createOrder', 'createOrder');
+    Route::get('getOrderByUserId/{id}', 'getOrderByUserId');
+    Route::post('updateOrderStatus', 'updateOrderStatus');
+});
+
+Route::controller(PaymentController::class)->group(function () {
+    Route::post('createPayment', 'createPayment');
+});
+
+
+Route::controller(VendorController::class)->group(function () {
+    Route::post('createVendor', 'createVendor');
+    Route::post('getVendorByUserId/{id}', 'getVendorByUserId');
+    Route::post('updateVendor/{id}', 'createPayment');
+});
+
+Route::controller(PlanController::class)->group(function () {
+    Route::post('createVendor', 'createVendor');
+    Route::post('getVendorByUserId/{id}', 'getVendorByUserId');
+    Route::post('updateVendor/{id}', 'createPayment');
 });
