@@ -22,7 +22,9 @@ use App\Http\Controllers\PlanController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
+Route::get('test', function () {
+    return print_r('working');
+});
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
