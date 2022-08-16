@@ -11,6 +11,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\PlanController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,9 +23,7 @@ use App\Http\Controllers\PlanController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::get('test', function () {
-    return print_r('working');
-});
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -89,6 +88,11 @@ Route::controller(OrderController::class)->group(function () {
 Route::controller(PaymentController::class)->group(function () {
     Route::post('createPayment', 'createPayment');
 });
+Route::controller(HomeController::class)->group(function () {
+    Route::post('featureImageUpload', 'featureImageUpload');
+    //Route::get('featureImageShow', 'featureImageShow');
+    Route::get('featureImageShow', 'featureImageShow');
+});
 
 
 Route::controller(VendorController::class)->group(function () {
@@ -102,3 +106,5 @@ Route::controller(PlanController::class)->group(function () {
     Route::post('getVendorByUserId/{id}', 'getVendorByUserId');
     Route::post('updateVendor/{id}', 'createPayment');
 });
+
+Route::get('image/{filename}', 'HomeController@displayImage');

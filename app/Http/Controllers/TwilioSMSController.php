@@ -8,6 +8,7 @@ use Twilio\Rest\Client;
 use App\Models\OtpVerification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use App\Models\User;
   
 class TwilioSMSController extends Controller
 {
@@ -22,7 +23,7 @@ class TwilioSMSController extends Controller
         $otp = mt_rand(1000,9999);
         // print_r($request->number." - ".$otp);
         $message = "Your OTP for Verification is " .$otp;
-        if(OtpVerification::where('phone_no','=',$receiverNumber)->exists()){
+        if(User::where('phone_no','=',$receiverNumber)->exists()){
             try {
                 $account_sid = getenv("TWILIO_SID");
                 $auth_token = getenv("TWILIO_TOKEN");
@@ -39,7 +40,7 @@ class TwilioSMSController extends Controller
       
             } catch (Exception $e) {
                 // dd("Error: ". $e->getMessage());
-                $response = ["error"=> $e->getMessage()];
+                $response = ["error"=> $e->getMessage(),'status'=>'403'];
             }
         }else {
             try {
@@ -53,13 +54,13 @@ class TwilioSMSController extends Controller
                     'from' => $twilio_number, 
                     'body' => $message]);
                 $token = Str::random(60);
-                OtpVerification::updateOrInsert(['phone_no' => $receiverNumber],['otp' => $otp],['token' => $token]);
-    
+                OtpVerification::updateOrInsert(['phone_no' => $receiverNumber],['otp' => $otp,'token' => $token]);
+                
                 $response = ["exists"=> 'false',"msg"=> 'SMS Sent Successfully.','Number'=>$receiverNumber,'Message'=>$message,'token'=>$token];
       
             } catch (Exception $e) {
                 // dd("Error: ". $e->getMessage());
-                $response = ["error"=> $e->getMessage()];
+                $response = ["error"=> $e->getMessage(),'status'=>'403'];
             }
         }
         return response()->json(['message' => $response]);
@@ -72,9 +73,9 @@ class TwilioSMSController extends Controller
         $data = OtpVerification::where('phone_no','=', $receiverNumber)->first();
         if($otp == $data->otp){
             $response = ['msg'=>'otp verified','exists' => $isExists];
-            // Auth::login($user, true);
+            //Auth::login($user, true);
         }else{
-            $response = ['msg'=>'otp mismatched'];
+            $response = ['msg'=>'otp mismatched','status'=>'401'];
         }   
         return response()->json(['message' => $response]); 
     }
