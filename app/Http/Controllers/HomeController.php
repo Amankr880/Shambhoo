@@ -55,8 +55,8 @@ class HomeController extends Controller
         $filename=explode(",",$data[0]['feature_image']);
         foreach($filename as $pic)
         {
-            $path[] = public_path('storage/feature_images/').$pic;
-            $contents[] = Storage::files('feature_images');
+            $path[] = public_path().'/feature_images/'.$pic;
+            // $contents[] = Storage::files('feature_images');
           // $contents[] = \File::files(public_path("storage/app/public/feature_images/".$pic));
         }
     

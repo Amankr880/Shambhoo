@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Support\Str;
 use Validator;
 
 class UserController extends Controller
@@ -24,21 +25,25 @@ class UserController extends Controller
             'image' => 'required',
             'location' => 'required',
             'pincode' => 'required'
+            
 
         ]);
     
         if($validator->fails()){
             return response()->json($validator->errors()->toJson(), 400);
         }
-    
+          $token = Str::random(60);
           $user = User::create(array_merge(
             $validator->validated(),
             ['password' => bcrypt($request->password)]
-            ));
+          ));
+          $user->remember_token = $token;
+          $user->save();
 
 
             return response()->json(['user'=>$user,
                                 'msg'=>'User created successfully',
+                                'token' => $token,
                                 'status'=>'201']);
        
     }

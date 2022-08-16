@@ -33,10 +33,10 @@ class TwilioSMSController extends Controller
                 $client->messages->create($receiverNumber, [
                     'from' => $twilio_number, 
                     'body' => $message]);
-                $token = Str::random(60);
-                OtpVerification::updateOrInsert(['phone_no' => $receiverNumber],['otp' => $otp],['token' => $token]);
+                // $token = Str::random(60);
+                OtpVerification::updateOrInsert(['phone_no' => $receiverNumber],['otp' => $otp]);
 
-                $response = ["exists"=> 'true',"msg"=> 'SMS Sent Successfully.','Number'=>$receiverNumber,'Message'=>$message,'token'=>$token];
+                $response = ["exists"=> 'true',"msg"=> 'SMS Sent Successfully.','Number'=>$receiverNumber,'Message'=>$message];
       
             } catch (Exception $e) {
                 // dd("Error: ". $e->getMessage());
@@ -53,10 +53,10 @@ class TwilioSMSController extends Controller
                 $client->messages->create($receiverNumber, [
                     'from' => $twilio_number, 
                     'body' => $message]);
-                $token = Str::random(60);
-                OtpVerification::updateOrInsert(['phone_no' => $receiverNumber],['otp' => $otp,'token' => $token]);
+                // $token = Str::random(60);
+                OtpVerification::updateOrInsert(['phone_no' => $receiverNumber],['otp' => $otp]);
                 
-                $response = ["exists"=> 'false',"msg"=> 'SMS Sent Successfully.','Number'=>$receiverNumber,'Message'=>$message,'token'=>$token];
+                $response = ["exists"=> 'false',"msg"=> 'SMS Sent Successfully.','Number'=>$receiverNumber,'Message'=>$message];
       
             } catch (Exception $e) {
                 // dd("Error: ". $e->getMessage());
