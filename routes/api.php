@@ -90,7 +90,7 @@ Route::controller(PaymentController::class)->group(function () {
 });
 Route::controller(HomeController::class)->group(function () {
     Route::post('featureImageUpload', 'featureImageUpload');
-    //Route::get('featureImageShow', 'featureImageShow');
+    Route::post('getStore', 'getStore');
     Route::get('featureImageShow', 'featureImageShow');
 });
 
@@ -101,10 +101,10 @@ Route::controller(VendorController::class)->group(function () {
     Route::post('updateVendor/{id}', 'createPayment');
 });
 
-Route::controller(PlanController::class)->group(function () {
-    Route::post('createVendor', 'createVendor');
-    Route::post('getVendorByUserId/{id}', 'getVendorByUserId');
-    Route::post('updateVendor/{id}', 'createPayment');
-});
+// Route::controller(PlanController::class)->group(function () {
+//     Route::post('createVendor', 'createVendor');
+//     Route::post('getVendorByUserId/{id}', 'getVendorByUserId');
+//     Route::post('updateVendor/{id}', 'createPayment');
+// });
 
 Route::get('image/{filename}', 'HomeController@displayImage');

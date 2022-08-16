@@ -13,8 +13,7 @@ class VendorController extends Controller
         $vendor->shopName = $request->input('shopName');
         $vendor->user_id = $request->input('user_id');
         $vendor->address = $request->input('address');
-        //$vendor->location = $request->input('location');    SOlve this
-        $ip = $request->ip();
+        $vendor->location = $request->input('location');
         $vendor->city = $request->input('city');
         $vendor->state = $request->input('state');
         $vendor->pincode = $request->input('pincode');
@@ -32,7 +31,6 @@ class VendorController extends Controller
         $vendor->gst_no = $request->input('gst_no');
         $vendor->business_doc_type = $request->input('business_doc_type');
         $vendor->business_doc_no = $request->input('business_doc_no');
-        $vendor->business_doc_type = $request->input('business_doc_type');
         //$vendor->business_doc_photo = $request->input('business_doc_photo');
         $image = $request->business_doc_photo->store('public/business_doc_photo');
         $vendor->business_doc_photo = $request->business_doc_photo->hashName();
@@ -50,8 +48,6 @@ class VendorController extends Controller
         $vendor->status = $request->input('status');
         $vendor->visibility = $request->input('visibility');
         $vendor->policy = $request->input('policy');
-        $image = $request->picture->store('public/vendor_img');
-        $vendor->picture = $request->picture->hashName();
         //$vendor->picture = $request->input('picture');
         // $image = $request->icon->store('public/vendor_icon');
         // $vendor->icon = $request->icon->hashName();

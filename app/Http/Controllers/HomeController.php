@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\HomeData;
 use Illuminate\Support\Facades\Validator;
 use Storage;
+use App\Models\Vendor;
 use Illuminate\Support\Facades\File;
 
 class HomeController extends Controller
@@ -61,6 +62,13 @@ class HomeController extends Controller
         }
     
         return $path;
+    }
+
+    public function getStore(Request $request)
+    {
+        $shopDetails = Vendor::where('pincode','=',$request->pincode)->get();  
+        $response = !$shopDetails->isEmpty() ? ['shopDetails'=>$shopDetails] : ["error"=> "Shops Not Available",'msg'=>'Shops In this Pincode is Not Available!!']; 
+        return response()->json($response);
     }
     
 }

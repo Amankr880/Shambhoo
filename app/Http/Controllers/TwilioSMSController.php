@@ -71,12 +71,16 @@ class TwilioSMSController extends Controller
         $otp = $request->otp;
         $isExists = $request->isExists;
         $data = OtpVerification::where('phone_no','=', $receiverNumber)->first();
-        if($otp == $data->otp){
+        if($otp == $data->otp && User::where('phone_no','=',$receiverNumber)->exists()){
+            $token = Str::random(60);
+            User::where('phone_no','=',$receiverNumber)->update(['remember_token' => $token]);
+            $response = ['msg'=>'otp verified','exists' => $isExists,'token' => $token];
+        }elseif($otp == $data->otp){
             $response = ['msg'=>'otp verified','exists' => $isExists];
-            //Auth::login($user, true);
         }else{
             $response = ['msg'=>'otp mismatched','status'=>'401'];
-        }   
+        }  
+
         return response()->json(['message' => $response]); 
     }
 
