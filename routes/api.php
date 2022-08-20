@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\TwilioSMSController;
+use App\Http\Controllers\SMSController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\ProductController;
@@ -43,8 +43,8 @@ Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'
 ], function ($router) {
-    Route::post('/sendSMS', [TwilioSMSController::class, 'index']);
-    Route::post('/verifyOtp', [TwilioSMSController::class, 'otpVerify']);  
+    Route::post('/sendSMS', [SMSController::class, 'smsSend']);
+    Route::post('/verifyOtp', [SMSController::class, 'otpVerify']);  
 });
 //Route::POST('sendSMS', [App\Http\Controllers\TwilioSMSController::class, 'index']);
 // Route::controller(TwilioSMSController::class)->group(function () {
