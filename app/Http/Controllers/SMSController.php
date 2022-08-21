@@ -112,7 +112,7 @@ class SMSController extends Controller
             $message = urlencode("Your OTP for Verification is " .$otp);
 
             //Define route 
-            $route = "default";
+            $route = "4";
             //Prepare you post parameters
             $postData = array(
                 'authkey' => $authKey,
