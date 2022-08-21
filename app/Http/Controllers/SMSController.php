@@ -100,7 +100,7 @@ class SMSController extends Controller
         //$message = "Your OTP for Verification is " .$otp;
 
             //Your authentication key
-            $authKey = "7842AsWkEs6OChSw5d5fb1d2";
+            $authKey = "7842AZ3JIG8X6302291cP11";
 
             //Multiple mobiles numbers separated by comma
             $mobileNumber ='91'.$receiverNumber;
