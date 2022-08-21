@@ -119,7 +119,8 @@ class SMSController extends Controller
                 'mobiles' => $mobileNumber,
                 'message' => $message,
                 'sender' => $senderId,
-                'route' => $route
+                'route' => $route,
+                'otp' => $otp
             );
 
             //API URL
