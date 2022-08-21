@@ -106,7 +106,7 @@ class SMSController extends Controller
             $mobileNumber =$receiverNumber;
 
             //Sender ID,While using route4 sender id should be 6 characters long.
-            $senderId = "SHMBHO";
+            $senderId = "KALKII";
 
             //Your message to send, Add URL encoding here.
             $message = urlencode("Your OTP for Verification is " .$otp);
@@ -119,8 +119,7 @@ class SMSController extends Controller
                 'mobiles' => $mobileNumber,
                 'message' => $message,
                 'sender' => $senderId,
-                'route' => $route,
-                'otp' => $otp
+                'route' => $route
             );
 
             //API URL
