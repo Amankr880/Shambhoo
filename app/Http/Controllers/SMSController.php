@@ -103,7 +103,7 @@ class SMSController extends Controller
             $authKey = "7842AZ3JIG8X6302291cP11";
 
             //Multiple mobiles numbers separated by comma
-            $mobileNumber ='91'.$receiverNumber;
+            $mobileNumber =$receiverNumber;
 
             //Sender ID,While using route4 sender id should be 6 characters long.
             $senderId = "SHMBHO";
