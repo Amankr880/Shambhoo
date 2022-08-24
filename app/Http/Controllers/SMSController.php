@@ -98,7 +98,7 @@ class SMSController extends Controller
         $receiverNumber = $request->number;
         $otp = mt_rand(1000,9999);
         //$message = "Your OTP for Verification is " .$otp;
-
+            $DLT_TE_ID = "1207161863947285226";
             //Your authentication key
             $authKey = "7842AsWkEs6OChSw5d5fb1d2";
 
@@ -119,7 +119,8 @@ class SMSController extends Controller
                 'mobiles' => $mobileNumber,
                 'message' => $message,
                 'sender' => $senderId,
-                'route' => $route
+                'route' => $route,
+                'DLT_TE_ID' => $DLT_TE_ID
             );
 
             //API URL
