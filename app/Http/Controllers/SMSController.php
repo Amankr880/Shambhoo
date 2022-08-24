@@ -153,6 +153,7 @@ class SMSController extends Controller
             curl_close($ch);
 
             echo $output;
+            print_r($ch);
         
     }
 
