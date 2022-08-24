@@ -44,7 +44,7 @@ Route::group([
     'prefix' => 'auth'
 ], function ($router) {
     Route::post('/sendSMS', [SMSController::class, 'index']);
-    Route::get('/sendSMSTest/{number}', [SMSController::class, 'smsSend']);
+    Route::post('/sendSMSTest', [SMSController::class, 'smsSend']);
     Route::post('/verifyOtp', [SMSController::class, 'otpVerify']);  
 });
 //Route::POST('sendSMS', [App\Http\Controllers\TwilioSMSController::class, 'index']);
