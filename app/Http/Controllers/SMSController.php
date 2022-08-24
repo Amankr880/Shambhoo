@@ -93,9 +93,9 @@ class SMSController extends Controller
     //     ]);
     // }
 
-    public function smsSend(Request $request)
+    public function smsSend($number)
     {
-        $receiverNumber = $request->number;
+        //$receiverNumber = $request->number;
         $otp = mt_rand(1000,9999);
         //$message = "Your OTP for Verification is " .$otp;
 
@@ -103,7 +103,7 @@ class SMSController extends Controller
             $authKey = "7842AsWkEs6OChSw5d5fb1d2";
 
             //Multiple mobiles numbers separated by comma
-            $mobileNumber =$receiverNumber;
+            $mobileNumber =$number;
 
             //Sender ID,While using route4 sender id should be 6 characters long.
             $senderId = "KALKII";
