@@ -17,13 +17,14 @@ class UserController extends Controller
             'last_name' => 'required',
             'user_status' => '',
             'email' => 'required|email|unique:users',
-            'password' => 'required|min:5|confirmed',
+            'password' => 'min:5',
             'DOB' => 'date',
             'address' => 'required',
             'phone_no' => 'required|numeric',
             'user_type' => '',
             'image' => 'required',
-            'location' => 'required',
+            'Longitude' => 'required',
+            'Latitude' => 'required',
             'pincode' => 'required'
             
 
@@ -68,6 +69,15 @@ class UserController extends Controller
         return response()->json($getMe);
     }
 
+    public function updateAddress(Request $request)
+    {
+        $phone = $phoneNo->input('phone_no');
+        $userData = User::where('phone_no','=',$phone)->get();
+        $userAddress = $userData->address;
+        $newAddr = $request->address;
+
+    }
+
     public function update(Request $request)
     {
         $users = User::find($request->input('id'));
@@ -81,7 +91,8 @@ class UserController extends Controller
         // $users->user_type = $request->input('user_type');
         // $users->user_type = $request->input('user_status');
         $users->image = $request->input('image');
-        $users->location = $request->input('location');
+        $users->Longitude = $request->input('Longitude');
+        $users->Latitude = $request->input('Latitude');
         $users->pincode = $request->input('pincode');
         $result = $users->save();
         if($result)

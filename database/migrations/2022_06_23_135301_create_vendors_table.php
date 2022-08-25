@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('shopName');
             $table->integer('user_id');
             $table->string('address');
-            $table->string('location');
+            $table->string('Longitude');
+            $table->string('Latitude');
             $table->string('city');
             $table->string('state');
             $table->string('pincode');

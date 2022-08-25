@@ -70,5 +70,12 @@ class HomeController extends Controller
         $response = !$shopDetails->isEmpty() ? ['shopDetails'=>$shopDetails] : ["error"=> "Shops Not Available",'msg'=>'Shops In this Pincode is Not Available!!']; 
         return response()->json($response);
     }
+
+    public function getFeatureStore(Request $request)
+    {
+        $shopDetails = Vendor::where('pincode','=',$request->pincode)->orderBy('status','DESC')->get();  
+        $response = !$shopDetails->isEmpty() ? ['shopDetails'=>$shopDetails] : ["error"=> "Shops Not Available",'msg'=>'Shops In this Pincode is Not Available!!']; 
+        return response()->json($response);
+    }
     
 }

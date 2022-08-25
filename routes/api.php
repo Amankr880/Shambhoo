@@ -91,15 +91,17 @@ Route::controller(PaymentController::class)->group(function () {
 });
 Route::controller(HomeController::class)->group(function () {
     Route::post('featureImageUpload', 'featureImageUpload');
-    Route::post('getStore', 'getStore');
     Route::get('featureImageShow', 'featureImageShow');
+    Route::post('getStore', 'getStore');
+    Route::post('getFeatureStore', 'getFeatureStore');
 });
 
 
 Route::controller(VendorController::class)->group(function () {
     Route::post('createVendor', 'createVendor');
     Route::post('getVendorByUserId/{id}', 'getVendorByUserId');
-    Route::post('updateVendor/{id}', 'createPayment');
+    Route::post('updateVendor/{id}', 'updateVendor');
+    Route::post('getVendor', 'getVendor');
 });
 
 // Route::controller(PlanController::class)->group(function () {

@@ -29,7 +29,8 @@ class User extends Authenticatable implements JWTSubject
         'address',
         'phone_no',
         'image',
-        'location',
+        'Latitude',
+        'Longitude',
         'pincode',
     ];
 
