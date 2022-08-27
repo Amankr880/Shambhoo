@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('quantity');
             $table->integer('user_id');
             $table->integer('active');
+            $table->float('price');
             $table->timestamps();
         });
     }
