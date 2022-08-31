@@ -33,14 +33,17 @@ class SMSController extends Controller
                 $client->messages->create($receiverNumber, [
                     'from' => $twilio_number, 
                     'body' => $message]);
-                // $token = Str::random(60);
-                OtpVerification::updateOrInsert(['phone_no' => $receiverNumber],['otp' => $otp]);
-
+                $token = Str::random(60);
+                $qw = OtpVerification::updateOrInsert(['phone_no' => $receiverNumber],['otp' => $otp],['token' => $token]);
+                    if($qw)
+                    {
+                        print_r('done');
+                    }
                 $response = ["exists"=> 'true',"msg"=> 'SMS Sent Successfully.','Number'=>$receiverNumber,'Message'=>$message];
       
             } catch (Exception $e) {
                 // dd("Error: ". $e->getMessage());
-                $response = ["error"=> $e->getMessage(),'status'=>'403'];
+                $response = ["error"=> $e->getMessage(),'status'=>'400'];
             }
         }else {
             try {
@@ -53,14 +56,14 @@ class SMSController extends Controller
                 $client->messages->create($receiverNumber, [
                     'from' => $twilio_number, 
                     'body' => $message]);
-                // $token = Str::random(60);
-                OtpVerification::updateOrInsert(['phone_no' => $receiverNumber],['otp' => $otp]);
+                $token = Str::random(60);
+                OtpVerification::updateOrInsert(['phone_no' => $receiverNumber],['otp' => $otp],['token' => $token]);
                 
                 $response = ["exists"=> 'false',"msg"=> 'SMS Sent Successfully.','Number'=>$receiverNumber,'Message'=>$message];
       
             } catch (Exception $e) {
                 // dd("Error: ". $e->getMessage());
-                $response = ["error"=> $e->getMessage(),'status'=>'403'];
+                $response = ["error"=> $e->getMessage(),'status'=>'400'];
             }
         }
         return response()->json(['message' => $response]);

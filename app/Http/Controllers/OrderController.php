@@ -19,7 +19,7 @@ class OrderController extends Controller
         // $order->timestamp = $request->input('timestamp');
         // $order->status = $request->input('status');
         $order->transaction_status = $request->input('transaction_status');
-        //$order->order_status = $request->input('order_status');
+        $order->order_status = $request->input('order_status');
         $order->vendor_id = $request->input('vendor_id');
         $order->total_order = $request->input('total_order');
         $order->discount_applied = $request->input('discount_applied');
