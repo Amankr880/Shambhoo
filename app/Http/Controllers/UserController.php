@@ -16,7 +16,7 @@ class UserController extends Controller
             'first_name' => 'required',
             'last_name' => 'required',
             'user_status' => '',
-            'email' => 'required|email|unique:users',
+            'email' => 'email|unique:users',
             'password' => 'min:5',
             'DOB' => 'date',
             'address' => 'required',
@@ -45,7 +45,7 @@ class UserController extends Controller
             return response()->json(['user'=>$user,
                                 'msg'=>'User created successfully',
                                 'token' => $token,
-                                'status'=>'201']);
+                                ],200);
        
     }
 
@@ -98,10 +98,10 @@ class UserController extends Controller
         if($result)
         {
             return response()->json(['users'=>$users,
-                                'msg'=>'User updated successfully']);
+                                'msg'=>'User updated successfully'],200);
         } else {
             return response()->json(['users'=>$users,
-                                'msg'=>'Something went wrong']);
+                                'msg'=>'Something went wrong'],400);
         }
         //return response()->json($users);
         
@@ -115,10 +115,10 @@ class UserController extends Controller
         if($result)
         {
             return response()->json(['users'=>$users,
-                                'msg'=>'User updated successfully']);
+                                'msg'=>'User updated successfully'],200);
         } else {
             return response()->json(['users'=>$users,
-                                'msg'=>'Something went wrong']);
+                                'msg'=>'Something went wrong'],400);
         }
     }
 
@@ -130,10 +130,10 @@ class UserController extends Controller
         if($result)
         {
             return response()->json(['users'=>$users,
-                                'msg'=>'User updated successfully']);
+                                'msg'=>'User updated successfully'],200);
         } else {
             return response()->json(['users'=>$users,
-                                'msg'=>'Something went wrong']);
+                                'msg'=>'Something went wrong'],400);
         }
     }
 }

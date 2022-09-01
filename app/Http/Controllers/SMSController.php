@@ -33,17 +33,12 @@ class SMSController extends Controller
                 $client->messages->create($receiverNumber, [
                     'from' => $twilio_number, 
                     'body' => $message]);
-                $token = Str::random(60);
-                $qw = OtpVerification::updateOrInsert(['phone_no' => $receiverNumber],['otp' => $otp],['token' => $token]);
-                    if($qw)
-                    {
-                        print_r('done');
-                    }
-                $response = ["exists"=> 'true',"msg"=> 'SMS Sent Successfully.','Number'=>$receiverNumber,'Message'=>$message];
-      
+                //$token = Str::random(60);
+                OtpVerification::updateOrInsert(['phone_no' => $receiverNumber],['otp' => $otp]);
+                $response =response()->json(["exists"=> 'false',"msg"=> 'SMS Sent Successfully.','Number'=>$receiverNumber,'Message'=>$message],200);
             } catch (Exception $e) {
                 // dd("Error: ". $e->getMessage());
-                $response = ["error"=> $e->getMessage(),'status'=>'400'];
+                $response = response()->json(["error"=> $e->getMessage()],400);
             }
         }else {
             try {
@@ -56,17 +51,17 @@ class SMSController extends Controller
                 $client->messages->create($receiverNumber, [
                     'from' => $twilio_number, 
                     'body' => $message]);
-                $token = Str::random(60);
-                OtpVerification::updateOrInsert(['phone_no' => $receiverNumber],['otp' => $otp],['token' => $token]);
+                //$token = Str::random(60);
+                OtpVerification::updateOrInsert(['phone_no' => $receiverNumber],['otp' => $otp]);
                 
-                $response = ["exists"=> 'false',"msg"=> 'SMS Sent Successfully.','Number'=>$receiverNumber,'Message'=>$message];
+                $response =response()->json(["exists"=> 'false',"msg"=> 'SMS Sent Successfully.','Number'=>$receiverNumber,'Message'=>$message],200);
       
             } catch (Exception $e) {
                 // dd("Error: ". $e->getMessage());
-                $response = ["error"=> $e->getMessage(),'status'=>'400'];
+                $response = response()->json(["error"=> $e->getMessage()],400);
             }
         }
-        return response()->json(['message' => $response]);
+        return $response;
     }
 
     public function otpVerify(Request $request){
@@ -77,14 +72,15 @@ class SMSController extends Controller
         if($otp == $data->otp && User::where('phone_no','=',$receiverNumber)->exists()){
             $token = Str::random(60);
             User::where('phone_no','=',$receiverNumber)->update(['remember_token' => $token]);
-            $response = ['msg'=>'otp verified','exists' => $isExists,'token' => $token];
+            $response = response()->json(['message' => 'otp verified','exists' => $isExists,'token' => $token],200);
         }elseif($otp == $data->otp){
-            $response = ['msg'=>'otp verified','exists' => $isExists];
+            $response = response()->json(['message' => 'otp verified'],200);
         }else{
-            $response = ['msg'=>'otp mismatched','status'=>'401'];
+            $response = response()->json(['message' => 'otp mismatched'],400);
+            http_response_code(404);
         }  
 
-        return response()->json(['message' => $response]); 
+        return $response; 
     }
 
     // protected function createNewToken($token){
