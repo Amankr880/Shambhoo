@@ -28,6 +28,8 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->string('Latitude')->nullable();
             $table->string('Longitude')->nullable();
+            $table->string('state')->nullable();
+            $table->string('city')->nullable();
             $table->string('pincode')->nullable();
             $table->rememberToken();
             $table->timestamps();

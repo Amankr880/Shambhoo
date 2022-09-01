@@ -5,11 +5,24 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\User;
 
 class CartController extends Controller
 {
     public function addProduct(Request $request)
     {
+        $header = $request->header('token');
+        $q = User::where('id',$request->user_id)->get('token');
+        if($q = $header)
+        
+        {
+            echo 'token match';
+        }
+        else
+        {
+            echo 'token not match';
+        }
+        exit();
         $product_id = $request->input('product_id');
         $quantity = $request->input('quantity');
         $user_id = $request->input('user_id');
@@ -49,4 +62,11 @@ class CartController extends Controller
     {
         
     }
+
+    public function yourControllerFunction(\Illuminate\Http\Request $request)
+{
+    $header = $request->header('Authorization');
+
+    // do some stuff
+}
 }

@@ -17,6 +17,8 @@ class SMSController extends Controller
      *
      * @return response()
      */
+
+    protected $token;
     public function index(Request $request)
     {
         $receiverNumber = $request->number;
@@ -70,17 +72,27 @@ class SMSController extends Controller
         $isExists = $request->isExists;
         $data = OtpVerification::where('phone_no','=', $receiverNumber)->first();
         if($otp == $data->otp && User::where('phone_no','=',$receiverNumber)->exists()){
-            $token = Str::random(60);
-            User::where('phone_no','=',$receiverNumber)->update(['remember_token' => $token]);
-            $response = response()->json(['message' => 'otp verified','exists' => $isExists,'token' => $token],200);
+            //$token = Str::random(60);
+            $qw = $this->tokenGen($receiverNumber);
+            //print_r($qw);exit();
+            User::where('phone_no','=',$qw['mobile'])->update(['token' => $qw['token']]);
+            $response = response()->json(['message' => 'otp verified','exists' => $isExists,'token' => $qw['token']],200);
         }elseif($otp == $data->otp){
             $response = response()->json(['message' => 'otp verified'],200);
         }else{
             $response = response()->json(['message' => 'otp mismatched'],400);
-            http_response_code(404);
         }  
 
         return $response; 
+    }
+
+    public function tokenGen($mobileNumber)
+    {
+       $arr = [];
+       $token = Str::random(60);
+       $arr['mobile'] = $mobileNumber;
+       $arr['token'] = $token;
+       return $arr;
     }
 
     // protected function createNewToken($token){

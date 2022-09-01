@@ -12,6 +12,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -94,6 +95,13 @@ Route::controller(HomeController::class)->group(function () {
     Route::get('featureImageShow', 'featureImageShow');
     Route::post('getStore', 'getStore');
     Route::post('getFeatureStore', 'getFeatureStore');
+});
+
+Route::controller(CartController::class)->group(function () {
+    Route::post('addProduct', 'addProduct');
+    // Route::get('featureImageShow', 'featureImageShow');
+    // Route::post('getStore', 'getStore');
+    // Route::post('getFeatureStore', 'getFeatureStore');
 });
 
 

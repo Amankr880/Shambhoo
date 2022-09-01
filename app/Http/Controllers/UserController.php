@@ -20,12 +20,14 @@ class UserController extends Controller
             'password' => 'min:5',
             'DOB' => 'date',
             'address' => 'required',
-            'phone_no' => 'required|numeric',
+            'phone_no' => 'required|numeric', 
             'user_type' => '',
             'image' => 'required',
             'Longitude' => 'required',
             'Latitude' => 'required',
-            'pincode' => 'required'
+            'pincode' => 'required',
+            'city' => '',
+            'state' => ''
             
 
         ]);
@@ -93,6 +95,8 @@ class UserController extends Controller
         $users->image = $request->input('image');
         $users->Longitude = $request->input('Longitude');
         $users->Latitude = $request->input('Latitude');
+        $users->city = $request->input('city');
+        $users->state = $request->input('state');
         $users->pincode = $request->input('pincode');
         $result = $users->save();
         if($result)
