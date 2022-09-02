@@ -70,7 +70,7 @@ class UserController extends Controller
         $destinationPath = "public/user_img";
         $pic = $file->hashName();
         //$filename = 'https://localhost:8000/public/storage/user_img/'. $file->hashName();
-        $filename = public_path().'/storage/user_img/'. $file->hashname();
+        $filename = 'https://shambhoo.herokuapp.com/storage/user_img/'. $file->hashname();
 
         Storage::putFileAs($destinationPath, $file, $pic);
         $users->image = $filename;
