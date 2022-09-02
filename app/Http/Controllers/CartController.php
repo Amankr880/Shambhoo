@@ -52,19 +52,33 @@ class CartController extends Controller
 
     public function viewCart(Request $request)
     {
-        $cartItems = Cart::where('user_id',$request->id)->get();
-        return response()->json($cartItems);
+        $header = $request->bearerToken();
+        $q = User::where('id',$request->user_id)->get('token');
+        if($q = $header) 
+        {
+            $cartItems = Cart::where('user_id',$request->id)->get();
+            $response = response()->json(['cartItem'=>$cartItem],200);
+        }
+        else
+        {
+            $response = response()->json(['msg'=>'Token not matched'],403);
+        }
+        return $response;
     }
 
     public function deleteProduct(Request $request)
     {
-        
+        $header = $request->bearerToken();
+        $q = User::where('id',$request->user_id)->get('token');
+        if($q = $header) 
+        {
+            $cartItems = Cart::where('user_id',$request->id)->where('product_id',$request->product_id)->delete();
+            $response = response()->json(['cartItem'=>$cartItem,'msg'=>'Item deleted'],200);
+        }
+        else
+        {
+            $response = response()->json(['msg'=>'Token not matched'],403);
+        }
+        return $response;
     }
-
-    public function yourControllerFunction(\Illuminate\Http\Request $request)
-{
-    $header = $request->header('Authorization');
-
-    // do some stuff
-}
 }
