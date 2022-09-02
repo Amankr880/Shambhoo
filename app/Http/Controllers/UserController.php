@@ -117,14 +117,14 @@ class UserController extends Controller
         return $response;
     }
 
-    public function getMe(Request $request)
+    public function getMe()
     {
         $header = $request->bearerToken();
         //$q = User::where('id',$request->user_id)->get('token');
         if($header) 
         {
             $getMe = User::where('token','=',$header)->get();
-            $response = response()->json(['user'=>$getMe],200);
+            $response = response()->json($getMe,200);
         }
         else
         {
