@@ -52,6 +52,8 @@ class UserController extends Controller
 
     public function userCreate(Request $request)
     {
+        $token = Str::random(60);
+
         $users = new User;
         $users->first_name = $request->input('first_name');
         $users->last_name = $request->input('last_name');
@@ -69,11 +71,12 @@ class UserController extends Controller
         $users->city = $request->input('city');
         $users->state = $request->input('state');
         $users->pincode = $request->input('pincode');
+        $users->token = $token;
         $result = $users->save();
-        $token = User::where('id',$users->id)->get('token');
+        // $token = User::where('id',$users->id)->get('token');
         if($result)
         {
-            return response()->json(['users'=>$users,'token'=>$token,
+            return response()->json(['users'=>$users,
                                 'msg'=>'User created successfully'],200);
         } else {
             return response()->json(['users'=>$users,
