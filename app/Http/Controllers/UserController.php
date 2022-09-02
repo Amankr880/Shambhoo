@@ -37,8 +37,8 @@ class UserController extends Controller
         }
         //   $token = Str::random(60);
           $user = User::create(array_merge(
-            $validator->validated(),
-            ['password' => bcrypt($request->password)]
+            $validator->validated()
+            // ['password' => bcrypt($request->password)]
           ));
         //   $user->token = $token;
           $user->save();
