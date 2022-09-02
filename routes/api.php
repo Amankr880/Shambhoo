@@ -62,6 +62,7 @@ Route::controller(UserController::class)->group(function () {
     Route::post('updateUserType', 'updateUserType');
     Route::post('updateUserStatus', 'updateUserStatus');
     Route::post('getMe', 'getMe');
+    Route::post('updateAddress', 'updateAddress');
 });
 
 Route::controller(CategoriesController::class)->group(function () {

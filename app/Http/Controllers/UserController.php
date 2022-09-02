@@ -69,7 +69,6 @@ class UserController extends Controller
         $file = $request->file('image');
         $destinationPath = "public/user_img";
         $pic = $file->hashName();
-        //$filename = 'https://localhost:8000/public/storage/user_img/'. $file->hashName();
         $filename = 'https://shambhoo.herokuapp.com/storage/user_img/'. $file->hashname();
 
         Storage::putFileAs($destinationPath, $file, $pic);
@@ -93,21 +92,6 @@ class UserController extends Controller
                                 'msg'=>'Something went wrong'],400);
         }
         
-    }
-
-    public function featureImageShow()
-    {
-        $path = [];
-        $data = HomeData::select('feature_image')->get();
-        $filename=explode(",",$data[0]['feature_image']);
-        foreach($filename as $pic)
-        {
-            $path[] = public_path().'/storage/feature_images/'.$pic;
-            // $contents[] = Storage::files('feature_images');
-          // $contents[] = \File::files(public_path("storage/app/public/feature_images/".$pic));
-        }
-    
-        return $path;
     }
 
     public function show()
