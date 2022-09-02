@@ -117,7 +117,7 @@ class UserController extends Controller
         return $response;
     }
 
-    public function getMe()
+    public function getMe(Request $request)
     {
         $header = $request->bearerToken();
         //$q = User::where('id',$request->user_id)->get('token');
