@@ -10,44 +10,77 @@ use Validator;
 
 class UserController extends Controller
 {
-    public function create(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'first_name' => 'required',
-            'last_name' => '',
-            'user_status' => '',
-            'email' => 'email|unique:users',
-            'password' => 'min:5',
-            'DOB' => 'date',
-            'address' => 'required',
-            'phone_no' => 'required|numeric', 
-            'user_type' => '',
-            'image' => 'required',
-            'Longitude' => 'required',
-            'Latitude' => 'required',
-            'pincode' => 'required',
-            'city' => '',
-            'state' => ''
+    // public function create(Request $request)
+    // {
+    //     $validator = Validator::make($request->all(), [
+    //         'first_name' => 'required',
+    //         'last_name' => '',
+    //         'user_status' => '',
+    //         'email' => 'email|unique:users',
+    //         'password' => 'min:5',
+    //         'DOB' => 'date',
+    //         'address' => 'required',
+    //         'phone_no' => 'required|numeric', 
+    //         'user_type' => '',
+    //         'image' => 'required',
+    //         'Longitude' => 'required',
+    //         'Latitude' => 'required',
+    //         'pincode' => 'required',
+    //         'city' => '',
+    //         'state' => ''
             
 
-        ]);
+    //     ]);
     
-        if($validator->fails()){
-            return response()->json($validator->errors()->toJson(), 400);
-        }
-        //   $token = Str::random(60);
-          $user = User::create(array_merge(
-            $validator->validated()
-            // ['password' => bcrypt($request->password)]
-          ));
-        //   $user->token = $token;
-          $user->save();
+    //     if($validator->fails()){
+    //         return response()->json($validator->errors()->toJson(), 400);
+    //     }
+    //     //   $token = Str::random(60);
+    //       $user = User::create(array_merge(
+    //         $validator->validated()
+    //         // ['password' => bcrypt($request->password)]
+    //       ));
+    //     //   $user->token = $token;
+    //       $user->save();
 
 
-            return response()->json(['user'=>$user,
-                                'msg'=>'User created successfully'
-                                ],200);
+    //         return response()->json(['user'=>$user,
+    //                             'msg'=>'User created successfully'
+    //                             ],200);
        
+    // }
+
+    public function userCreate(Request $request)
+    {
+        $users = new User;
+        $users->first_name = $request->input('first_name');
+        $users->last_name = $request->input('last_name');
+        $users->DOB = $request->input('DOB');
+        $users->email = $request->input('email');
+        $users->address = $request->input('address');
+        $users->phone_no = $request->input('phone_no');
+        //$users->password = Hash::make($request->input('password'));
+        // $users->user_type = $request->input('user_type');
+        // $users->user_type = $request->input('user_status');
+        $pic = $request->image->store('public/user_img');
+        $users->image = $request->image->hashName();
+        $users->Longitude = $request->input('Longitude');
+        $users->Latitude = $request->input('Latitude');
+        $users->city = $request->input('city');
+        $users->state = $request->input('state');
+        $users->pincode = $request->input('pincode');
+        $result = $users->save();
+        $token = User::where('id',$users->id)->get('token');
+        if($result)
+        {
+            return response()->json(['users'=>$users,'token'=>$token,
+                                'msg'=>'User created successfully'],200);
+        } else {
+            return response()->json(['users'=>$users,
+                                'msg'=>'Something went wrong'],400);
+        }
+        //return response()->json($users);
+        
     }
 
     public function show()

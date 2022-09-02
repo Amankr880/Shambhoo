@@ -55,7 +55,7 @@ Route::group([
 // });
 
 Route::controller(UserController::class)->group(function () {
-    Route::post('createUser', 'create');
+    Route::post('createUser', 'userCreate');
     Route::get('showAllUser', 'show');
     Route::post('displaySingleuser', 'displaySingleuser');
     Route::post('updateUserDetail', 'update');
