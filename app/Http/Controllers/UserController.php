@@ -69,7 +69,8 @@ class UserController extends Controller
         $file = $request->file('image');
         $destinationPath = "public/user_img";
         $pic = $file->hashName();
-        $filename = 'https://shambhoo.herokuapp.com/'.'public/storage/user_img/'. $file->hashName();
+        //$filename = 'https://localhost:8000/public/storage/user_img/'. $file->hashName();
+        $filename = public_path().'/storage/user_img/'. $file->hashname();
 
         Storage::putFileAs($destinationPath, $file, $pic);
         $users->image = $filename;
@@ -91,7 +92,6 @@ class UserController extends Controller
             return response()->json(['users'=>$users,
                                 'msg'=>'Something went wrong'],400);
         }
-        //return response()->json($users);
         
     }
 
