@@ -36,17 +36,16 @@ class UserController extends Controller
             return response()->json($validator->errors()->toJson(), 400);
         }
         //   $token = Str::random(60);
-        //   $user = User::create(array_merge(
-        //     $validator->validated(),
-        //     ['password' => bcrypt($request->password)]
-        //   ));
+          $user = User::create(array_merge(
+            $validator->validated(),
+            ['password' => bcrypt($request->password)]
+          ));
         //   $user->token = $token;
           $user->save();
 
 
             return response()->json(['user'=>$user,
-                                'msg'=>'User created successfully',
-                                'token' => $token,
+                                'msg'=>'User created successfully'
                                 ],200);
        
     }
