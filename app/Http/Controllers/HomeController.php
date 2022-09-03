@@ -21,6 +21,7 @@ class HomeController extends Controller
             if($request->hasfile('image'))
             {
                 $img=$request->file('image');
+                $filename = [];
                 foreach ($img as $imgkey ) {
                     $imgkey->store('public/feature_images');
                     $imgname[]=$imgkey->hashName();

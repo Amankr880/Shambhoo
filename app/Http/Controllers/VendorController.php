@@ -67,34 +67,33 @@ class VendorController extends Controller
         Storage::putFileAs($destinationPath, $file, $pic);
         $vendor->header_image = $filename;
 
-        // try{
-        //     $data= $request->all();
-        // $validator = $this->validatorForStore($data)->validate();
-        //     $filename = [];
-        // if(isset($data['gallery']))
-        // {
-        //     if($request->hasfile('gallery'))
-        //     {
-        //         $img=$request->file('gallery');
-        //         foreach ($img as $imgkey ) {
-        //             $imgkey->store('public/gallery');
-        //             $imgname[]=$imgkey->hashName();
-        //             $filename ='https://shambhoo.herokuapp.com/storage/gallery/'.$imgkey->hashName();
-        //         }
-        //         // $imgname=implode(",",$imgname);
-        //         $filename=implode(",",$filename);
-        //         $vendor->gallery = $filename;
-        //     }else{
-        //         $imgname=null;
-        //     }
-        // }else{
-        //     $imgname=null;
-        // }
-        // }
-        // catch(Exception $e)
-        // {
-        //     echo 'Message: ' .$e->getMessage();
-        // }
+        try{
+            $data= $request->all();
+        $validator = $this->validatorForStore($data)->validate();
+        if(isset($data['gallery']))
+        {
+            if($request->hasfile('gallery'))
+            {
+                $img=$request->file('gallery');
+                $filename = [];
+                foreach ($img as $imgkey ) {
+                    $imgkey->store('public/gallery');
+                    $imgname[]=$imgkey->hashName();
+                    $filename[] ='https://shambhoo.herokuapp.com/storage/gallery/'.$imgkey->hashName();
+                }
+                $filename=implode(",",$filename);
+                $vendor->gallery = $filename;
+            }else{
+                $imgname=null;
+            }
+        }else{
+            $imgname=null;
+        }
+        }
+        catch(Exception $e)
+        {
+            echo 'Message: ' .$e->getMessage();
+        }
         
 
         $vendor->delivery_slot = $request->input('delivery_slot');
@@ -191,31 +190,6 @@ class VendorController extends Controller
         return response()->json($response);
     }
 
-    public function galleryUpload(Request $imgGallery)
-    {
-        $data= $imgGallery;
-        $validator = $this->validatorForStore($data)->validate();
-
-        if(isset($data['gallery']))
-        {
-            if($imgGallery->hasfile('gallery'))
-            {
-                $img=$imgGallery->file('gallery');
-                foreach ($img as $imgkey ) {
-                    $imgkey->store('public/gallery');
-                    $imgname[]=$imgkey->hashName();
-                    $filename[]='https://shambhoo.herokuapp.com/storage/feature_images/'.$imgkey->hashName();
-                }
-                $filename=implode(",",$filename);
-            }else{
-                $imgname=null;
-            }
-        }else{
-            $imgname=null;
-        }
-        return $filename;
-    }
-
     protected function validatorForStore($data){
         if(isset($data['gallery'])){
             $rules['gallery.*'] = 'required|mimes:jpg,jpeg,png,mp4,ogx,oga,ogv,ogg,webm|max:20000';
@@ -223,7 +197,7 @@ class VendorController extends Controller
         }
         
         $messages = [
-            "gallery.max" => "Max 3 images can be attached.",
+            "gallery.max" => "Max 5 images can be attached.",
         ];
 
         return Validator::make($data, $rules, $messages);
