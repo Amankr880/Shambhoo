@@ -37,7 +37,7 @@ class SMSController extends Controller
                     'body' => $message]);
                 //$token = Str::random(60);
                 OtpVerification::updateOrInsert(['phone_no' => $receiverNumber],['otp' => $otp]);
-                $response =response()->json(["exists"=> 'ture',"msg"=> 'SMS Sent Successfully.','Number'=>$receiverNumber,'Message'=>$message],200);
+                $response =response()->json(["exists"=> 'true',"msg"=> 'SMS Sent Successfully.','Number'=>$receiverNumber,'Message'=>$message],200);
             } catch (Exception $e) {
                 // dd("Error: ". $e->getMessage());
                 $response = response()->json(["error"=> $e->getMessage()],400);
