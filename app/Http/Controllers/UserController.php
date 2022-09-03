@@ -70,11 +70,9 @@ class UserController extends Controller
         $destinationPath = "public/user_img";
         $pic = $file->hashName();
         $filename = 'https://shambhoo.herokuapp.com/storage/user_img/'. $file->hashname();
-
         Storage::putFileAs($destinationPath, $file, $pic);
         $users->image = $filename;
-        // $pic = $request->image->store('public/user_img');
-        // $users->image = $request->image->hashName();
+        
         $users->Longitude = $request->input('Longitude');
         $users->Latitude = $request->input('Latitude');
         $users->city = $request->input('city');
@@ -123,7 +121,7 @@ class UserController extends Controller
         //$q = User::where('id',$request->user_id)->get('token');
         if($header) 
         {
-            $getMe = User::where('token','=',$header)->get();
+            $getMe = User::where('token','=',$header)->first();
             $response = response()->json($getMe,200);
         }
         else
@@ -136,19 +134,24 @@ class UserController extends Controller
     public function updateAddress(Request $request)
     {
         $header = $request->bearerToken();
-        $q = User::where('phone',$request->phone)->get('token');
-        if($q = $header) 
+        if($header) 
         {
-            $phone = $phoneNo->input('phone_no');
-            $userData = User::where('phone_no','=',$phone)->get();
-            $userAddress = $userData->address;
-            $newAddr = $request->address;
+            $userData = User::where('token','=',$header)
+                            ->update([
+                                'address' => $request->address,
+                                'pincode' => $request->pincode,
+                                'city' => $request->city,
+                                'state' => $request->state,
+                                'Latitude' => $request->Latitude,
+                                'Longitude' => $request->Longitude
+                            ]);
+            $response = response()->json(['msg'=>'Address Updated!'],200);
         }
         else
         {
             $response = response()->json(['msg'=>'Token not matched'],403);
         }
-
+        return $response;
     }
 
     public function update(Request $request)

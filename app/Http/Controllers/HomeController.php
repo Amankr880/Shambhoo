@@ -24,16 +24,18 @@ class HomeController extends Controller
                 foreach ($img as $imgkey ) {
                     $imgkey->store('public/feature_images');
                     $imgname[]=$imgkey->hashName();
+                    $filename[]='https://shambhoo.herokuapp.com/storage/feature_images/'.$imgkey->hashName();
                 }
-                $imgname=implode(",",$imgname);
-                $img = HomeData::insert(['feature_image'=> $imgname]);
+                // $imgname=implode(",",$imgname);
+                $filename=implode(",",$filename);
+                $img = HomeData::insert(['feature_image'=> $filename]);
             }else{
                 $imgname=null;
             }
         }else{
             $imgname=null;
         }
-        return response()->json(['image'=>$imgname,'msg'=>'photos uploaded successfully!!']);
+        return response()->json(['image'=>$filename,'msg'=>'photos uploaded successfully!!']);
     }
 
     protected function validatorForStore($data){
@@ -51,17 +53,17 @@ class HomeController extends Controller
 
     public function featureImageShow()
     {
-        $path = [];
-        $data = HomeData::select('feature_image')->get();
-        $filename=explode(",",$data[0]['feature_image']);
-        foreach($filename as $pic)
-        {
-            $path[] = public_path().'/storage/feature_images/'.$pic;
-            // $contents[] = Storage::files('feature_images');
-          // $contents[] = \File::files(public_path("storage/app/public/feature_images/".$pic));
-        }
+        //$path = [];
+        $data = HomeData::select('feature_image')->first();
+        //$filename=explode(",",$data[0]['feature_image']);
+        // foreach($filename as $pic)
+        // {
+        //     $path[] = public_path().'/storage/feature_images/'.$pic;
+        //     // $contents[] = Storage::files('feature_images');
+        //   // $contents[] = \File::files(public_path("storage/app/public/feature_images/".$pic));
+        // }
     
-        return $path;
+        return $data;
     }
 
     public function getStore(Request $request)
