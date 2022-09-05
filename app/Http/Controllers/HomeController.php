@@ -54,17 +54,14 @@ class HomeController extends Controller
 
     public function featureImageShow()
     {
-        //$path = [];
         $data = HomeData::select('feature_image')->first();
-        //$filename=explode(",",$data[0]['feature_image']);
-        // foreach($filename as $pic)
-        // {
-        //     $path[] = public_path().'/storage/feature_images/'.$pic;
-        //     // $contents[] = Storage::files('feature_images');
-        //   // $contents[] = \File::files(public_path("storage/app/public/feature_images/".$pic));
-        // }
-    
-        return $data;
+        if($data){
+            $response = response()->json($data,200);
+        }
+        else {
+            $response = response()->json(['msg' => 'image not found'],400);
+        }
+        return $response;
     }
 
     public function getStore(Request $request)
