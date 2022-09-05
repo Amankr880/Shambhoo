@@ -67,33 +67,33 @@ class VendorController extends Controller
         Storage::putFileAs($destinationPath, $file, $pic);
         $vendor->header_image = $filename;
 
-        try{
-            $data= $request->all();
-        $validator = $this->validatorForStore($data)->validate();
-        if(isset($data['gallery']))
-        {
-            if($request->hasfile('gallery'))
-            {
-                $img=$request->file('gallery');
-                $filename = [];
-                foreach ($img as $imgkey ) {
-                    $imgkey->store('public/gallery');
-                    $imgname[]=$imgkey->hashName();
-                    $filename[] ='https://shambhoo-app-pfm6i.ondigitalocean.app/storage/gallery/'.$imgkey->hashName();
-                }
-                $filename=implode(",",$filename);
-                $vendor->gallery = $filename;
-            }else{
-                $imgname=null;
-            }
-        }else{
-            $imgname=null;
-        }
-        }
-        catch(Exception $e)
-        {
-            echo 'Message: ' .$e->getMessage();
-        }
+        // try{
+        //     $data= $request->all();
+        // $validator = $this->validatorForStore($data)->validate();
+        // if(isset($data['gallery']))
+        // {
+        //     if($request->hasfile('gallery'))
+        //     {
+        //         $img=$request->file('gallery');
+        //         $filename = [];
+        //         foreach ($img as $imgkey ) {
+        //             $imgkey->store('public/gallery');
+        //             $imgname[]=$imgkey->hashName();
+        //             $filename[] ='https://shambhoo-app-pfm6i.ondigitalocean.app/storage/gallery/'.$imgkey->hashName();
+        //         }
+        //         $filename=implode(",",$filename);
+        //         $vendor->gallery = $filename;
+        //     }else{
+        //         $imgname=null;
+        //     }
+        // }else{
+        //     $imgname=null;
+        // }
+        // }
+        // catch(Exception $e)
+        // {
+        //     echo 'Message: ' .$e->getMessage();
+        // }
         
 
         $vendor->delivery_slot = $request->input('delivery_slot');

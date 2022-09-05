@@ -58,8 +58,13 @@ class HomeController extends Controller
     public function featureImageShow()
     {
         $data = HomeData::select('feature_image')->orderBy('id', 'desc')->limit(3)->get();
+        $arr = [];
+        foreach($data as $img) {
+            array_push($arr,$img['feature_image']);
+        }
+        $q['feature_image'] = $arr;
         if($data){
-            $response = response()->json(['image'=>$data],200);
+            $response = response()->json($q,200);
         }
         else {
             $response = response()->json(['msg' => 'image not found'],400);
