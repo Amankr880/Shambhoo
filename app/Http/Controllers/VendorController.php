@@ -79,7 +79,7 @@ class VendorController extends Controller
                 foreach ($img as $imgkey ) {
                     $imgkey->store('public/gallery');
                     $imgname[]=$imgkey->hashName();
-                    $filename[] ='https://shambhoo.herokuapp.com/storage/gallery/'.$imgkey->hashName();
+                    $filename[] ='https://shambhoo-app-pfm6i.ondigitalocean.app/storage/gallery/'.$imgkey->hashName();
                 }
                 $filename=implode(",",$filename);
                 $vendor->gallery = $filename;
