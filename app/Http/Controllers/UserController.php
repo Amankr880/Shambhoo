@@ -69,7 +69,7 @@ class UserController extends Controller
         $file = $request->file('image');
         $destinationPath = "public/user_img";
         $pic = $file->hashName();
-        $filename = 'https://shambhoo.herokuapp.com/storage/user_img/'. $file->hashname();
+        $filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/user_img/'. $file->hashname();
         Storage::putFileAs($destinationPath, $file, $pic);
         $users->image = $filename;
         

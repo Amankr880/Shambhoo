@@ -35,35 +35,35 @@ class VendorController extends Controller
         $file = $request->file('id_proof_photo');
         $destinationPath = "public/id_proof_photo";
         $pic = $file->hashName();
-        $filename = 'https://shambhoo.herokuapp.com/storage/id_proof_photo/'. $file->hashname();
+        $filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/id_proof_photo/'. $file->hashname();
         Storage::putFileAs($destinationPath, $file, $pic);
         $vendor->id_proof_photo = $filename;
 
         $file = $request->file('pancard_photo');
         $destinationPath = "public/pancard_photo";
         $pic = $file->hashName();
-        $filename = 'https://shambhoo.herokuapp.com/storage/pancard_photo/'. $file->hashname();
+        $filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/pancard_photo/'. $file->hashname();
         Storage::putFileAs($destinationPath, $file, $pic);
         $vendor->pancard_photo = $filename;
 
         $file = $request->file('business_doc_photo');
         $destinationPath = "public/business_doc_photo";
         $pic = $file->hashName();
-        $filename = 'https://shambhoo.herokuapp.com/storage/business_doc_photo/'. $file->hashname();
+        $filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/business_doc_photo/'. $file->hashname();
         Storage::putFileAs($destinationPath, $file, $pic);
         $vendor->business_doc_photo = $filename;
 
         $file = $request->file('logo_image');
         $destinationPath = "public/logo_image";
         $pic = $file->hashName();
-        $filename = 'https://shambhoo.herokuapp.com/storage/logo_image/'. $file->hashname();
+        $filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/logo_image/'. $file->hashname();
         Storage::putFileAs($destinationPath, $file, $pic);
         $vendor->logo_image = $filename;
 
         $file = $request->file('header_image');
         $destinationPath = "public/header_image";
         $pic = $file->hashName();
-        $filename = 'https://shambhoo.herokuapp.com/storage/header_image/'. $file->hashname();
+        $filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/header_image/'. $file->hashname();
         Storage::putFileAs($destinationPath, $file, $pic);
         $vendor->header_image = $filename;
 

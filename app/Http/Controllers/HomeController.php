@@ -25,7 +25,7 @@ class HomeController extends Controller
                 foreach ($img as $imgkey ) {
                     $imgkey->store('public/feature_images');
                     $imgname[]=$imgkey->hashName();
-                    $filename[]='https://shambhoo.herokuapp.com/storage/feature_images/'.$imgkey->hashName();
+                    $filename[]='https://shambhoo-app-pfm6i.ondigitalocean.app/storage/feature_images/'.$imgkey->hashName();
                 }
                 // $imgname=implode(",",$imgname);
                 $filename=implode(",",$filename);
