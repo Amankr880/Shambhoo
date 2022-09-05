@@ -27,9 +27,12 @@ class HomeController extends Controller
                     $imgname[]=$imgkey->hashName();
                     $filename[]='https://shambhoo-app-pfm6i.ondigitalocean.app/storage/feature_images/'.$imgkey->hashName();
                 }
+                foreach($filename as $file) {
+                    $q = HomeData::insert(['feature_image'=> $file]);
+                }
                 // $imgname=implode(",",$imgname);
-                $filename=implode(",",$filename);
-                $img = HomeData::insert(['feature_image'=> $filename]);
+                // $filename=implode(",",$filename);
+                // $img = HomeData::insert(['feature_image'=> $filename]);
             }else{
                 $imgname=null;
             }
@@ -54,9 +57,9 @@ class HomeController extends Controller
 
     public function featureImageShow()
     {
-        $data = HomeData::select('feature_image')->first();
+        $data = HomeData::select('feature_image')->orderBy('id', 'desc')->limit(3)->get();
         if($data){
-            $response = response()->json($data,200);
+            $response = response()->json(['image'=>$data],200);
         }
         else {
             $response = response()->json(['msg' => 'image not found'],400);
