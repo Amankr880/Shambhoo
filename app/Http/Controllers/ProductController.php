@@ -49,8 +49,19 @@ class ProductController extends Controller
     public function getProductByCategoryId($cate_Id)
     {
         $product = Product::where([['category_id','=',$cate_Id],['status','!=','10']])->get();  
-        $response = !$product->isEmpty() ? ['product'=>$product] : ["error"=> "product Not found",'msg'=>'product Not Found!!']; 
-        return response()->json($response);
+        if($product)
+        {
+            $response = response()->json($product,200);
+        }
+        else{
+            $response = response()->json(['msg'=>'product Not Found!!'],404);
+        } 
+        return $response;
+    }
+
+    public function getSingleProduct(Request $request)
+    {
+        
     }
 
     public function updateProduct(Request $request, $id)

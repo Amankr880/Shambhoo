@@ -75,15 +75,40 @@ class HomeController extends Controller
     public function getStore(Request $request)
     {
         $shopDetails = Vendor::where('pincode','=',$request->pincode)->get();  
-        $response = !$shopDetails->isEmpty() ? ['shopDetails'=>$shopDetails] : ["error"=> "Shops Not Available",'msg'=>'Shops In this Pincode is Not Available!!']; 
-        return response()->json($response);
+        if($shopDetails)
+        {
+            $response = response()->json($shopDetails,200);
+        }
+        else{
+            $response = response()->json(['msg'=>'Shops In this Pincode is Not Available!!'],404);
+        }
+        return $response;
     }
 
     public function getFeatureStore(Request $request)
     {
-        $shopDetails = Vendor::where('pincode','=',$request->pincode)->orderBy('status','DESC')->get();  
-        $response = !$shopDetails->isEmpty() ? ['shopDetails'=>$shopDetails] : ["error"=> "Shops Not Available",'msg'=>'Shops In this Pincode is Not Available!!']; 
-        return response()->json($response);
+        $shopDetails = Vendor::where('pincode','=',$request->pincode)->orderBy('status','DESC')->get(); 
+        if($shopDetails)
+        {
+            $response = response()->json($shopDetails,200);
+        }
+        else{
+            $response = response()->json(['msg'=>'Shops In this Pincode is Not Available!!'],404);
+        } 
+        return $response;
+    }
+
+    public function getSingleStore(Request $request)
+    {
+        $shopDetails = Vendor::where('id','=',$request->id)->first(); 
+        if($shopDetails)
+        {
+            $response = response()->json($shopDetails,200);
+        }
+        else{
+            $response = response()->json(['msg'=>'Shops In this Pincode is Not Available!!'],404);
+        } 
+        return $response;
     }
     
 }
