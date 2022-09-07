@@ -36,7 +36,7 @@ class ProductController extends Controller
         //     ];
         
         $product->save();
-        return response()->json(['product'=>$product,'msg'=>'product created successfully!!']);
+        return response()->json(['product'=>$product,'msg'=>'product created successfully!!'],200);
     }
 
     public function getAllProducts()
@@ -59,9 +59,17 @@ class ProductController extends Controller
         return $response;
     }
 
-    public function getSingleProduct(Request $request)
+    public function getSingleProduct($Id)
     {
-        
+        $product = Product::where([['id','=',$Id],['status','!=','10']])->get();  
+        if($product)
+        {
+            $response = response()->json($product,200);
+        }
+        else{
+            $response = response()->json(['msg'=>'product Not Found!!'],404);
+        } 
+        return $response;
     }
 
     public function updateProduct(Request $request, $id)

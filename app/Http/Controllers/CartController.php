@@ -11,7 +11,7 @@ class CartController extends Controller
 {
     public function addProduct(Request $request)
     {
-        $header = $request->header('token');
+        $header = $request->bearerToken();
         $q = User::where('id',$request->user_id)->get('token');
         if($q = $header) 
         {

@@ -13,6 +13,7 @@ use App\Http\Controllers\VendorController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\ReviewsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -78,6 +79,7 @@ Route::controller(ProductController::class)->group(function () {
     Route::post('createProduct', 'createProduct');
     Route::get('getAllProducts', 'getAllProducts');
     Route::post('getProductByCategoryId/{id}', 'getProductByCategoryId');
+    Route::post('getSingleProduct/{id}', 'getSingleProduct');
     Route::post('updateProduct/{id}', 'updateProduct');
     Route::post('deleteProduct/{id}', 'deleteProduct');
 });
@@ -91,6 +93,12 @@ Route::controller(OrderController::class)->group(function () {
 Route::controller(PaymentController::class)->group(function () {
     Route::post('createPayment', 'createPayment');
 });
+
+Route::controller(ReviewsController::class)->group(function () {
+    Route::post('createReview', 'createReview');
+    Route::post('getReview', 'getReview');
+});
+
 Route::controller(HomeController::class)->group(function () {
     Route::post('featureImageUpload', 'featureImageUpload');
     Route::get('featureImageShow', 'featureImageShow');

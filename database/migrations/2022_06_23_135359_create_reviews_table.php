@@ -16,10 +16,11 @@ return new class extends Migration
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
+            $table->integer('vendor_id');
             $table->integer('product_id');
             $table->longText('description');
             $table->integer('product_rating');
-            $table->binary('images');
+            $table->string('images');
             $table->integer('is_approved');
             $table->integer('delivery_rating');
             $table->integer('vendor_rating');
