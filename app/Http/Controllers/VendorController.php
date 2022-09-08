@@ -13,102 +13,104 @@ class VendorController extends Controller
 {
     public function createVendor(Request $request)
     {
-        $vendor = new Vendor();
-        $vendor->shopName = $request->input('shopName');
-        $vendor->user_id = $request->input('user_id');
-        $vendor->address = $request->input('address');
-        $vendor->Longitude = $request->input('Longitude');
-        $vendor->Latitude = $request->input('Latitude');
-        $vendor->city = $request->input('city');
-        $vendor->state = $request->input('state');
-        $vendor->pincode = $request->input('pincode');
-        $vendor->phone_no = $request->input('phone_no');
-        $vendor->email_id = $request->input('email_id');
-        $vendor->id_proof_type = $request->input('id_proof_type');
-        $vendor->id_proof_no = $request->input('id_proof_no');
-        $vendor->pancard_no = $request->input('pancard_no');
-        $vendor->gst_no = $request->input('gst_no');
-        $vendor->business_doc_type = $request->input('business_doc_type');
-        $vendor->business_doc_no = $request->input('business_doc_no');
-        $vendor->about = $request->input('about');
-       
-        $file = $request->file('id_proof_photo');
-        $destinationPath = "public/id_proof_photo";
-        $pic = $file->hashName();
-        $filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/id_proof_photo/'. $file->hashname();
-        Storage::putFileAs($destinationPath, $file, $pic);
-        $vendor->id_proof_photo = $filename;
-
-        $file = $request->file('pancard_photo');
-        $destinationPath = "public/pancard_photo";
-        $pic = $file->hashName();
-        $filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/pancard_photo/'. $file->hashname();
-        Storage::putFileAs($destinationPath, $file, $pic);
-        $vendor->pancard_photo = $filename;
-
-        $file = $request->file('business_doc_photo');
-        $destinationPath = "public/business_doc_photo";
-        $pic = $file->hashName();
-        $filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/business_doc_photo/'. $file->hashname();
-        Storage::putFileAs($destinationPath, $file, $pic);
-        $vendor->business_doc_photo = $filename;
-
-        $file = $request->file('logo_image');
-        $destinationPath = "public/logo_image";
-        $pic = $file->hashName();
-        $filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/logo_image/'. $file->hashname();
-        Storage::putFileAs($destinationPath, $file, $pic);
-        $vendor->logo_image = $filename;
-
-        $file = $request->file('header_image');
-        $destinationPath = "public/header_image";
-        $pic = $file->hashName();
-        $filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/header_image/'. $file->hashname();
-        Storage::putFileAs($destinationPath, $file, $pic);
-        $vendor->header_image = $filename;
-
-        // try{
-        //     $data= $request->all();
-        // $validator = $this->validatorForStore($data)->validate();
-        // if(isset($data['gallery']))
-        // {
-        //     if($request->hasfile('gallery'))
-        //     {
-        //         $img=$request->file('gallery');
-        //         $filename = [];
-        //         foreach ($img as $imgkey ) {
-        //             $imgkey->store('public/gallery');
-        //             $imgname[]=$imgkey->hashName();
-        //             $filename[] ='https://shambhoo-app-pfm6i.ondigitalocean.app/storage/gallery/'.$imgkey->hashName();
-        //         }
-        //         $filename=implode(",",$filename);
-        //         $vendor->gallery = $filename;
-        //     }else{
-        //         $imgname=null;
-        //     }
-        // }else{
-        //     $imgname=null;
-        // }
-        // }
-        // catch(Exception $e)
-        // {
-        //     echo 'Message: ' .$e->getMessage();
-        // }
+        $header = $request->bearerToken();
+        $q = User::where('id',$request->user_id)->get('token');
+        if($q = $header) 
+        {
+            $vendor = new Vendor();
+            $vendor->shopName = $request->input('shopName');
+            $vendor->user_id = $request->input('user_id');
+            $vendor->address = $request->input('address');
+            $vendor->Longitude = $request->input('Longitude');
+            $vendor->Latitude = $request->input('Latitude');
+            $vendor->city = $request->input('city');
+            $vendor->state = $request->input('state');
+            $vendor->pincode = $request->input('pincode');
+            $vendor->phone_no = $request->input('phone_no');
+            $vendor->email_id = $request->input('email_id');
+            $vendor->id_proof_type = $request->input('id_proof_type');
+            $vendor->id_proof_no = $request->input('id_proof_no');
+            $vendor->pancard_no = $request->input('pancard_no');
+            $vendor->gst_no = $request->input('gst_no');
+            $vendor->business_doc_type = $request->input('business_doc_type');
+            $vendor->business_doc_no = $request->input('business_doc_no');
+            $vendor->about = $request->input('about');
+            $vendor->delivery_slot = $request->input('delivery_slot');
+            $vendor->status = $request->input('status');
+            $vendor->visibility = $request->input('visibility');
+            $vendor->policy = $request->input('policy');
         
+            $file = $request->file('id_proof_photo');
+            $destinationPath = "public/id_proof_photo";
+            $pic = $file->hashName();
+            $filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/id_proof_photo/'. $file->hashname();
+            Storage::putFileAs($destinationPath, $file, $pic);
+            $vendor->id_proof_photo = $filename;
 
-        $vendor->delivery_slot = $request->input('delivery_slot');
-        $vendor->status = $request->input('status');
-        $vendor->visibility = $request->input('visibility');
-        $vendor->policy = $request->input('policy');
-        //$vendor->picture = $request->input('picture');
-        // $image = $request->icon->store('public/vendor_icon');
-        // $vendor->icon = $request->icon->hashName();
-        // $vendor['picture'][]=[
-        //     $request->input('picture')
-        //     ];
-        
-        $vendor->save();
-        return response()->json(['vendor'=>$vendor,'msg'=>'vendor created successfully!!'],200);
+            $file = $request->file('pancard_photo');
+            $destinationPath = "public/pancard_photo";
+            $pic = $file->hashName();
+            $filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/pancard_photo/'. $file->hashname();
+            Storage::putFileAs($destinationPath, $file, $pic);
+            $vendor->pancard_photo = $filename;
+
+            $file = $request->file('business_doc_photo');
+            $destinationPath = "public/business_doc_photo";
+            $pic = $file->hashName();
+            $filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/business_doc_photo/'. $file->hashname();
+            Storage::putFileAs($destinationPath, $file, $pic);
+            $vendor->business_doc_photo = $filename;
+
+            $file = $request->file('logo_image');
+            $destinationPath = "public/logo_image";
+            $pic = $file->hashName();
+            $filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/logo_image/'. $file->hashname();
+            Storage::putFileAs($destinationPath, $file, $pic);
+            $vendor->logo_image = $filename;
+
+            $file = $request->file('header_image');
+            $destinationPath = "public/header_image";
+            $pic = $file->hashName();
+            $filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/header_image/'. $file->hashname();
+            Storage::putFileAs($destinationPath, $file, $pic);
+            $vendor->header_image = $filename;
+
+            // try{
+            //     $data= $request->all();
+            // $validator = $this->validatorForStore($data)->validate();
+            // if(isset($data['gallery']))
+            // {
+            //     if($request->hasfile('gallery'))
+            //     {
+            //         $img=$request->file('gallery');
+            //         $filename = [];
+            //         foreach ($img as $imgkey ) {
+            //             $imgkey->store('public/gallery');
+            //             $imgname[]=$imgkey->hashName();
+            //             $filename[] ='https://shambhoo-app-pfm6i.ondigitalocean.app/storage/gallery/'.$imgkey->hashName();
+            //         }
+            //         $filename=implode(",",$filename);
+            //         $vendor->gallery = $filename;
+            //     }else{
+            //         $imgname=null;
+            //     }
+            // }else{
+            //     $imgname=null;
+            // }
+            // }
+            // catch(Exception $e)
+            // {
+            //     echo 'Message: ' .$e->getMessage();
+            // }
+            
+            $vendor->save();
+            $response = response()->json(['vendor'=>$vendor,'msg'=>'vendor created successfully!!'],200);
+        }
+        else
+        {
+            $response = response()->json(['msg'=>'Token not matched'],403);
+        }
+        return $response;
     }
 
     public function getVendorByUserId($user_Id)

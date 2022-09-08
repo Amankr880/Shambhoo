@@ -13,12 +13,15 @@ class CategoriesController extends Controller
         $category->parent_category = $request->input('parent_category');
         $category->category_name = $request->input('category_name');
         $category->description = $request->input('description');
-        $image = $request->icon->store('public/category_icon');
-        $category->icon = $request->icon->hashName();
-        // $category['picture'][]=[
-        //     $request->input('picture')
-        //     ];
         $category->status = $request->input('status');
+
+        $file = $request->file('icon');
+        $destinationPath = "public/category_icon";
+        $pic = $file->hashName();
+        $filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/category_icon/'. $file->hashname();
+        Storage::putFileAs($destinationPath, $file, $pic);
+        $category->icon = $filename;
+        
         $category->save();
         return response()->json(['category'=>$category,'msg'=>'category created successfully!!']);
     }
@@ -30,17 +33,47 @@ class CategoriesController extends Controller
         return response()->json($category);
     }
 
-    public function getParentCategory()
+    public function getParentCategory(Request $request)
     {
-        $category = Categories::where([['parent_category','=', NULL],['status','!=','10']])->get();  
-        return response()->json($category);
+        $header = $request->bearerToken();
+        $q = User::where('id',$request->user_id)->get('token');
+        if($q = $header) 
+        {
+            $category = Categories::where([['parent_category','=', NULL],['status','!=','10']])->get();
+            if($category){
+                $response = response()->json($category,200);
+            }  
+            else{
+                $response = response()->json(['msg'=>'category not found'],403);
+            }
+        }
+        else
+        {
+            $response = response()->json(['msg'=>'Token not matched'],403);
+        }
+        return $response;
+       
     }
 
-    public function getCategoryById($parentId)
+    public function getCategoryById(Request $request)
     {
-        $category = Categories::where([['parent_category','=',$parentId],['status','!=','10']])->get();  
-        $response = !$category->isEmpty() ? ['category'=>$category] : ["error"=> "Category Not found",'msg'=>'Category Not Found!!']; 
-        return response()->json($response);
+        $header = $request->bearerToken();
+        $q = User::where('id',$request->user_id)->get('token');
+        if($q = $header) 
+        {
+            $category = Categories::where([['parent_category','=',$parentId],['status','!=','10']])->get(); 
+            if($category){
+                $response = response()->json($category,200);
+            }  
+            else{
+                $response = response()->json(['msg'=>'category not found'],403);
+            }
+        }
+        else
+        {
+            $response = response()->json(['msg'=>'Token not matched'],403);
+        }
+        return $response;
     }
 
     public function updateCategory(Request $request, $id)
@@ -73,40 +106,5 @@ class CategoriesController extends Controller
         $category = Categories::where('id','=',$id)->update(['status'=>'10']);
         $response = $category ? ['category'=>$category,'msg'=>'Category deleted successfully!!'] : ["error"=> "Category Not found",'msg'=>'Category Not Found!!'];
         return response()->json($response);
-    }
-
-    public function storeIcon($icon,$id)
-    {
-    // if(!$request->hasFile('image')) {
-    //     return response()->json(['upload_file_not_found'], 400);
-    // }
- 
-    $allowedfileExtension=['jpg','png'];
-    $files = $icon; 
-    $errors = [];
- 
-        foreach ($files as $file) {     
-            $extension = $file->getClientOriginalExtension();
-            $check = in_array($extension,$allowedfileExtension);
-    
-            if($check) {
-                foreach($icon as $mediaFiles) {
-    
-                    $path = $mediaFiles->store('public/category_icon');
-                    $name = $mediaFiles->getClientOriginalName();
-        
-                    //store image file into directory and db
-                    $category = Categories::find($id);
-                    $category->icon = $name;
-                    // $save->path = $path;
-                    $save->save();
-                }
-            } else {
-                return response()->json(['invalid_file_format'], 422);
-            }
-    
-            return response()->json(['file_uploaded'], 200);
-    
-        }
     }
 }

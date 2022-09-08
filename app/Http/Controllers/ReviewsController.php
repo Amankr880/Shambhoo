@@ -81,13 +81,22 @@ class ReviewsController extends Controller
 
     public function getReview(Request $request)
     {
-        $reviews = Reviews::where('vendor_id',$request->vendor_id)->get();
-        if($reviews){
-            $response = response()->json(['rewiews'=>$reviews],200);
+        $header = $request->bearerToken();
+        $q = User::where('id',$request->user_id)->get('token');
+        if($q = $header) 
+        {
+            $reviews = Reviews::where('vendor_id',$request->vendor_id)->get();
+            if($reviews){
+                $response = response()->json(['rewiews'=>$reviews],200);
+            }
+            else
+            {
+                $response = response()->json(['msg'=>'No rewiews'],403);
+            }
         }
         else
         {
-            $response = response()->json(['msg'=>'No rewiews'],403);
+            $response = response()->json(['msg'=>'Token not matched'],403);
         }
         return $response;
     }

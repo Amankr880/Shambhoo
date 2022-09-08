@@ -12,38 +12,45 @@ class ProductController extends Controller
 {
     public function createProduct(Request $request)
     {
-        $product = new Product();
-        $product->SKU = $request->input('SKU');
-        $product->product_name = $request->input('product_name');
-        $product->product_desc = $request->input('product_desc');
-        $product->attributes = $request->input('attributes');
-        $product->category_id = $request->input('category_id');
-        $product->unit_price = $request->input('unit_price');
-        $product->MSRP = $request->input('MSRP');
-        // $product->status = $request->input('status');
-        $product->vendor_id = $request->input('vendor_id');
-        $product->unit_weight = $request->input('unit_weight');
-        $product->unit_stock = $request->input('unit_stock');
-        $product->unit_in_order = $request->input('unit_in_order');
-        $product->discount = $request->input('discount');
-        $product->product_available = $request->input('product_available');
-        $product->discount_available = $request->input('discount_available');
-        $product->ranking = $request->input('ranking');
-        $image = $request->picture->store('public/product_img');
-        $product->picture = $request->picture->hashName();
+        $header = $request->bearerToken();
+        $q = User::where('id',$request->user_id)->get('token');
+        if($q = $header) 
+        {
+            $product = new Product();
+            $product->SKU = $request->input('SKU');
+            $product->product_name = $request->input('product_name');
+            $product->product_desc = $request->input('product_desc');
+            $product->attributes = $request->input('attributes');
+            $product->category_id = $request->input('category_id');
+            $product->unit_price = $request->input('unit_price');
+            $product->MSRP = $request->input('MSRP');
+            // $product->status = $request->input('status');
+            $product->vendor_id = $request->input('vendor_id');
+            $product->unit_weight = $request->input('unit_weight');
+            $product->unit_stock = $request->input('unit_stock');
+            $product->unit_in_order = $request->input('unit_in_order');
+            $product->discount = $request->input('discount');
+            $product->product_available = $request->input('product_available');
+            $product->discount_available = $request->input('discount_available');
+            $product->ranking = $request->input('ranking');
 
-        $vendor_category = vendor_category::firstOrCreate(['vendor_id' => $request->input('vendor_id'),'category_id' => $request->input('category_id')]);
-        
+            $file = $request->file('picture');
+            $destinationPath = "public/product_img";
+            $pic = $file->hashName();
+            $filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/product_img/'. $file->hashname();
+            Storage::putFileAs($destinationPath, $file, $pic);
+            $product->picture = $filename;
 
-        //$product->picture = $request->input('picture');
-        // $image = $request->icon->store('public/product_icon');
-        // $product->icon = $request->icon->hashName();
-        // $product['picture'][]=[
-        //     $request->input('picture')
-        //     ];
-        
-        $product->save();
-        return response()->json(['product'=>$product,'msg'=>'product created successfully!!'],200);
+            $vendor_category = vendor_category::firstOrCreate(['vendor_id' => $request->input('vendor_id'),'category_id' => $request->input('category_id')]);
+
+            $product->save();
+            $response = response()->json(['product'=>$product,'msg'=>'product created successfully!!'],200);
+        }
+        else
+        {
+            $response = response()->json(['msg'=>'Token not matched'],403);
+        }
+        return $response;
     }
 
     public function getAllProducts()
@@ -77,16 +84,25 @@ class ProductController extends Controller
         return $response;
     }
 
-    public function getSingleProduct($Id)
+    public function getSingleProduct(Request $request)
     {
-        $product = Product::where([['id','=',$Id],['status','!=','10']])->get();  
-        if($product)
+        $header = $request->bearerToken();
+        $q = User::where('id',$request->user_id)->get('token');
+        if($q = $header) 
         {
-            $response = response()->json($product,200);
+            $product = Product::where([['id','=',$request->product_id],['status','!=','10']])->get();
+            if($product)
+            {
+                $response = response()->json($product,200);
+            }
+            else{
+                $response = response()->json(['msg'=>'product Not Found!!'],404);
+            } 
         }
-        else{
-            $response = response()->json(['msg'=>'product Not Found!!'],404);
-        } 
+        else
+        {
+            $response = response()->json(['msg'=>'Token not matched'],403);
+        }
         return $response;
     }
 
@@ -97,8 +113,6 @@ class ProductController extends Controller
         if($q = $header) 
         {
             $vendor_id = $request->input('vendor_id');
-            // $vendor_category = vendor_category::where('vendor_id','=',$vendor_id)->get();
-            // $category_detail = Categories::where([['parent_category','=',$vendor_category->category_id],['status','!=','10']])->get();
             $vendor_category = vendor_category::join('categories', 'vendor_category.category_id', '=', 'categories.id')
                     ->where([['vendor_category.vendor_id','=',$vendor_id],['categories.status','!=','10']])
                     ->select('vendor_category.*', 'categories.*')->get(); 
