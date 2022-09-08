@@ -183,13 +183,23 @@ class VendorController extends Controller
 
     public function getVendor(Request $request)
     {
-        $vendor = Vendor::where('id','=',$request->id)->get(); 
-        $product = Product::where('vendor_id','=',$request->id)->get(); 
-        $response = [
-            'vendor'=>$vendor,
-            'product'=>$product
-            ]; 
-        return response()->json($response);
+        $header = $request->bearerToken();
+        $q = User::where('id',$request->user_id)->get('token');
+        if($q = $header) 
+        {
+            $vendor = Vendor::where('id','=',$request->id)->get(); 
+            $product = Product::where('vendor_id','=',$request->id)->get(); 
+            $data = [
+                'vendor'=>$vendor,
+                'product'=>$product
+                ]; 
+               $response =  response()->json($data);
+        }
+        else
+        {
+            $response = response()->json(['msg'=>'Token not matched'],403);
+        }
+        return $response;
     }
 
     protected function validatorForStore($data){
