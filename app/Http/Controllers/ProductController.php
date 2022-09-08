@@ -97,7 +97,11 @@ class ProductController extends Controller
         if($q = $header) 
         {
             $vendor_id = $request->input('vendor_id');
-            $vendor_category = vendor_category::where('vendor_id','=',$vendor_id)->get();
+            // $vendor_category = vendor_category::where('vendor_id','=',$vendor_id)->get();
+            // $category_detail = Categories::where([['parent_category','=',$vendor_category->category_id],['status','!=','10']])->get();
+            $vendor_category = vendor_category::join('categories', 'vendor_category.category_id', '=', 'categories.id')
+                    ->where([['vendor_category.vendor_id','=',$vendor_id],['categories.status','!=','10']])
+                    ->select('vendor_category.*', 'categories.*')->get(); 
             $response = response()->json(['vendor_category'=>$vendor_category],200);
         }
         else
