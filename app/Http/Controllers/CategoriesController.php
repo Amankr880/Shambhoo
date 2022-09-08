@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Categories;
+use App\Models\User;
 use Storage;
 use Illuminate\Support\Facades\File;
 
@@ -63,7 +64,7 @@ class CategoriesController extends Controller
         $q = User::where('id',$request->user_id)->get('token');
         if($q = $header) 
         {
-            $category = Categories::where([['parent_category','=',$parentId],['status','!=','10']])->get(); 
+            $category = Categories::where([['parent_category','=',$request->parentId],['status','!=','10']])->get(); 
             if($category){
                 $response = response()->json($category,200);
             }  
