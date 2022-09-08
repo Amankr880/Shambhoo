@@ -7,6 +7,8 @@ use App\Models\Product;
 use App\Models\Categories;
 use App\Models\vendor_category;
 use App\Models\User;
+use Storage;
+use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
