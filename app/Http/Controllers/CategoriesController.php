@@ -13,9 +13,6 @@ class CategoriesController extends Controller
         $category->parent_category = $request->input('parent_category');
         $category->category_name = $request->input('category_name');
         $category->description = $request->input('description');
-        $image = $request->picture->store('public/category_img');
-        $category->picture = $request->picture->hashName();
-        //$category->picture = $request->input('picture');
         $image = $request->icon->store('public/category_icon');
         $category->icon = $request->icon->hashName();
         // $category['picture'][]=[

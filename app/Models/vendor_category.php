@@ -5,15 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Categories extends Model
+class vendor_category extends Model
 {
     use HasFactory;
-    protected $table = 'categories';
+    protected $table = 'vendor_category';
     protected $fillable = [
-      'parent_category',
-      'category_name',
-      'description',
-      'icon',
-      'status',
+      'vendor_id',
+      'category_id',
     ];
 }

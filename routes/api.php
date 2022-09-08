@@ -70,7 +70,7 @@ Route::controller(CategoriesController::class)->group(function () {
     Route::post('createCategory', 'createCategory');
     Route::get('getAllCategories', 'getAllCategories');
     Route::get('getParentCategory', 'getParentCategory');
-    Route::post('getCategoryById/{id}', 'getCategoryById');
+    Route::get('getCategoryById/{id}', 'getCategoryById');
     Route::post('updateCategory/{id}', 'updateCategory');
     Route::post('deleteCategory/{id}', 'deleteCategory');
 });
@@ -78,10 +78,11 @@ Route::controller(CategoriesController::class)->group(function () {
 Route::controller(ProductController::class)->group(function () {
     Route::post('createProduct', 'createProduct');
     Route::get('getAllProducts', 'getAllProducts');
-    Route::post('getProductByCategoryId/{id}', 'getProductByCategoryId');
+    Route::post('getProductByCategoryId', 'getProductByCategoryId');
     Route::post('getSingleProduct/{id}', 'getSingleProduct');
     Route::post('updateProduct/{id}', 'updateProduct');
     Route::post('deleteProduct/{id}', 'deleteProduct');
+    Route::post('getVendorProduct', 'getVendorProduct');
 });
 
 Route::controller(OrderController::class)->group(function () {
@@ -104,6 +105,7 @@ Route::controller(HomeController::class)->group(function () {
     Route::get('featureImageShow', 'featureImageShow');
     Route::post('getStore', 'getStore');
     Route::post('getFeatureStore', 'getFeatureStore');
+    Route::post('getSingleStore', 'getSingleStore');
 });
 
 Route::controller(CartController::class)->group(function () {

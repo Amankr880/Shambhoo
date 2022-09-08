@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Categories;
+use App\Models\vendor_category;
 
 class ProductController extends Controller
 {
@@ -28,6 +30,10 @@ class ProductController extends Controller
         $product->ranking = $request->input('ranking');
         $image = $request->picture->store('public/product_img');
         $product->picture = $request->picture->hashName();
+
+        $vendor_category = vendor_category::firstOrCreate(['vendor_id' => $request->input('vendor_id'),'category_id' => $request->input('category_id')]);
+        
+
         //$product->picture = $request->input('picture');
         // $image = $request->icon->store('public/product_icon');
         // $product->icon = $request->icon->hashName();
@@ -46,16 +52,27 @@ class ProductController extends Controller
         return response()->json($product);
     }
 
-    public function getProductByCategoryId($cate_Id)
+    public function getProductByCategoryId(Request $request)
     {
-        $product = Product::where([['category_id','=',$cate_Id],['status','!=','10']])->get();  
-        if($product)
+        $header = $request->bearerToken();
+        $q = User::where('id',$request->user_id)->get('token');
+        if($q = $header) 
         {
-            $response = response()->json($product,200);
+            $product = Product::where([['category_id','=',$request->input('category_id')],
+                                    ['vendor_id','=',$request->input('vendor_id')],
+                                    ['status','!=','10']])->get();  
+            if($product)
+            {
+                $response = response()->json($product,200);
+            }
+            else{
+                $response = response()->json(['msg'=>'product Not Found!!'],404);
+            } 
         }
-        else{
-            $response = response()->json(['msg'=>'product Not Found!!'],404);
-        } 
+        else
+        {
+            $response = response()->json(['msg'=>'Token not matched'],403);
+        }
         return $response;
     }
 
@@ -71,6 +88,56 @@ class ProductController extends Controller
         } 
         return $response;
     }
+
+    public function getVendorCategory(Request $request)
+    {
+        $header = $request->bearerToken();
+        $q = User::where('id',$request->user_id)->get('token');
+        if($q = $header) 
+        {
+            $vendor_id = $request->input('vendor_id');
+            $vendor_category = vendor_category::where('vendor_id','=',$vendor_id)->get();
+            $response = response()->json(['vendor_category'=>$vendor_category],200);
+        }
+        else
+        {
+            $response = response()->json(['msg'=>'Token not matched'],403);
+        }
+        return $response;
+    }
+
+    // public function getVendorProduct(Request $request)
+    // {
+    //     $vendor_id = $request->input('vendor_id');
+    //     $category_id = $request->input('category_id');
+    //     $vendor_category = vendor_category::where('vendor_id','=',$vendor_id)->get();
+    //     $product = Product::where([['vendor_id','=',$vendor_id],['status','!=','10']])->get(); 
+    //     // $product2 = Product::join('categories', 'products.category_id', '=', 'categories.id')
+    //     //             ->where([['products.vendor_id','=',$vendor_id],['products.status','!=','10']])
+    //     //             ->select('products.*', 'categories.*')->get(); 
+    //     $product2 = Categories::join('products', 'categories.id', '=', 'products.category_id')
+    //                 ->where([['products.vendor_id','=',$vendor_id],['products.category_id','=',$category_id],['products.status','!=','10']])
+    //                 ->select('products.*')->get(); 
+    //      echo ($product2);exit();
+    //     $index = 0;
+    //     if($product){
+    //         foreach($product as $cat_id){
+    //             $cat_id = $cat_id->category_id;
+    //             $category[] = Categories::where([['id','=',$cat_id],['status','!=','10']])->get();
+    //         }
+    //     }
+    //     else{
+    //         $response = response()->json(['msg'=>'vendor has no product!!'],404);
+    //     }
+    //     if($product && $category)
+    //     {
+    //         $response = response()->json(['product' => $product,'category'=>$category],200);
+    //     }
+    //     else{
+    //         $response = response()->json(['msg'=>'vendor has no product!!'],404);
+    //     }
+    //     return $response;
+    // }
 
     public function updateProduct(Request $request, $id)
     {
