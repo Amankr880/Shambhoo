@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Vendor;
 use App\Models\Product;
+use App\Models\User;
 use Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
