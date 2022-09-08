@@ -38,7 +38,7 @@ class CartController extends Controller
                     $cartItem->price = $price;
                     $cartItem->active = $active;
                     $cartItem->save();
-                    $response = response()->json(['msg'=> $prod_check->product_name.'Added to cart!!'],201);
+                    $response = response()->json(['msg'=> $prod_check->product_name.' Added to cart!!'],201);
                 }
             }
         }

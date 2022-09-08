@@ -82,7 +82,7 @@ Route::controller(ProductController::class)->group(function () {
     Route::post('getSingleProduct/{id}', 'getSingleProduct');
     Route::post('updateProduct/{id}', 'updateProduct');
     Route::post('deleteProduct/{id}', 'deleteProduct');
-    Route::post('getVendorProduct', 'getVendorProduct');
+    Route::post('getVendorCategory', 'getVendorCategory');
 });
 
 Route::controller(OrderController::class)->group(function () {
