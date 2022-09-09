@@ -83,6 +83,7 @@ Route::controller(ProductController::class)->group(function () {
     Route::post('updateProduct/{id}', 'updateProduct');
     Route::post('deleteProduct/{id}', 'deleteProduct');
     Route::post('getVendorCategory', 'getVendorCategory');
+    Route::post('getVendorParentCategory', 'getVendorParentCategory');
 });
 
 Route::controller(OrderController::class)->group(function () {
