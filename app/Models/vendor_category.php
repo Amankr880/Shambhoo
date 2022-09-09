@@ -12,5 +12,6 @@ class vendor_category extends Model
     protected $fillable = [
       'vendor_id',
       'category_id',
+      'parent_category',
     ];
 }

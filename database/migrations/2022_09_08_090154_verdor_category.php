@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('vendor_id');
             $table->integer('category_id');
+            $table->integer('parent_category');
             $table->timestamps();
         });
     }

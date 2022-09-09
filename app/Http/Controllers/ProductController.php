@@ -43,7 +43,9 @@ class ProductController extends Controller
             Storage::putFileAs($destinationPath, $file, $pic);
             $product->picture = $filename;
 
-            $vendor_category = vendor_category::firstOrCreate(['vendor_id' => $request->input('vendor_id'),'category_id' => $request->input('category_id')]);
+            $vendor_category = vendor_category::firstOrCreate(['vendor_id' => $request->input('vendor_id'),
+                                                            'category_id' => $request->input('category_id'),
+                                                            'parent_category' => $request->input('parent_category')]);
 
             $product->save();
             $response = response()->json(['product'=>$product,'msg'=>'product created successfully!!'],200);
@@ -116,6 +118,25 @@ class ProductController extends Controller
         {
             $vendor_id = $request->input('vendor_id');
             $vendor_category = vendor_category::join('categories', 'vendor_category.category_id', '=', 'categories.id')
+                    ->where([['vendor_category.vendor_id','=',$vendor_id],['categories.status','!=','10']])
+                    ->select('vendor_category.*', 'categories.*')->get(); 
+            $response = response()->json(['vendor_category'=>$vendor_category],200);
+        }
+        else
+        {
+            $response = response()->json(['msg'=>'Token not matched'],403);
+        }
+        return $response;
+    }
+
+    public function getVendorParentCategory(Request $request)
+    {
+        $header = $request->bearerToken();
+        $q = User::where('id',$request->user_id)->get('token');
+        if($q = $header) 
+        {
+            $vendor_id = $request->input('vendor_id');
+            $vendor_category = vendor_category::join('categories', 'vendor_category.parent_category', '=', 'categories.id')
                     ->where([['vendor_category.vendor_id','=',$vendor_id],['categories.status','!=','10']])
                     ->select('vendor_category.*', 'categories.*')->get(); 
             $response = response()->json(['vendor_category'=>$vendor_category],200);
