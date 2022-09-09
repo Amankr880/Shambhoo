@@ -41,6 +41,9 @@ class CartController extends Controller
                     $response = response()->json(['msg'=> $prod_check->product_name.' Added to cart!!'],201);
                 }
             }
+            else{
+                $response = response()->json(['msg'=>'Product is not there'],403);
+            }
         }
         else
         {
@@ -56,7 +59,7 @@ class CartController extends Controller
         $q = User::where('id',$request->user_id)->get('token');
         if($q = $header) 
         {
-            $cartItems = Cart::where('user_id',$request->id)->get();
+            $cartItems = Cart::where('user_id',$request->user_id)->get();
             $response = response()->json(['cartItem'=>$cartItem],200);
         }
         else

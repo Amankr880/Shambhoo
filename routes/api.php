@@ -111,7 +111,7 @@ Route::controller(HomeController::class)->group(function () {
 
 Route::controller(CartController::class)->group(function () {
     Route::post('addProduct', 'addProduct');
-    // Route::get('featureImageShow', 'featureImageShow');
+    Route::post('viewCart', 'viewCart');
     // Route::post('getStore', 'getStore');
     // Route::post('getFeatureStore', 'getFeatureStore');
 });
