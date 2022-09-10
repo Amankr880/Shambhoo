@@ -9,12 +9,14 @@ use Storage;
 use App\Models\Vendor;
 use Illuminate\Support\Facades\File;
 
-class HomeController extends Controller
+class HomepageController extends Controller
 {
     public function featureImageUpload(Request $request)
     {
+        
         $data= $request->all();
-        $validator = $this->validatorForStore($data)->validate();
+        //$validator = $this->validatorForStore($data)->validate();
+        // var_dump($validator);exit();
 
         if(isset($data['image']))
         {

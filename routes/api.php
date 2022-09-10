@@ -11,7 +11,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\PlanController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ReviewsController;
 
@@ -101,7 +101,7 @@ Route::controller(ReviewsController::class)->group(function () {
     Route::post('getReview', 'getReview');
 });
 
-Route::controller(HomeController::class)->group(function () {
+Route::controller(HomepageController::class)->group(function () {
     Route::post('featureImageUpload', 'featureImageUpload');
     Route::get('featureImageShow', 'featureImageShow');
     Route::post('getStore', 'getStore');
