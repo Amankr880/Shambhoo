@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Categories;
+use App\Models\Cart;
 use App\Models\vendor_category;
 use App\Models\User;
 use Storage;
@@ -73,6 +74,18 @@ class ProductController extends Controller
             $product = Product::where([['category_id','=',$request->input('category_id')],
                                     ['vendor_id','=',$request->input('vendor_id')],
                                     ['status','!=','10']])->get();  
+                            
+            $cart = Cart::where('user_id',$request->user_id)->get();
+            foreach($product as $product_item){
+                foreach($cart as $cart_item){
+                    if($product_item['id']==$cart_item['product_id']){
+                        $product_item['quantity']=$cart_item['quantity'];
+                        break;
+                    }else{
+                        $product_item['quantity']=0;
+                    }
+                }	
+            }
             if($product)
             {
                 $response = response()->json($product,200);

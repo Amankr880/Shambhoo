@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\HomeData;
+use App\Models\Categories;
+use App\Models\User;
+use App\Models\Product;
 use Illuminate\Support\Facades\Validator;
 use Storage;
 use App\Models\Vendor;
@@ -89,7 +92,7 @@ class HomepageController extends Controller
 
     public function getFeatureStore(Request $request)
     {
-        $shopDetails = Vendor::where('pincode','=',$request->pincode)->orderBy('status','DESC')->get(); 
+        $shopDetails = Vendor::where('pincode','=',$request->pincode)->orderBy('status','DESC')->inRandomOrder()->get(); 
         if($shopDetails)
         {
             $response = response()->json($shopDetails,200);
@@ -110,6 +113,54 @@ class HomepageController extends Controller
         else{
             $response = response()->json(['msg'=>'Shops In this Pincode is Not Available!!'],404);
         } 
+        return $response;
+    }
+
+    public function getVendorByCategoryId(Request $request)
+    {
+        $header = $request->bearerToken();
+        $q = User::where('id',$request->user_id)->get('token');
+        if($q = $header) 
+        {
+            $category = Categories::where([['parent_category','=',$request->parentId],['status','!=','10']])->get('id');
+            if($category){
+                $products = [];
+                foreach($category as $val){
+                    $products[] = Product::where([['category_id','=',$val->id],
+                                                ['status','!=','10']])->get('vendor_id')->toarray();
+                }
+                // $a = [];
+                // print_r($products); exit();
+                // $a = json_decode(json_encode($products));
+                // echo gettype($a); var_dump($a); exit(); 
+                $data = array_reduce($products, 'array_merge', array());
+                // dd($data);
+                $vendor = [];
+                // $count = 0;
+                foreach ($data as $key => $value) {
+                    // echo $value['vendor_id'];
+                    // echo '<pre></pre>'; 
+                    $vendor[] = Vendor::where([['id','=',$value['vendor_id']],['pincode','=',$request->pincode]])->get(); 
+                    // $count++;
+                    // echo $count;
+                }
+                $aq = array_filter($vendor, fn($value) => !is_null($value) && $value !== '');
+                //  exit();
+                if($vendor){
+                    $response = response()->json($aq,200);
+                }
+                else{
+                    $response = response()->json(['msg'=>'vendor not found at this pincode'],403);
+                }             
+            }  
+            else{
+                $response = response()->json(['msg'=>'category not found'],403);
+            }
+        }
+        else
+        {
+            $response = response()->json(['msg'=>'Token not matched'],403);
+        }
         return $response;
     }
     
