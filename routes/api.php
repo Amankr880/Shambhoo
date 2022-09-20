@@ -107,6 +107,7 @@ Route::controller(HomepageController::class)->group(function () {
     Route::post('getStore', 'getStore');
     Route::post('getFeatureStore', 'getFeatureStore');
     Route::post('getSingleStore', 'getSingleStore');
+    Route::post('getVendorByCategoryId', 'getVendorByCategoryId');
 });
 
 Route::controller(CartController::class)->group(function () {
