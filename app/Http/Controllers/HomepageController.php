@@ -122,40 +122,20 @@ class HomepageController extends Controller
         $q = User::where('id',$request->user_id)->get('token');
         if($q = $header) 
         {
-            $category = Categories::where([['parent_category','=',$request->parentId],['status','!=','10']])->get('id');
-            if($category){
-                $products = [];
-                foreach($category as $val){
-                    $products[] = Product::where([['category_id','=',$val->id],
-                                                ['status','!=','10']])->get('vendor_id')->toarray();
+            $products=Product::where('category_id','=',$request->id)->distinct()->select('vendor_id')->get();
+            $vendors = [];
+            foreach($products as $product){
+                $vendor=Vendor::where([['id','=',$product['vendor_id']],['pincode','=',$request->pincode]])->select('id','shopName','logo_image')->get();
+                if($vendor!="[]"){
+                    $vendors[]=$vendor[0];
                 }
-                // $a = [];
-                // print_r($products); exit();
-                // $a = json_decode(json_encode($products));
-                // echo gettype($a); var_dump($a); exit(); 
-                $data = array_reduce($products, 'array_merge', array());
-                // dd($data);
-                $vendor = [];
-                // $count = 0;
-                foreach ($data as $key => $value) {
-                    // echo $value['vendor_id'];
-                    // echo '<pre></pre>'; 
-                    $vendor[] = Vendor::where([['id','=',$value['vendor_id']],['pincode','=',$request->pincode]])->get(); 
-                    // $count++;
-                    // echo $count;
-                }
-                $aq = array_filter($vendor, fn($value) => !is_null($value) && $value !== '');
-                //  exit();
-                if($vendor){
-                    $response = response()->json($aq,200);
+            }
+                if($vendors){
+                    $response = response()->json($vendors,200);
                 }
                 else{
                     $response = response()->json(['msg'=>'vendor not found at this pincode'],403);
-                }             
-            }  
-            else{
-                $response = response()->json(['msg'=>'category not found'],403);
-            }
+                }               
         }
         else
         {
