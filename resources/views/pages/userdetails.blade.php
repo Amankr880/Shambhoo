@@ -30,7 +30,7 @@
                                 </div>
                                 <div class="col d-flex align-items-center gx-4">
                                     <input type="hidden" name="image" value="{{$value}}">
-                                    <img src="{{asset('storage/assets/img/users/'.$value)}}" style="max-height: 100px;max-width:100px;margin-right: 20px;"><div>Change icon:<br><br><input type="file" name="image_file"></div>
+                                    <img src="{{$value}}" style="max-height: 100px;max-width:100px;margin-right: 20px;"><div>Change icon:<br><br><input type="file" name="image_file"></div>
                                 </div>
                             </div>
                             @else
