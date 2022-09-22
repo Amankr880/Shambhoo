@@ -40,14 +40,14 @@ class AdminController extends Controller
             if($image!="")
                 Storage::disk('public')->delete($destinationPath.'/'.$request['image']);
             $image=$request->file('image_file')->hashName();
-            $filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/assets/img/users/'. $image;
-            Storage::disk('public')->putFileAs($destinationPath,$request->file('image_file'),$filename);
+            $filename = 'http://shambhoo.herokuapp.com/storage/assets/img/users/'. $image;
+            Storage::disk('public')->putFileAs($destinationPath,$request->file('image_file'),$image);
         }
 
         $user  = User::findOrFail($request['id']);
         $input = $request->all();
         $user->fill($input);
-        $user['image']=$image;
+        $user['image']=$filename;
         $user->save();
         return redirect()->route('userdetails', ['id' => $request['id']]);
     }
