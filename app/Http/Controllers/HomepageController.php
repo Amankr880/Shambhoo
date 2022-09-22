@@ -122,14 +122,9 @@ class HomepageController extends Controller
         $q = User::where('id',$request->user_id)->get('token');
         if($q = $header) 
         {
-            $products=Product::where('category_id','=',$request->id)->distinct()->select('vendor_id')->get();
-            $vendors = [];
-            foreach($products as $product){
-                $vendor=Vendor::where([['id','=',$product['vendor_id']],['pincode','=',$request->pincode]])->select('id','shopName','logo_image')->get();
-                if($vendor!="[]"){
-                    $vendors[]=$vendor[0];
-                }
-            }
+            $vendors=Product::where([['products.category_id','=',$request->id],['vendors.pincode','=',$request->pincode]])
+                                    ->distinct()->join('vendors','products.vendor_id','=','vendors.id')
+                                    ->select('vendors.shopName','vendors.id','vendors.logo_image')->get();
                 if($vendors){
                     $response = response()->json($vendors,200);
                 }
