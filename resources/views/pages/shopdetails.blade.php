@@ -70,7 +70,7 @@
                             <h3 class="mb-0">Edit Store Details</h3>
                     </div>
                     <div class="card-body">
-                        <form action="{{url('updateshop')}}" method="post">
+                        <form action="{{url('updateshop')}}" method="post" enctype="multipart/form-data">
                             @csrf
                         @foreach($shop[0] as $key=>$value)
                             @if($key=='first_name')
@@ -84,6 +84,66 @@
                                         <input type="text" name="{{$key}}" class="form-control form-control-alternative" value="{{$value}}" readonly>
                                     </div>
                                 </div>
+                            @elseif($key=='id_proof_photo')
+                             <div class="row form-group d-flex align-items-center">
+                                <div class="col-3">
+                                    <label class="form-control-label" for="input-name">{{$key}}</label>
+                                </div>
+                                <div class="col d-flex align-items-center gx-4">
+                                    <input type="hidden" name="id_proof_photo" value="{{$value}}">
+                                    <img src="{{asset('storage/assets/img/id_proof/'.$value)}}" style="max-height: 150px;max-width:150px;margin-right: 20px;"><div>Change image:<br><br><input type="file" name="id_proof_photo_file"></div>
+                                </div>
+                            </div>
+                            @elseif($key=='pancard_photo')
+                             <div class="row form-group d-flex align-items-center">
+                                <div class="col-3">
+                                    <label class="form-control-label" for="input-name">{{$key}}</label>
+                                </div>
+                                <div class="col d-flex align-items-center gx-4">
+                                    <input type="hidden" name="pancard_photo" value="{{$value}}">
+                                    <img src="{{asset('storage/assets/img/pancard/'.$value)}}" style="max-height: 150px;max-width:150px;margin-right: 20px;"><div>Change image:<br><br><input type="file" name="pancard_photo_file"></div>
+                                </div>
+                            </div>
+                            @elseif($key=='business_doc_photo')
+                             <div class="row form-group d-flex align-items-center">
+                                <div class="col-3">
+                                    <label class="form-control-label" for="input-name">{{$key}}</label>
+                                </div>
+                                <div class="col d-flex align-items-center gx-4">
+                                    <input type="hidden" name="business_doc_photo" value="{{$value}}">
+                                    <img src="{{asset('storage/assets/img/business_doc/'.$value)}}" style="max-height: 150px;max-width:150px;margin-right: 20px;"><div>Change image:<br><br><input type="file" name="business_doc_photo_file"></div>
+                                </div>
+                            </div>
+                            @elseif($key=='logo_image')
+                             <div class="row form-group d-flex align-items-center">
+                                <div class="col-3">
+                                    <label class="form-control-label" for="input-name">{{$key}}</label>
+                                </div>
+                                <div class="col d-flex align-items-center gx-4">
+                                    <input type="hidden" name="logo_image" value="{{$value}}">
+                                    <img src="{{asset('storage/assets/img/logo/'.$value)}}" style="max-height: 100px;max-width:100px;margin-right: 20px;"><div>Change image:<br><br><input type="file" name="logo_image_file"></div>
+                                </div>
+                            </div>
+                            @elseif($key=='header_image')
+                             <div class="row form-group d-flex align-items-center">
+                                <div class="col-3">
+                                    <label class="form-control-label" for="input-name">{{$key}}</label>
+                                </div>
+                                <div class="col d-flex align-items-center gx-4">
+                                    <input type="hidden" name="header_image" value="{{$value}}">
+                                    <img src="{{asset('storage/assets/img/header/'.$value)}}" style="max-height: 150px;max-width:150px;margin-right: 20px;"><div>Change image:<br><br><input type="file" name="header_image_file"></div>
+                                </div>
+                            </div>
+                            @elseif($key=='gallery')
+                             <div class="row form-group d-flex align-items-center">
+                                <div class="col-3">
+                                    <label class="form-control-label" for="input-name">{{$key}}</label>
+                                </div>
+                                <div class="col d-flex align-items-center gx-4">
+                                    <input type="hidden" name="gallery" value="{{$value}}">
+                                    <img src="{{asset('storage/assets/img/gallery/'.$value)}}" style="max-height: 150px;max-width:150px;margin-right: 20px;"><div>Change image:<br><br><input type="file" name="gallery_file"></div>
+                                </div>
+                            </div>
                             @else
                              <div class="row form-group d-flex align-items-center">
                                 <div class="col-3">

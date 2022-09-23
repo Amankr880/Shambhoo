@@ -53,7 +53,7 @@
                     <th scope="row">
                       <div class="align-items-center">
                         <a href="{{Request::path()}}/{{$shop['id']}}">
-                          <img alt="Image placeholder" src="../assets/img/logos/{{$shop['logo_image']}}.png" class="avatar mr-3">
+                          <img alt="Image placeholder" src="{{asset('storage/assets/img/logo/'.$shop['logo_image'])}}" class="avatar mr-3">
                           <span class="name mb-0 text-sm">{{$shop['shopName']}}</span>
                       </a>
                       </div>
