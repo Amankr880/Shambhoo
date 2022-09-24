@@ -26,7 +26,8 @@ class HomepageController extends Controller
             if($request->hasfile('image'))
             {
                 $img=$request->file('image');
-                $filename = [];
+                
+                
                 foreach ($img as $imgkey ) {
                     $imgkey->store('public/feature_images');
                     $imgname[]=$imgkey->hashName();
@@ -79,7 +80,7 @@ class HomepageController extends Controller
 
     public function getStore(Request $request)
     {
-        $shopDetails = Vendor::where('pincode','=',$request->pincode)->get();  
+        $shopDetails = Vendor::where([['pincode','=',$request->pincode],['status','!=',0],['visibility','=',1]])->get();  
         if($shopDetails)
         {
             $response = response()->json($shopDetails,200);
@@ -92,7 +93,7 @@ class HomepageController extends Controller
 
     public function getFeatureStore(Request $request)
     {
-        $shopDetails = Vendor::where('pincode','=',$request->pincode)->orderBy('status','DESC')->inRandomOrder()->get(); 
+        $shopDetails = Vendor::where([['pincode','=',$request->pincode],['status','=',3],['visibility','=',1]])->inRandomOrder()->get(); 
         if($shopDetails)
         {
             $response = response()->json($shopDetails,200);
@@ -122,7 +123,8 @@ class HomepageController extends Controller
         $q = User::where('id',$request->user_id)->get('token');
         if($q = $header) 
         {
-            $vendors=Product::where([['products.category_id','=',$request->id],['vendors.pincode','=',$request->pincode]])
+            $vendors=Product::where([['products.category_id','=',$request->id],['vendors.pincode','=',$request->pincode],
+                                    ['status','!=',0],['visibility','=',1]])
                                     ->distinct()->join('vendors','products.vendor_id','=','vendors.id')
                                     ->select('vendors.shopName','vendors.id','vendors.logo_image')->get();
                 if($vendors){
