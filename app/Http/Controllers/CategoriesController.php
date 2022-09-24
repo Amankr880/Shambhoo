@@ -42,7 +42,7 @@ class CategoriesController extends Controller
         $q = User::where('id',$request->user_id)->get('token');
         if($q = $header) 
         {
-            $category = Categories::where([['parent_category','=', NULL],['status','!=','10']])->get();
+            $category = Categories::where([['parent_category','=', NULL],['status','!=','10']])->get(); 
             if($category){
                 $response = response()->json($category,200);
             }  
@@ -64,7 +64,7 @@ class CategoriesController extends Controller
         $q = User::where('id',$request->user_id)->get('token');
         if($q = $header) 
         {
-            $category = Categories::where([['parent_category','=',$request->parentId],['status','!=','10']])->get(); 
+            $category = Categories::where([['parent_category','=',$request->parentId],['status','!=','10']])->get();
             if($category){
                 $response = response()->json($category,200);
             }  

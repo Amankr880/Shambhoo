@@ -39,8 +39,8 @@
                     <th scope="col" class="sort" data-sort="name">Id</th>
                     <th scope="col" class="sort" data-sort="budget">Shop</th>
                     <th scope="col" class="sort" data-sort="budget">Vendor</th>
-                    <th scope="col" class="sort" data-sort="status">Store</th>
-                    <th scope="col">Status</th>
+                    <th scope="col" class="sort" data-sort="status">Status</th>
+                    <th scope="col">Availability</th>
                     <th scope="col"></th>
                   </tr>
                 </thead>
@@ -62,12 +62,24 @@
                 <a href="#">{{$shop['first_name']}} {{$shop['last_name']}}</a>
                     </td>
                     <td class="budget">
-                {{$shop['status']}}
-                    </td>
+                @if($shop['status']==0)
+                Unverified
+                @elseif($shop['status']==1)
+                Verified<br>Non Premium
+                @elseif($shop['status']==2)
+                Verified<br>Premium<br>Non Featured
+                @else
+                Verified<br>Premium<br>Featured
+                @endif
+                                    </td>
                     <td>
                       <span class="badge badge-dot mr-4">
                         <i class="bg-success"></i>
-                        <span class="status">{{$shop['visibility']}}</span>
+                        <span class="status">@if($shop['visibility']==0)
+                        Unavailable
+                        @else
+                        Available
+                        @endif</span>
                       </span>
                     </td>
                     </td>

@@ -131,12 +131,12 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{{ route('orders') }}">
+                <a class="nav-link" href="{{ route('featuredads') }}">
                   <span class="nav-link-text">Featured Ads</span>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{{ route('orders') }}">
+                <a class="nav-link" href="{{ route('featuredstores') }}">
                   <span class="nav-link-text">Featured Stores</span>
                 </a>
               </li>

@@ -44,4 +44,7 @@ Route::group(['middleware' => 'auth'], function () {
 	 Route::post('addcategory', [App\Http\Controllers\AdminController::class, 'insertCategory']);
 	 Route::get('/editcategory/{id}', [App\Http\Controllers\AdminController::class, 'editCategory'])->name('editcategory');
 	 Route::post('updatecategory', [App\Http\Controllers\AdminController::class, 'updateCategory']);
+
+	 Route::get('/featuredstores', [App\Http\Controllers\AdminController::class, 'featuredstores'])->name('featuredstores');
+	 Route::get('/featuredads', [App\Http\Controllers\AdminController::class, 'featuredads'])->name('featuredads');
 });

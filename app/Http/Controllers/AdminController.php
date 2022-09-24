@@ -9,6 +9,7 @@ use App\Models\Order;
 use App\Models\User;
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\Ads;
 use App\Models\order_Item;
 use Storage;
 use Illuminate\Support\Facades\DB;
@@ -141,6 +142,15 @@ class AdminController extends Controller
         return redirect()->route('singleshop', ['id' => $request['id']]);
     }
 
+    public function featuredstores(){
+        $featuredstores =Vendor::join('users','vendors.user_id', '=', 'users.id')->where('status','=',3)->select('vendors.id','vendors.shopName','vendors.status','vendors.visibility','vendors.logo_image','users.first_name','users.last_name')->get();
+        $eligible =Vendor::join('users','vendors.user_id', '=', 'users.id')->where('status','=',2)->select('vendors.id','vendors.shopName','vendors.status','vendors.visibility','vendors.logo_image','users.first_name','users.last_name')->get();
+        return view('pages.featuredstores',['featuredstores'=>$featuredstores,'eligible'=>$eligible]);
+    }
+    public function featuredads(){
+        $featuredads=Ads::select('*',DB::raw("CONCAT(url,'banner') AS url"))->get();
+        return view('pages.featuredads',['featuredads'=>$featuredads]);
+    }
 
 
 

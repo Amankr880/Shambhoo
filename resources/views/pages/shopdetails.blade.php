@@ -144,6 +144,32 @@
                                     <img src="{{asset('storage/assets/img/gallery/'.$value)}}" style="max-height: 150px;max-width:150px;margin-right: 20px;"><div>Change image:<br><br><input type="file" name="gallery_file"></div>
                                 </div>
                             </div>
+                            @elseif($key=='status')
+                                <div class="row form-group d-flex align-items-center">
+                                <div class="col-3">
+                                    <label class="form-control-label" for="input-name">{{$key}}</label>
+                                </div>
+                                <div class="col d-flex align-items-center gx-4">
+                                     <select class="form-select" name="{{$key}}">
+                                        <option value="0" @if($value==0)selected @endif>Unverified</option>
+                                        <option value="1" @if($value==1)selected @endif>Verfied, Non Premium</option>
+                                        <option value="2" @if($value==2)selected @endif>Verified, Premium, Non Featured</option>
+                                        <option value="3" @if($value==3)selected @endif>Verified, Premium, Featured</option>
+                                    </select>
+                                </div>
+                            </div>
+                            @elseif($key=='visibility')
+                            <div class="row form-group d-flex align-items-center">
+                                <div class="col-3">
+                                    <label class="form-control-label" for="input-name">{{$key}}</label>
+                                </div>
+                                <div class="col d-flex align-items-center gx-4">
+                                     <select class="form-select" name="{{$key}}">
+                                        <option value="0" @if($value==0)selected @endif>Unavailable</option>
+                                        <option value="1" @if($value==1)selected @endif>Available</option>
+                                    </select>
+                                </div>
+                            </div>
                             @else
                              <div class="row form-group d-flex align-items-center">
                                 <div class="col-3">
