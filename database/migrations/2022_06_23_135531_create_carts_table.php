@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('product_id');
             $table->integer('quantity');
             $table->integer('user_id');
-            $table->integer('active');
+            $table->integer('vendor_id');
             $table->float('price');
             $table->timestamps();
         });

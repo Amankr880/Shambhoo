@@ -113,8 +113,8 @@ Route::controller(HomepageController::class)->group(function () {
 Route::controller(CartController::class)->group(function () {
     Route::post('addProduct', 'addProduct');
     Route::post('viewCart', 'viewCart');
-    // Route::post('getStore', 'getStore');
-    // Route::post('getFeatureStore', 'getFeatureStore');
+    Route::post('deleteProduct', 'deleteProduct');
+    Route::post('updateProduct', 'updateProduct');
 });
 
 
