@@ -19,52 +19,52 @@ class SMSController extends Controller
      */
 
     protected $token;
-    public function index(Request $request)
-    {
-        $receiverNumber = $request->number;
-        $otp = mt_rand(1000,9999);
-        // print_r($request->number." - ".$otp);
-        $message = "Your OTP for Verification is " .$otp;
-        if(User::where('phone_no','=',$receiverNumber)->exists()){
-            try {
-                $account_sid = getenv("TWILIO_SID");
-                $auth_token = getenv("TWILIO_TOKEN");
-                $twilio_number = getenv("TWILIO_FROM");
+    // public function index(Request $request)
+    // {
+    //     $receiverNumber = $request->number;
+    //     $otp = mt_rand(1000,9999);
+    //     // print_r($request->number." - ".$otp);
+    //     $message = "Your OTP for Verification is " .$otp;
+    //     if(User::where('phone_no','=',$receiverNumber)->exists()){
+    //         try {
+    //             $account_sid = getenv("TWILIO_SID");
+    //             $auth_token = getenv("TWILIO_TOKEN");
+    //             $twilio_number = getenv("TWILIO_FROM");
       
-                $client = new Client($account_sid, $auth_token);
-                $client->messages->create($receiverNumber, [
-                    'from' => $twilio_number, 
-                    'body' => $message]);
-                //$token = Str::random(60);
-                OtpVerification::updateOrInsert(['phone_no' => $receiverNumber],['otp' => $otp]);
-                $response =response()->json(["exists"=> 'true',"msg"=> 'SMS Sent Successfully.','Number'=>$receiverNumber,'Message'=>$message],200);
-            } catch (Exception $e) {
-                // dd("Error: ". $e->getMessage());
-                $response = response()->json(["error"=> $e->getMessage()],400);
-            }
-        }else {
-            try {
+    //             $client = new Client($account_sid, $auth_token);
+    //             $client->messages->create($receiverNumber, [
+    //                 'from' => $twilio_number, 
+    //                 'body' => $message]);
+    //             //$token = Str::random(60);
+    //             OtpVerification::updateOrInsert(['phone_no' => $receiverNumber],['otp' => $otp]);
+    //             $response =response()->json(["exists"=> 'true',"msg"=> 'SMS Sent Successfully.','Number'=>$receiverNumber,'Message'=>$message],200);
+    //         } catch (Exception $e) {
+    //             // dd("Error: ". $e->getMessage());
+    //             $response = response()->json(["error"=> $e->getMessage()],400);
+    //         }
+    //     }else {
+    //         try {
   
-                $account_sid = getenv("TWILIO_SID");
-                $auth_token = getenv("TWILIO_TOKEN");
-                $twilio_number = getenv("TWILIO_FROM");
+    //             $account_sid = getenv("TWILIO_SID");
+    //             $auth_token = getenv("TWILIO_TOKEN");
+    //             $twilio_number = getenv("TWILIO_FROM");
       
-                $client = new Client($account_sid, $auth_token);
-                $client->messages->create($receiverNumber, [
-                    'from' => $twilio_number, 
-                    'body' => $message]);
-                //$token = Str::random(60);
-                OtpVerification::updateOrInsert(['phone_no' => $receiverNumber],['otp' => $otp]);
+    //             $client = new Client($account_sid, $auth_token);
+    //             $client->messages->create($receiverNumber, [
+    //                 'from' => $twilio_number, 
+    //                 'body' => $message]);
+    //             //$token = Str::random(60);
+    //             OtpVerification::updateOrInsert(['phone_no' => $receiverNumber],['otp' => $otp]);
                 
-                $response =response()->json(["exists"=> 'false',"msg"=> 'SMS Sent Successfully.','Number'=>$receiverNumber,'Message'=>$message],200);
+    //             $response =response()->json(["exists"=> 'false',"msg"=> 'SMS Sent Successfully.','Number'=>$receiverNumber,'Message'=>$message],200);
       
-            } catch (Exception $e) {
-                // dd("Error: ". $e->getMessage());
-                $response = response()->json(["error"=> $e->getMessage()],400);
-            }
-        }
-        return $response;
-    }
+    //         } catch (Exception $e) {
+    //             // dd("Error: ". $e->getMessage());
+    //             $response = response()->json(["error"=> $e->getMessage()],400);
+    //         }
+    //     }
+    //     return $response;
+    // }
 
     public function otpVerify(Request $request){
         $receiverNumber = $request->number;
@@ -104,68 +104,135 @@ class SMSController extends Controller
     //     ]);
     // }
 
+    // public function smsSend(Request $request)
+    // {
+    //     $receiverNumber = $request->number;
+    //     $otp = mt_rand(1000,9999);
+    //         //Your authentication key
+    //         $api_key = 'M8vmX7P9FeLZkhRe';
+    //         $sender_id = 'SHMBHO';
+    //         //Multiple mobiles numbers separated by comma
+    //         $mobileNumber =$receiverNumber;
+    //         //Sender ID,While using route4 sender id should be 6 characters long.
+    //         // $senderId = "SHMBHO";
+    //         //Your message to send, Add URL encoding here.
+    //         $message = "Your One Time Password (OTP) for Registration to SHAMBHOO is ".$otp." Pls do not share with anyone.";
+    //         //Define route 
+    //         // $route = "4";
+    //         //Prepare you post parameters
+    //         $postData = array(
+    //             'apikey' => $api_key,
+    //             'number' => $mobileNumber,
+    //             'message' => $message,
+    //             'senderid' => $sender_id,
+    //             'format' => 'json'
+    //         );
+    //         //API URL
+    //         $url="http://sms.osdigital.in/V2/http-api.php";
+    //         // init the resource
+    //         $ch = curl_init();
+    //         curl_setopt_array($ch, array(
+    //             CURLOPT_URL => $url,
+    //             CURLOPT_RETURNTRANSFER => true,
+    //             CURLOPT_POST => true,
+    //             CURLOPT_POSTFIELDS => $postData
+    //             //,CURLOPT_FOLLOWLOCATION => true
+    //         ));
+    //         //Ignore SSL certificate verification
+    //         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+    //         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+    //         //get response
+    //         $output = curl_exec($ch);
+    //         //Print error if any
+    //         if(curl_errno($ch))
+    //         {
+    //             echo 'error:' . curl_error($ch);
+    //         }
+    //         curl_close($ch);
+    //         echo $output;
+        
+    // }
+
     public function smsSend(Request $request)
     {
         $receiverNumber = $request->number;
         $otp = mt_rand(1000,9999);
-        //$message = "Your OTP for Verification is " .$otp;
-            $DLT_TE_ID = "1207161863947285226";
-            //Your authentication key
-            $authKey = "7842AsWkEs6OChSw5d5fb1d2";
-
-            //Multiple mobiles numbers separated by comma
-            $mobileNumber =$receiverNumber;
-
-            //Sender ID,While using route4 sender id should be 6 characters long.
-            $senderId = "KALKII";
-
-            //Your message to send, Add URL encoding here.
-            $message = urlencode("Your OTP for Verification is " .$otp);
-
-            //Define route 
-            $route = "4";
-            //Prepare you post parameters
-            $postData = array(
-                'authkey' => $authKey,
-                'mobiles' => $mobileNumber,
-                'message' => $message,
-                'sender' => $senderId,
-                'route' => $route,
-                'DLT_TE_ID' => $DLT_TE_ID
-            );
-
-            //API URL
-            $url="http://www.dakshinfosoft.com/api/sendhttp.php";
-
-            // init the resource
-            $ch = curl_init();
-            curl_setopt_array($ch, array(
-                CURLOPT_URL => $url,
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_POST => true,
-                CURLOPT_POSTFIELDS => $postData
-                //,CURLOPT_FOLLOWLOCATION => true
-            ));
-
-
-            //Ignore SSL certificate verification
-            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-
-
-            //get response
-            $output = curl_exec($ch);
-
-            //Print error if any
-            if(curl_errno($ch))
-            {
-                echo 'error:' . curl_error($ch);
+        //Your authentication key
+        $api_key = 'M8vmX7P9FeLZkhRe';
+        $sender_id = 'SHMBHO';
+        //API URL
+        $url="http://sms.osdigital.in/V2/http-api.php";
+        //Your message to send, Add URL encoding here.
+        $message = "Your One Time Password (OTP) for Registration to SHAMBHOO is ".$otp." Pls do not share with anyone.";
+        //Prepare you post parameters
+        $postData = array(
+            'apikey' => $api_key,
+            'number' => $receiverNumber,
+            'message' => $message,
+            'senderid' => $sender_id,
+            'format' => 'json'
+        );
+        if(User::where('phone_no','=',$receiverNumber)->exists()){
+            try {
+                // init the resource
+                $ch = curl_init();
+                curl_setopt_array($ch, array(
+                    CURLOPT_URL => $url,
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_POST => true,
+                    CURLOPT_POSTFIELDS => $postData
+                    //,CURLOPT_FOLLOWLOCATION => true
+                ));
+                //Ignore SSL certificate verification
+                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+                //get response
+                $output = curl_exec($ch);
+                //Print error if any
+                if(curl_errno($ch))
+                {
+                    echo 'error:' . curl_error($ch);
+                }
+                curl_close($ch);
+                OtpVerification::updateOrInsert(['phone_no' => $receiverNumber],['otp' => $otp]);
+                $response =response()->json(["exists"=> 'true',"output"=> $output,'Message'=>$message],200);
+            } catch (Exception $e) {
+                // dd("Error: ". $e->getMessage());
+                $response = response()->json(["error"=> $e->getMessage()],400);
             }
-
-            curl_close($ch);
-
-            echo $output;
-        
+        }else {
+            try {
+                // init the resource
+                $ch = curl_init();
+                curl_setopt_array($ch, array(
+                    CURLOPT_URL => $url,
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_POST => true,
+                    CURLOPT_POSTFIELDS => $postData
+                    //,CURLOPT_FOLLOWLOCATION => true
+                ));
+                //Ignore SSL certificate verification
+                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+                //get response
+                $output = curl_exec($ch);
+                //Print error if any
+                if(curl_errno($ch))
+                {
+                    echo 'error:' . curl_error($ch);
+                }
+                curl_close($ch);
+                OtpVerification::updateOrInsert(['phone_no' => $receiverNumber],['otp' => $otp]);
+                
+                $response =response()->json(["exists"=> 'false',"output"=> $output,'Message'=>$message],200);
+      
+            } catch (Exception $e) {
+                // dd("Error: ". $e->getMessage());
+                $response = response()->json(["error"=> $e->getMessage()],400);
+            }
+        }
+        return $response;
     }
+
 
 }
