@@ -45,7 +45,7 @@ Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'
 ], function ($router) {
-    Route::post('/sendSMS', [SMSController::class, 'index']);
+    Route::post('/sendSMS', [SMSController::class, 'smsSend']);
     Route::post('/sendSMSTest', [SMSController::class, 'smsSend']);
     Route::post('/verifyOtp', [SMSController::class, 'otpVerify']);  
 });
