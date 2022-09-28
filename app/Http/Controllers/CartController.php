@@ -24,19 +24,23 @@ class CartController extends Controller
             $cartLastItem = Cart::where('user_id',$user_id)->join('products','products.id','=','carts.product_id')->latest('carts.id')->first();
             $product = Product::where('id',$product_id)->select('*')->get();
             if($cartLastItem != ""){
-                if($cartLastItem['vendor_id']==$product[0]['vendor_id']){
-                    if($quantity<$product[0]['unit_stock']){
-                        $cartItem = new Cart();
-                        $cartItem->product_id = $product_id;
-                        $cartItem->quantity = $quantity;
-                        $cartItem->user_id = $user_id;
-                        $cartItem->save();
-                        $response = response()->json(['msg'=> $prod_check->product_name.' Added to cart!!'],201);
+                if(Cart::where('product_id',$product_id)->where('user_id',$user_id)->count()==0){
+                    if($cartLastItem['vendor_id']==$product[0]['vendor_id']){
+                        if($quantity<$product[0]['unit_stock']){
+                            $cartItem = new Cart();
+                            $cartItem->product_id = $product_id;
+                            $cartItem->quantity = $quantity;
+                            $cartItem->user_id = $user_id;
+                            $cartItem->save();
+                            $response = response()->json(['msg'=> $prod_check->product_name.' Added to cart!!'],201);
+                        }else{
+                            $response = response()->json(['msg'=>'Product out of stock!!'],400);
+                        }
                     }else{
-                        $response = response()->json(['msg'=>'Product out of stock!!'],400);
+                        $response = response()->json(['msg'=>'Cannot add product from different vendor!!'],400);
                     }
                 }else{
-                    $response = response()->json(['msg'=>'Cannot add product from different vendor!!'],400);
+                    $response = response()->json(['msg'=> $prod_check->product_name.' Already Added!!'],403);
                 }
             }else{
                 if($quantity<$product[0]['unit_stock']){
