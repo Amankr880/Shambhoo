@@ -18,48 +18,80 @@ class CartController extends Controller
             $product_id = $request->input('product_id');
             $quantity = $request->input('quantity');
             $user_id = $request->input('user_id');
-            // $active = $request->input('active');
-            // $price = $request->input('price');
     
             $prod_check = Product::where('id',$product_id)->first();
-    
-            if($prod_check)
-            {
-                if(Cart::where('product_id',$product_id)->where('user_id',$user_id)->exists())
-                {
-                    $response = response()->json(['msg'=> $prod_check->product_name.' Already Added!!'],403);
+            
+            $cartLastItem = Cart::where('user_id',$user_id)->join('products','products.id','=','carts.product_id')->latest('carts.id')->first();
+            $product = Product::where('id',$product_id)->select('*')->get();
+            if($cartLastItem != ""){
+                if($cartLastItem['vendor_id']==$product[0]['vendor_id']){
+                    if($quantity<$product[0]['unit_stock']){
+                        $cartItem = new Cart();
+                        $cartItem->product_id = $product_id;
+                        $cartItem->quantity = $quantity;
+                        $cartItem->user_id = $user_id;
+                        $cartItem->save();
+                        $response = response()->json(['msg'=> $prod_check->product_name.' Added to cart!!'],201);
+                    }else{
+                        $response = response()->json(['msg'=>'Product out of stock!!'],400);
+                    }
                 }else{
-                    if(Cart::where([['user_id',$user_id],['vendor_id',$prod_check->vendor_id]])->exists())
-                    {
-                        $cartItem = new Cart();
-                        $cartItem->product_id = $product_id;
-                        $cartItem->quantity = $quantity;
-                        $cartItem->user_id = $user_id;
-                        $cartItem->price = $prod_check->MSRP;
-                        $cartItem->vendor_id = $prod_check->vendor_id;
-                        $cartItem->save();
-                        $response = response()->json(['msg'=> $prod_check->product_name.' Added to cart!!'],201);
-                    }
-                    elseif(Cart::where([['user_id',$user_id],['vendor_id','!=',$prod_check->vendor_id]])->exists())
-                    {
-                        $response = response()->json(['msg'=>'Cannot add product from different vendor!!'],400);
-                    }
-                    else
-                    {
-                        $cartItem = new Cart();
-                        $cartItem->product_id = $product_id;
-                        $cartItem->quantity = $quantity;
-                        $cartItem->user_id = $user_id;
-                        $cartItem->price = $prod_check->MSRP;
-                        $cartItem->vendor_id = $prod_check->vendor_id;
-                        $cartItem->save();
-                        $response = response()->json(['msg'=> $prod_check->product_name.' Added to cart!!'],201);
-                    }
+                    $response = response()->json(['msg'=>'Cannot add product from different vendor!!'],400);
+                }
+            }else{
+                if($quantity<$product[0]['unit_stock']){
+                    $cartItem = new Cart();
+                    $cartItem->product_id = $product_id;
+                    $cartItem->quantity = $quantity;
+                    $cartItem->user_id = $user_id;
+                    $cartItem->save();
+                    $response = response()->json(['msg'=> $prod_check->product_name.' Added to cart!!'],201);
+                }else{
+                    $response = response()->json(['msg'=>'Product out of stock!!'],400);
                 }
             }
-            else{
-                $response = response()->json(['msg'=>'Product is not there'],403);
-            }
+
+            // if($prod_check)
+            // {
+            //     if(Cart::where('product_id',$product_id)->where('user_id',$user_id)->exists())
+            //     {
+            //         $response = response()->json(['msg'=> $prod_check->product_name.' Already Added!!'],403);
+            //     }else{
+            //         if($quantity<$prod_check['unit_stock']){
+            //             if(Cart::where([['user_id',$user_id],['vendor_id',$prod_check->vendor_id]])->exists())
+            //             {
+            //                 $cartItem = new Cart();
+            //                 $cartItem->product_id = $product_id;
+            //                 $cartItem->quantity = $quantity;
+            //                 $cartItem->user_id = $user_id;
+            //                 $cartItem->price = $prod_check->MSRP;
+            //                 $cartItem->vendor_id = $prod_check->vendor_id;
+            //                 $cartItem->save();
+            //                 $response = response()->json(['msg'=> $prod_check->product_name.' Added to cart!!'],201);
+            //             }
+            //             elseif(Cart::where([['user_id',$user_id],['vendor_id','!=',$prod_check->vendor_id]])->exists())
+            //             {
+            //                 $response = response()->json(['msg'=>'Cannot add product from different vendor!!'],400);
+            //             }
+            //             else
+            //             {
+            //                 $cartItem = new Cart();
+            //                 $cartItem->product_id = $product_id;
+            //                 $cartItem->quantity = $quantity;
+            //                 $cartItem->user_id = $user_id;
+            //                 $cartItem->price = $prod_check->MSRP;
+            //                 $cartItem->vendor_id = $prod_check->vendor_id;
+            //                 $cartItem->save();
+            //                 $response = response()->json(['msg'=> $prod_check->product_name.' Added to cart!!'],201);
+            //             }
+            //         }else{
+            //             $response = response()->json(['msg'=>'Product out of stock!!'],400);
+            //         }
+            //     }
+            // }
+            // else{
+            //     $response = response()->json(['msg'=>'Product is not there'],403);
+            // }
         }
         else
         {
@@ -75,7 +107,10 @@ class CartController extends Controller
         $q = User::where('id',$request->user_id)->get('token');
         if($q = $header) 
         {
-            $cartItems = Cart::where('user_id',$request->user_id)->get();
+            $cartItems = Cart::where([['carts.user_id',$request->user_id]])
+                        ->join('products','products.id','=','carts.product_id')
+                        ->select('products.product_name','products.MSRP','products.picture','carts.quantity','products.unit_stock')->get();
+
             if($cartItems!="[]"){
                 $response = response()->json(['cartItem'=>$cartItems],200);
             }
