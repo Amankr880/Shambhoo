@@ -116,7 +116,7 @@ class VendorController extends Controller
 
     public function getVendorByUserId($user_Id)
     {
-        $vendor = Vendor::where('user_id','=',$user_Id)->get(); 
+        $vendor = Vendor::where('user_id','=',$user_Id)->select('*',DB::raw("CONCAT('storage/assets/img/logo/',image) AS logo,CONCAT('storage/assets/img/header/',header_image) AS header_image,CONCAT('storage/assets/img/gallery/',gallery) AS gallery"))->get(); 
         $response = !$vendor->isEmpty() ? ['vendor'=>$vendor] : ["error"=> "vendor Not found",'msg'=>'vendor Not Found!!']; 
         return response()->json($response);
     }
@@ -185,7 +185,7 @@ class VendorController extends Controller
     public function getVendor(Request $request)
     {
         $header = $request->bearerToken();
-        $q = User::where('id',$request->user_id)->get('token');
+        $q = User::where('id',$request->user_id)->select('*',DB::raw("CONCAT('storage/assets/img/logo/',image) AS logo,CONCAT('storage/assets/img/header/',header_image) AS header_image,CONCAT('storage/assets/img/gallery/',gallery) AS gallery"))->get('token');
         if($q = $header) 
         {
             $vendor = Vendor::where('id','=',$request->id)->get(); 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Db;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Validator;
@@ -104,7 +105,7 @@ class UserController extends Controller
         if($q = $header) 
         {
             $uid = $id->input('id');
-            $singleUser = User::where('id','=',$uid)->get();
+            $singleUser = User::where('id','=',$uid)->select('*',DB::raw("CONCAT('storage/assets/img/users/',image) AS image"))->get();
             $response = response()->json(['singleUser'=>$singleUser],200);
         }
         else
@@ -119,7 +120,7 @@ class UserController extends Controller
         $header = $request->bearerToken();
         if($header) 
         {
-            $getMe = User::where('token','=',$header)->first();
+            $getMe = User::where('token','=',$header)->select('*',DB::raw("CONCAT('storage/assets/img/users/',image) AS image"))->first();
             $response = response()->json($getMe,200);
         }
         else
