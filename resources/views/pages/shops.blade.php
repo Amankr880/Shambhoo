@@ -6,17 +6,6 @@
           <div class="row align-items-center py-4">
             <div class="col-lg-6 col-7">
               <h6 class="h2 text-white d-inline-block mb-0">Shops</h6>
-              <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
-                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                  <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                  <li class="breadcrumb-item"><a href="#">Shops</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Shops</li>
-                </ol>
-              </nav>
-            </div>
-            <div class="col-lg-6 col-5 text-right">
-              <a href="#" class="btn btn-sm btn-neutral">New</a>
-              <a href="#" class="btn btn-sm btn-neutral">Filters</a>
             </div>
           </div>
         </div>
@@ -39,8 +28,8 @@
                     <th scope="col" class="sort" data-sort="name">Id</th>
                     <th scope="col" class="sort" data-sort="budget">Shop</th>
                     <th scope="col" class="sort" data-sort="budget">Vendor</th>
-                    <th scope="col" class="sort" data-sort="status">Store</th>
-                    <th scope="col">Status</th>
+                    <th scope="col" class="sort" data-sort="status">Status</th>
+                    <th scope="col">Availability</th>
                     <th scope="col"></th>
                   </tr>
                 </thead>
@@ -62,17 +51,30 @@
                 <a href="#">{{$shop['first_name']}} {{$shop['last_name']}}</a>
                     </td>
                     <td class="budget">
-                {{$shop['status']}}
-                    </td>
+                @if($shop['status']==0)
+                Unverified
+                @elseif($shop['status']==1)
+                Verified<br>Non Premium
+                @elseif($shop['status']==2)
+                Verified<br>Premium<br>Non Featured
+                @else
+                Verified<br>Premium<br>Featured
+                @endif
+                                    </td>
                     <td>
                       <span class="badge badge-dot mr-4">
                         <i class="bg-success"></i>
-                        <span class="status">{{$shop['visibility']}}</span>
+                        <span class="status">@if($shop['visibility']==0)
+                        Unavailable
+                        @else
+                        
+                        Available
+                        @endif</span>
                       </span>
                     </td>
                     </td>
                     <td class="text-right">
-                      <div class="dropdown">
+                     <!--  <div class="dropdown">
                         <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <i class="fas fa-ellipsis-v"></i>
                         </a>
@@ -81,7 +83,7 @@
                           <a class="dropdown-item" href="#">Another action</a>
                           <a class="dropdown-item" href="#">Something else here</a>
                         </div>
-                      </div>
+                      </div> -->
                     </td>
                   </tr>
               @endforeach

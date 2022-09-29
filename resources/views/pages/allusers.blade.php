@@ -6,20 +6,6 @@
       <div class="row align-items-center py-4">
         <div class="col-lg-6 col-7">
           <h6 class="h2 text-white d-inline-block mb-0">Customers</h6>
-          <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
-            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-              <li class="breadcrumb-item">
-                <a href="#"></a>
-              </li>
-              <li class="breadcrumb-item">
-                <a href="#">Customers</a>
-              </li>
-              <li class="breadcrumb-item active" aria-current="page">Customers</li>
-            </ol>
-          </nav>
-        </div>
-        <div class="col-lg-6 col-5 text-right">
-          <a href="#" class="btn btn-sm btn-neutral">New</a> <a href="#" class="btn btn-sm btn-neutral">Filters</a>
         </div>
       </div>
     </div>
@@ -54,10 +40,15 @@
                   {{$user['email']}}
                 </td>
                 <td class="budget">{{$user['phone_no']}}</td>
-                <td><span class="badge badge-dot mr-4"><span class="status">{{$user['user_status']}}</span></span></td>
+                <td><span class="badge badge-dot mr-4"><span class="status">@if($user['user_status']==0)
+                        Unavailable
+                        @else
+                        
+                        Available
+                        @endif</span></span></td>
                 
                     <td class="text-right">
-                      <div class="dropdown">
+                      <!-- <div class="dropdown">
                         <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <i class="fas fa-ellipsis-v"></i>
                         </a>
@@ -66,7 +57,7 @@
                           <a class="dropdown-item" href="#">Another action</a>
                           <a class="dropdown-item" href="#">Something else here</a>
                         </div>
-                      </div>
+                      </div> -->
                     </td>
               </tr>
               @endforeach

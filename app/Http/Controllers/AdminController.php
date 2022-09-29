@@ -9,9 +9,11 @@ use App\Models\Order;
 use App\Models\User;
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\Ads;
 use App\Models\order_Item;
 use Storage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 
 class AdminController extends Controller
 {
@@ -48,7 +50,7 @@ class AdminController extends Controller
         $user->fill($input);
         $user['image']=$image;
         $user->save();
-        return redirect()->route('userdetails', ['id' => $request['id']]);
+        return redirect()->route('allusers');
     }
 
 
@@ -138,9 +140,18 @@ class AdminController extends Controller
         $input['header_image']=$header_image;
         $input['gallery']=$gallery_image;
         $shop->fill($input)->save();
-        return redirect()->route('singleshop', ['id' => $request['id']]);
+        return redirect()->route('table');
     }
 
+    public function featuredstores(){
+        $featuredstores =Vendor::join('users','vendors.user_id', '=', 'users.id')->where('status','=',3)->select('vendors.id','vendors.shopName','vendors.status','vendors.visibility','vendors.logo_image','users.first_name','users.last_name')->get();
+        $eligible =Vendor::join('users','vendors.user_id', '=', 'users.id')->where('status','=',2)->select('vendors.id','vendors.shopName','vendors.status','vendors.visibility','vendors.logo_image','users.first_name','users.last_name')->get();
+        return view('pages.featuredstores',['featuredstores'=>$featuredstores,'eligible'=>$eligible]);
+    }
+    public function featuredads(){
+        $featuredads=Ads::select('*',DB::raw("CONCAT(url,'banner') AS url"))->get();
+        return view('pages.featuredads',['featuredads'=>$featuredads]);
+    }
 
 
 
@@ -158,7 +169,7 @@ class AdminController extends Controller
         $order  = Order::findOrFail($request['id']);
         $input = $request->all();
         $order->fill($input)->save();
-        return redirect()->route('orderdetails', ['id' => $request['id']]);
+        return redirect()->route('orders');
     }
 
     //Category Management   
@@ -213,6 +224,7 @@ class AdminController extends Controller
         $category->fill($input);
         $category['icon']=$icon;
         $category->save();
-        return redirect()->route('editcategory', ['id' => $request['id']]);
+
+        return Redirect::to('/categories/'.$request['parent_category']);
     }
 }
