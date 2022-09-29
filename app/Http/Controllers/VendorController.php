@@ -37,44 +37,44 @@ class VendorController extends Controller
             $vendor->business_doc_no = $request->input('business_doc_no');
             $vendor->about = $request->input('about');
             $vendor->delivery_slot = $request->input('delivery_slot');
-            $vendor->status = $request->input('status');
-            $vendor->visibility = $request->input('visibility');
+            // $vendor->status = $request->input('status');
+            // $vendor->visibility = $request->input('visibility');
             $vendor->policy = $request->input('policy');
         
             $file = $request->file('id_proof_photo');
-            $destinationPath = "public/id_proof_photo";
+            $destinationPath = "assets/img/id_proof/";
             $pic = $file->hashName();
-            $filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/id_proof_photo/'. $file->hashname();
+            // $filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/id_proof_photo/'. $file->hashname();
             Storage::putFileAs($destinationPath, $file, $pic);
-            $vendor->id_proof_photo = $filename;
+            $vendor->id_proof_photo = $pic;
 
             $file = $request->file('pancard_photo');
-            $destinationPath = "public/pancard_photo";
+            $destinationPath = "assets/img/pancard/";
             $pic = $file->hashName();
-            $filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/pancard_photo/'. $file->hashname();
+            // $filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/pancard_photo/'. $file->hashname();
             Storage::putFileAs($destinationPath, $file, $pic);
-            $vendor->pancard_photo = $filename;
+            $vendor->pancard_photo = $pic;
 
             $file = $request->file('business_doc_photo');
-            $destinationPath = "public/business_doc_photo";
+            $destinationPath = "assets/img/business_doc/";
             $pic = $file->hashName();
-            $filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/business_doc_photo/'. $file->hashname();
+            // $filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/business_doc_photo/'. $file->hashname();
             Storage::putFileAs($destinationPath, $file, $pic);
-            $vendor->business_doc_photo = $filename;
+            $vendor->business_doc_photo = $pic;
 
             $file = $request->file('logo_image');
-            $destinationPath = "public/logo_image";
+            $destinationPath = "assets/img/logo/";
             $pic = $file->hashName();
-            $filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/logo_image/'. $file->hashname();
+            // $filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/logo_image/'. $file->hashname();
             Storage::putFileAs($destinationPath, $file, $pic);
-            $vendor->logo_image = $filename;
+            $vendor->logo_image = $pic;
 
             $file = $request->file('header_image');
-            $destinationPath = "public/header_image";
+            $destinationPath = "assets/img/header/";
             $pic = $file->hashName();
-            $filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/header_image/'. $file->hashname();
+            // $filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/header_image/'. $file->hashname();
             Storage::putFileAs($destinationPath, $file, $pic);
-            $vendor->header_image = $filename;
+            $vendor->header_image = $pic;
 
             // try{
             //     $data= $request->all();

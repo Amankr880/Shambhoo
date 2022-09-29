@@ -19,11 +19,11 @@ class CategoriesController extends Controller
         $category->status = $request->input('status');
 
         $file = $request->file('icon');
-        $destinationPath = "public/category_icon";
+        $destinationPath = "public/assets/img/category_icons/";
         $pic = $file->hashName();
-        $filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/category_icon/'. $file->hashname();
+        //$filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/category_icon/'.$file->hashname();
         Storage::putFileAs($destinationPath, $file, $pic);
-        $category->icon = $filename;
+        $category->icon = $pic;
         
         $category->save();
         return response()->json(['category'=>$category,'msg'=>'category created successfully!!']);

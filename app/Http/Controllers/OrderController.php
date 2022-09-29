@@ -28,6 +28,7 @@ class OrderController extends Controller
                 $order->order_status = $request->input('order_status');
                 $prod = Product::where('id',$product_id)->first();
                 $order->vendor_id = $prod->vendor_id;
+                $order->total_order = $request->input('total_order');
                 $order->total_discount = $request->input('total_discount');
                 $order->delivery_address = $request->input('delivery_address');
                 $order->discount_type = $request->input('discount_type');
@@ -42,6 +43,7 @@ class OrderController extends Controller
                 // $order->timestamp = $request->input('timestamp');
                 // $order->status = $request->input('status');
                 // $order->discount_applied = $request->input('discount_applied');
+                // $order->discount_type = $request->input('discount_type');
                 // $order->order_details = $request->input('order_details');
                 $order->save();
                 // $orders = DB::insert('INSERT into Order OUTPUT INSERTED.*

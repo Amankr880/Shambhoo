@@ -25,35 +25,35 @@ class ReviewsController extends Controller
             $reviews->delivery_rating = $request->input('delivery_rating');
             $reviews->vendor_rating = $request->input('vendor_rating');
 
-            try{
-                $data= $request->all();
-                $validator = $this->validatorForStore($data)->validate();
-                if(isset($data['images']))
-                {
-                    if($request->hasfile('images'))
-                    {
-                        $img=$request->file('images');
-                        $filename = [];
-                        foreach ($img as $imgkey ) {
-                            $imgkey->store('public/review_images');
-                            $imgname[]=$imgkey->hashName();
-                            $filename[] ='https://shambhoo-app-pfm6i.ondigitalocean.app/storage/review_images/'.$imgkey->hashName();
-                        }
-                        // var_dump($filename);exit();
-                        $filename=implode(",",$filename);
-                        // $filename = serialize($filename);
-                        $reviews->images = $filename;
-                    }else{
-                        $imgname=null;
-                    }
-            }else{
-                $imgname=null;
-            }
-            }
-            catch(Exception $e)
-            {
-                echo 'Message: ' .$e->getMessage();
-            }
+            // try{
+            //     $data= $request->all();
+            //     $validator = $this->validatorForStore($data)->validate();
+            //     if(isset($data['images']))
+            //     {
+            //         if($request->hasfile('images'))
+            //         {
+            //             $img=$request->file('images');
+            //             $filename = [];
+            //             foreach ($img as $imgkey ) {
+            //                 $imgkey->store('assets/img/review_image/');
+            //                 $imgname[]=$imgkey->hashName();
+            //                 $filename[] ='https://shambhoo-app-pfm6i.ondigitalocean.app/storage/review_images/'.$imgkey->hashName();
+            //             }
+            //             // var_dump($filename);exit();
+            //             $filename=implode(",",$filename);
+            //             // $filename = serialize($filename);
+            //             $reviews->images = $filename;
+            //         }else{
+            //             $imgname=null;
+            //         }
+            // }else{
+            //     $imgname=null;
+            // }
+            // }
+            // catch(Exception $e)
+            // {
+            //     echo 'Message: ' .$e->getMessage();
+            // }
             $reviews->save();
             $response = response()->json([$reviews,'msg'=>'Review Added!!'],200);
                 

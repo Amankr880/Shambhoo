@@ -67,11 +67,11 @@ class UserController extends Controller
         // $users->user_type = $request->input('user_status');
 
         $file = $request->file('image');
-        $destinationPath = "public/user_img";
+        $destinationPath = "public/assets/img/users";
         $pic = $file->hashName();
-        $filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/user_img/'. $file->hashname();
+        //$filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/assets/img/users/'. $file->hashname();
         Storage::putFileAs($destinationPath, $file, $pic);
-        $users->image = $filename;
+        $users->image = $pic;
         
         $users->Longitude = $request->input('Longitude');
         $users->Latitude = $request->input('Latitude');
@@ -80,7 +80,6 @@ class UserController extends Controller
         $users->pincode = $request->input('pincode');
         $users->token = $token;
         $result = $users->save();
-        // $token = User::where('id',$users->id)->get('token');
         if($result)
         {
             return response()->json(['users'=>$users,
@@ -118,7 +117,6 @@ class UserController extends Controller
     public function getMe(Request $request)
     {
         $header = $request->bearerToken();
-        //$q = User::where('id',$request->user_id)->get('token');
         if($header) 
         {
             $getMe = User::where('token','=',$header)->first();
