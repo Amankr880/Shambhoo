@@ -31,9 +31,11 @@ class OrderController extends Controller
                 $order->total_order = $request->input('total_order');
                 $order->total_discount = $request->input('total_discount');
                 $order->delivery_address = $request->input('delivery_address');
+                $order->discount_type = $request->input('discount_type');
                 $otp = mt_rand(1000,9999);
                 $order->order_otp = $otp;
-                $order->order_type = $request->input('order_type');
+                // $order->total_order = $request->input('total_order');
+                // $order->order_type = $request->input('order_type');
                 // $order->order_no = $request->input('order_no');
                 // $order->ship_date = $request->input('ship_date');
                 // $order->required_date = $request->input('required_date');

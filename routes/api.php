@@ -45,7 +45,7 @@ Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'
 ], function ($router) {
-    Route::post('/sendSMS', [SMSController::class, 'index']);
+    Route::post('/sendSMS', [SMSController::class, 'smsSend']);
     Route::post('/sendSMSTest', [SMSController::class, 'smsSend']);
     Route::post('/verifyOtp', [SMSController::class, 'otpVerify']);  
 });
@@ -113,8 +113,8 @@ Route::controller(HomepageController::class)->group(function () {
 Route::controller(CartController::class)->group(function () {
     Route::post('addProduct', 'addProduct');
     Route::post('viewCart', 'viewCart');
-    // Route::post('getStore', 'getStore');
-    // Route::post('getFeatureStore', 'getFeatureStore');
+    Route::post('deleteProduct', 'deleteProduct');
+    Route::post('updateProduct', 'updateProduct');
 });
 
 
