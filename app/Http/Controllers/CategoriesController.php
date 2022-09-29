@@ -32,7 +32,10 @@ class CategoriesController extends Controller
     public function getAllCategories()
     {
         //if(Categories::where('status' => '10'))
-        $category = Categories::where('status','!=','10')->get();  
+        $category = Categories::where('status','!=','10')->get(); 
+        foreach($category as $cat){
+            $cat['icon'] = '/storage/assets/img/category_icons/'.$cat['icon'];
+        }
         return response()->json($category);
     }
 
