@@ -49,3 +49,5 @@ Route::group(['middleware' => 'auth'], function () {
 	 Route::get('/featuredstores', [App\Http\Controllers\AdminController::class, 'featuredstores'])->name('featuredstores');
 	 Route::get('/featuredads', [App\Http\Controllers\AdminController::class, 'featuredads'])->name('featuredads'); 
 });
+
+URL::forceScheme('https');
