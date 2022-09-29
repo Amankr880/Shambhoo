@@ -9,6 +9,7 @@ use App\Models\User;
 use Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\DB;
 
 class VendorController extends Controller
 {
