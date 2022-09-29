@@ -28,7 +28,7 @@
           @foreach($featuredads as $ad)
           <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
             <a href="{{$ad['url']}}" class="flex-grow-1">
-              <img src="{{asset('storage/assets/img/ads/'.$ad['banner'])}}" style="max-width:350px;margin-right: 20px;">
+              <img src="{{asset('storage/assets/img/ads/'.$ad['banner'])}}" style="border-radius: 10px;max-width:350px;margin-right: 20px;">
             {{$ad['url']}}</a>
             <a href="">@if($ad['status']==0)
                 Disabled

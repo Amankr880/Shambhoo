@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Auth::routes();
@@ -21,6 +21,7 @@ Route::group(['middleware' => 'auth'], function () {
 	 Route::get('map', function () {return view('pages.maps');})->name('map');
 	 Route::get('icons', function () {return view('pages.icons');})->name('icons');
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
+	//Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 	 
 	 //Admin Panel
 	 Route::get('/shops', [App\Http\Controllers\AdminController::class, 'getAllShops'])->name('table');
@@ -46,5 +47,5 @@ Route::group(['middleware' => 'auth'], function () {
 	 Route::post('updatecategory', [App\Http\Controllers\AdminController::class, 'updateCategory']);
 
 	 Route::get('/featuredstores', [App\Http\Controllers\AdminController::class, 'featuredstores'])->name('featuredstores');
-	 Route::get('/featuredads', [App\Http\Controllers\AdminController::class, 'featuredads'])->name('featuredads');
+	 Route::get('/featuredads', [App\Http\Controllers\AdminController::class, 'featuredads'])->name('featuredads'); 
 });

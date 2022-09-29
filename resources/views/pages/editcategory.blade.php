@@ -8,7 +8,14 @@
     <div class="container-fluid mt--7">
                 <div class="card bg-secondary shadow">
                     <div class="card-header bg-white border-0">
-                            <h3 class="mb-0">Edit Category</h3>
+                            <div class="row">
+                                <div class="col">
+                                    <h3 class="mb-0">Edit Category</h3>
+                                </div>
+                                <div class="col text-right">
+                                    <a href="" class="text-danger"><u>Delete</u></a>
+                                </div>
+                            </div>
                     </div>
                     <div class="card-body">
                         <form action="{{url('updatecategory')}}" enctype="multipart/form-data" method="post">
