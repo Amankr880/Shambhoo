@@ -7,6 +7,7 @@ use App\Models\Categories;
 use App\Models\User;
 use Storage;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\DB;
 
 class CategoriesController extends Controller
 {
@@ -32,10 +33,7 @@ class CategoriesController extends Controller
     public function getAllCategories()
     {
         //if(Categories::where('status' => '10'))
-        $category = Categories::where('status','!=','10')->get(); 
-        foreach($category as $cat){
-            $cat['icon'] = '/storage/assets/img/category_icons/'.$cat['icon'];
-        }
+        $category = Categories::where('status','!=','10')->select('*',DB::raw("CONCAT('storage/assets/img/category_icons/',icon) AS icon"))->get();
         return response()->json($category);
     }
 
@@ -45,7 +43,7 @@ class CategoriesController extends Controller
         $q = User::where('id',$request->user_id)->get('token');
         if($q = $header) 
         {
-            $category = Categories::where([['parent_category','=', NULL],['status','!=','10']])->get();
+            $category = Categories::where([['parent_category','=', NULL],['status','!=','10']])->select('*',DB::raw("CONCAT('storage/assets/img/category_icons/',icon) AS icon"))->get();
             if($category){
                 $response = response()->json($category,200);
             }  
@@ -67,7 +65,7 @@ class CategoriesController extends Controller
         $q = User::where('id',$request->user_id)->get('token');
         if($q = $header) 
         {
-            $category = Categories::where([['parent_category','=',$request->parentId],['status','!=','10']])->get(); 
+            $category = Categories::where([['parent_category','=',$request->parentId],['status','!=','10']])->select('*',DB::raw("CONCAT('storage/assets/img/category_icons/',icon) AS icon"))->get(); 
             if($category){
                 $response = response()->json($category,200);
             }  

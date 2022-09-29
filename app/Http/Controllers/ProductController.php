@@ -10,6 +10,7 @@ use App\Models\vendor_category;
 use App\Models\User;
 use Storage;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -61,7 +62,7 @@ class ProductController extends Controller
     public function getAllProducts()
     {
         //if(Categories::where('status' => '10'))
-        $product = Product::where('status','!=','10')->get();  
+        $product = Product::where('status','!=','10')->select('*',DB::raw("CONCAT('storage/assets/img/product_img/',picture) AS picture"))->get();  
         return response()->json($product);
     }
 
@@ -73,7 +74,7 @@ class ProductController extends Controller
         {
             $product = Product::where([['category_id','=',$request->input('category_id')],
                                     ['vendor_id','=',$request->input('vendor_id')],
-                                    ['status','!=','10']])->get();  
+                                    ['status','!=','10']])->select('*',DB::raw("CONCAT('storage/assets/img/product_img/',picture) AS picture"))->get();  
                             
             $cart = Cart::where('user_id',$request->user_id)->get();
             foreach($product as $product_item){
@@ -107,7 +108,7 @@ class ProductController extends Controller
         $q = User::where('id',$request->user_id)->get('token');
         if($q = $header) 
         {
-            $product = Product::where([['id','=',$request->product_id],['status','!=','10']])->get();
+            $product = Product::where([['id','=',$request->product_id],['status','!=','10']])->select('*',DB::raw("CONCAT('storage/assets/img/product_img/',picture) AS picture"))->get();
             if($product)
             {
                 $response = response()->json($product,200);
