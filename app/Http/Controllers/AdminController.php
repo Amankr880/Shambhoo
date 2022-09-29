@@ -13,6 +13,7 @@ use App\Models\Ads;
 use App\Models\order_Item;
 use Storage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 
 class AdminController extends Controller
 {
@@ -49,7 +50,7 @@ class AdminController extends Controller
         $user->fill($input);
         $user['image']=$image;
         $user->save();
-        return redirect()->route('userdetails', ['id' => $request['id']]);
+        return redirect()->route('allusers');
     }
 
 
@@ -139,7 +140,7 @@ class AdminController extends Controller
         $input['header_image']=$header_image;
         $input['gallery']=$gallery_image;
         $shop->fill($input)->save();
-        return redirect()->route('singleshop', ['id' => $request['id']]);
+        return redirect()->route('table');
     }
 
     public function featuredstores(){
@@ -168,7 +169,7 @@ class AdminController extends Controller
         $order  = Order::findOrFail($request['id']);
         $input = $request->all();
         $order->fill($input)->save();
-        return redirect()->route('orderdetails', ['id' => $request['id']]);
+        return redirect()->route('orders');
     }
 
     //Category Management   
@@ -223,6 +224,7 @@ class AdminController extends Controller
         $category->fill($input);
         $category['icon']=$icon;
         $category->save();
-        return redirect()->route('editcategory', ['id' => $request['id']]);
+
+        return Redirect::to('/categories/'.$request['parent_category']);
     }
 }

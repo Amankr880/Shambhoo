@@ -67,6 +67,7 @@
                         <span class="status">@if($shop['visibility']==0)
                         Unavailable
                         @else
+                        
                         Available
                         @endif</span>
                       </span>
