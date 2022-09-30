@@ -46,19 +46,8 @@ class OrderController extends Controller
                 // $order->discount_type = $request->input('discount_type');
                 // $order->order_details = $request->input('order_details');
                 $order->save();
-                // $orders = DB::insert('INSERT into Order OUTPUT INSERTED.*
-                //             (user_id,order_date,transaction_status,order_status,vendor_id,total_order,total_discount,delivery_address,order_otp,order_type)
-                //             VALUES ('$order->user_id,$order->order_date,$order->transaction_status,$order->order_status,$order->vendor_id,$order->total_order,
-                //             $order->total_discount,$order->delivery_address,$order->order_otp, $order->order_type')');
-
-                // DB::table('users')->insertGetId([
-                //     'name' => 'Hardik Savani',
-                //     'email' => 'hardik@gmail.com',
-                //     'password' => '123456'
-                // ]);
 
                 $cart_items = Cart::where('user_id',$request->input('user_id'))->get();
-                // var_dump($cart_items);exit();
                 foreach($cart_items as $data){
                     $order_item = new order_Item;
                     $order_item->product_id = $data->product_id;
@@ -70,7 +59,7 @@ class OrderController extends Controller
                 foreach($cart_items as $res){
                     $products[] = Product::where('id',$res->product_id)->get();
                 }
-                // $delete_cart_items = Cart::where('user_id',$request->input('user_id'))->delete();
+                $delete_cart_items = Cart::where('user_id',$request->input('user_id'))->delete();
                 $response = response()->json(['order'=>$order,'products'=>$products,'msg'=>'order created successfully!!'],200);
             }
             else{

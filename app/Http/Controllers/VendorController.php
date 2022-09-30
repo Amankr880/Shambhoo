@@ -186,11 +186,11 @@ class VendorController extends Controller
     public function getVendor(Request $request)
     {
         $header = $request->bearerToken();
-        $q = User::where('id',$request->user_id)->select('*',DB::raw("CONCAT('storage/assets/img/logo/',image) AS logo,CONCAT('storage/assets/img/header/',header_image) AS header_image,CONCAT('storage/assets/img/gallery/',gallery) AS gallery"))->get('token');
+        $q = User::where('id',$request->user_id)->get('token');
         if($q = $header) 
         {
-            $vendor = Vendor::where('id','=',$request->id)->get(); 
-            $product = Product::where('vendor_id','=',$request->id)->get(); 
+            $vendor = Vendor::where('id','=',$request->id)->select('*',DB::raw("CONCAT('storage/assets/img/logo/',logo_image) AS logo_image,CONCAT('storage/assets/img/header/',header_image) AS header_image"))->get(); 
+            $product = Product::where('vendor_id','=',$request->id)->select('*',DB::raw("CONCAT('storage/assets/img/product_img/',picture) AS picture"))->get(); 
             $data = [
                 'vendor'=>$vendor,
                 'product'=>$product

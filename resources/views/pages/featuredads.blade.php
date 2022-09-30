@@ -8,7 +8,7 @@
               <h6 class="h2 text-white d-inline-block mb-0">Featured Ads</h6>
             </div>
         <div class="col-lg-6 col-5 text-right">
-          <a href="{{url('/')}}/addcategory" class="btn btn-sm btn-neutral">Add New Banner</a>
+          <a href="{{url('/')}}/addad" class="btn btn-sm btn-neutral">Add New Banner</a>
         </div>
           </div>
         </div>
@@ -34,7 +34,7 @@
                 Disabled
                 @else
                 &bull;Enabled
-                @endif<u>Edit</u></a>
+                @endif<a href="featuredads/{{$ad['id']}}">Edit</a>
           </div>
           @endforeach
         </div>

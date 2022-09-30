@@ -47,7 +47,12 @@ Route::group(['middleware' => 'auth'], function () {
 	 Route::post('updatecategory', [App\Http\Controllers\AdminController::class, 'updateCategory']);
 
 	 Route::get('/featuredstores', [App\Http\Controllers\AdminController::class, 'featuredstores'])->name('featuredstores');
+
 	 Route::get('/featuredads', [App\Http\Controllers\AdminController::class, 'featuredads'])->name('featuredads'); 
+	 Route::get('/featuredads/{id}', [App\Http\Controllers\AdminController::class, 'editads'])->name('editads');
+	 Route::get('/addad', [App\Http\Controllers\AdminController::class, 'addad'])->name('addad');
+	 Route::post('/insertad', [App\Http\Controllers\AdminController::class, 'insertAd']);
+	 Route::post('/updatead', [App\Http\Controllers\AdminController::class, 'updateAd']);
 });
 
 URL::forceScheme('https');

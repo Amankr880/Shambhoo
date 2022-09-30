@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\HomeData;
+use App\Models\Ads;
 use App\Models\Categories;
 use App\Models\User;
 use App\Models\Product;
@@ -63,14 +64,17 @@ class HomepageController extends Controller
 
     public function featureImageShow()
     {
-        $data = HomeData::select('feature_image')->orderBy('id', 'desc')->limit(3)->get();
-        $arr = [];
-        foreach($data as $img) {
-            array_push($arr,$img['feature_image']);
-        }
-        $q['feature_image'] = $arr;
+        $data = Ads::where('status','=',1)->select('banner','url')->orderBy('id', 'desc')->limit(3)->get();
+        echo $data;exit();
+        // $arr = [];
+        // foreach($data as $img) {
+        //     array_push($arr,$img['banner']);
+        //     array_push($arr,$img['url']);
+        // }
+        // // $q['banner'] = $arr;
+        // $q['url'] = $arr;
         if($data){
-            $response = response()->json($q,200);
+            $response = response()->json($data,200);
         }
         else {
             $response = response()->json(['msg' => 'image not found'],400);
