@@ -149,7 +149,49 @@ class AdminController extends Controller
         return view('pages.featuredstores',['featuredstores'=>$featuredstores,'eligible'=>$eligible]);
     }
     public function featuredads(){
-        $featuredads=Ads::select('*',DB::raw("CONCAT(url,'banner') AS url"))->get();
+        $featuredads=Ads::select('*')->get();
+        return view('pages.featuredads',['featuredads'=>$featuredads]);
+    }
+    public function editads($id){
+        $featuredads=Ads::where('id','=',$id)->select('*')->get()->toarray();
+        return view('pages.editads',['featuredads'=>$featuredads]);
+    }
+    public function addad(){
+        $ad = collect(Ads::first())->keys();
+        return view('pages.addad',['ad'=>$ad]);
+    }
+    public function insertAd(Request $request){
+    
+        $banner="";
+        $file=$request->file('banner_file');
+        if($file!=""){
+            $destinationPath = "assets/img/ads/";
+            $banner=$file->hashName();
+            Storage::disk('public')->putFileAs($destinationPath,$file,$banner);
+        }
+        $insert = new Ads;
+        $insert->fill($request->all());
+        $insert['banner']=$banner;
+        $insert->save();
+        $featuredads=Ads::select('*')->get();
+        return view('pages.featuredads',['featuredads'=>$featuredads]);
+    }
+    public function updateAd(Request $request){
+        $banner=$request['banner_hash'];
+        $file=$request->file('banner_file');
+        if($file!=""){
+            $destinationPath = "assets/img/ads/";
+            if($file!="")
+                Storage::disk('public')->delete($destinationPath.$banner);
+            $banner=$file->hashName();
+            Storage::disk('public')->putFileAs($destinationPath,$file,$banner);
+        }
+        $ads = Ads::findOrFail($request['id']);
+        $input = $request->all();
+        //print_r($input); exit();
+        $input['banner']=$banner;
+        $ads->fill($input)->save();
+        $featuredads=Ads::select('*')->get();
         return view('pages.featuredads',['featuredads'=>$featuredads]);
     }
 
