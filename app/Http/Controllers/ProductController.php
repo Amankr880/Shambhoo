@@ -152,7 +152,9 @@ class ProductController extends Controller
             $vendor_id = $request->input('vendor_id');
             $vendor_category = vendor_category::join('categories', 'vendor_category.parent_category', '=', 'categories.id')
                     ->where([['vendor_category.vendor_id','=',$vendor_id],['categories.status','!=','10']])
-                    ->select('vendor_category.*', 'categories.*')->get(); 
+                    ->select('vendor_category.*', 'categories.*')
+                    ->select('*',DB::raw("CONCAT('storage/assets/img/category_icons/',categories.icon) AS categories.icon"))
+                    ->get(); 
             $response = response()->json(['vendor_category'=>$vendor_category],200);
         }
         else
