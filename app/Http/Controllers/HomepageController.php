@@ -64,7 +64,9 @@ class HomepageController extends Controller
 
     public function featureImageShow()
     {
-        $data = Ads::where('status','=',1)->select('banner','url')->orderBy('id', 'desc')->limit(3)->get();
+        $data = Ads::where('status','=',1)->select('banner','url')->orderBy('id', 'desc')->limit(3)
+        ->select('*',DB::raw("CONCAT('storage/assets/img/ads/',banner) AS banner"))
+        ->get();
         echo $data;exit();
         // $arr = [];
         // foreach($data as $img) {
@@ -84,7 +86,7 @@ class HomepageController extends Controller
 
     public function getStore(Request $request)
     {
-        $shopDetails = Vendor::where([['pincode','=',$request->pincode],['status','!=',0],['visibility','=',1]])->get();  
+        $shopDetails = Vendor::where([['pincode','=',$request->pincode],['status','!=',0],['visibility','=',1]])->select('*',DB::raw("CONCAT('storage/assets/img/logo/',logo_image) AS logo_image,CONCAT('storage/assets/img/header/',header_image) AS header_image"))->get();  
         if($shopDetails)
         {
             $response = response()->json($shopDetails,200);
@@ -97,7 +99,7 @@ class HomepageController extends Controller
 
     public function getFeatureStore(Request $request)
     {
-        $shopDetails = Vendor::where([['pincode','=',$request->pincode],['status','=',3],['visibility','=',1]])->inRandomOrder()->get(); 
+        $shopDetails = Vendor::where([['pincode','=',$request->pincode],['status','=',3],['visibility','=',1]])->inRandomOrder()->select('*',DB::raw("CONCAT('storage/assets/img/logo/',logo_image) AS logo_image,CONCAT('storage/assets/img/header/',header_image) AS header_image"))->get(); 
         if($shopDetails)
         {
             $response = response()->json($shopDetails,200);
@@ -110,7 +112,7 @@ class HomepageController extends Controller
 
     public function getSingleStore(Request $request)
     {
-        $shopDetails = Vendor::where('id','=',$request->id)->first(); 
+        $shopDetails = Vendor::where('id','=',$request->id)->select('*',DB::raw("CONCAT('storage/assets/img/logo/',logo_image) AS logo_image,CONCAT('storage/assets/img/header/',header_image) AS header_image"))->first(); 
         if($shopDetails)
         {
             $response = response()->json($shopDetails,200);
@@ -130,7 +132,9 @@ class HomepageController extends Controller
             $vendors=Product::where([['products.category_id','=',$request->id],['vendors.pincode','=',$request->pincode],
                                     ['status','!=',0],['visibility','=',1]])
                                     ->distinct()->join('vendors','products.vendor_id','=','vendors.id')
-                                    ->select('vendors.shopName','vendors.id','vendors.logo_image')->get();
+                                    ->select('vendors.shopName','vendors.id','vendors.logo_image')
+                                    ->select('*',DB::raw("CONCAT('storage/assets/img/logo/',vendors.logo_image) AS vendors.logo_image"))
+                                    ->get();
                 if($vendors){
                     $response = response()->json($vendors,200);
                 }
