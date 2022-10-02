@@ -133,7 +133,7 @@ class HomepageController extends Controller
             $vendors=Product::where([['products.category_id','=',$request->id],['vendors.pincode','=',$request->pincode],
                                     ['status','!=',0],['visibility','=',1]])
                                     ->distinct()->join('vendors','products.vendor_id','=','vendors.id')
-                                    ->select('vendors.shopName','vendors.id','vendors.logo_image')
+                                    ->select('vendors.shopName','vendors.id','vendors.logo_image',DB::raw("CONCAT('storage/assets/img/logo/',vendors.logo_image) AS logo_image"))
                                     ->get();
                 if($vendors){
                     $response = response()->json($vendors,200);
