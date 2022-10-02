@@ -71,7 +71,7 @@ class UserController extends Controller
         $destinationPath = "public/assets/img/users";
         $pic = $file->hashName();
         //$filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/assets/img/users/'. $file->hashname();
-        Storage::putFileAs($destinationPath, $file, $pic);
+        Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
         $users->image = $pic;
         
         $users->Longitude = $request->input('Longitude');

@@ -42,7 +42,7 @@ class ProductController extends Controller
             $destinationPath = "assets/img/product_img/";
             $pic = $file->hashName();
             //$filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/product_img/'. $file->hashname();
-            Storage::putFileAs($destinationPath, $file, $pic);
+            Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
             $product->picture = $pic;
 
             $vendor_category = vendor_category::firstOrCreate(['vendor_id' => $request->input('vendor_id'),

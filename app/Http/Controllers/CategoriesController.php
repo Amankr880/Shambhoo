@@ -23,7 +23,7 @@ class CategoriesController extends Controller
         $destinationPath = "public/assets/img/category_icons/";
         $pic = $file->hashName();
         //$filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/category_icon/'.$file->hashname();
-        Storage::putFileAs($destinationPath, $file, $pic);
+        Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
         $category->icon = $pic;
         
         $category->save();

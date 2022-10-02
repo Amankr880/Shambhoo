@@ -46,35 +46,35 @@ class VendorController extends Controller
             $destinationPath = "assets/img/id_proof/";
             $pic = $file->hashName();
             // $filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/id_proof_photo/'. $file->hashname();
-            Storage::putFileAs($destinationPath, $file, $pic);
+            Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
             $vendor->id_proof_photo = $pic;
 
             $file = $request->file('pancard_photo');
             $destinationPath = "assets/img/pancard/";
             $pic = $file->hashName();
             // $filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/pancard_photo/'. $file->hashname();
-            Storage::putFileAs($destinationPath, $file, $pic);
+            Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
             $vendor->pancard_photo = $pic;
 
             $file = $request->file('business_doc_photo');
             $destinationPath = "assets/img/business_doc/";
             $pic = $file->hashName();
             // $filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/business_doc_photo/'. $file->hashname();
-            Storage::putFileAs($destinationPath, $file, $pic);
+            Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
             $vendor->business_doc_photo = $pic;
 
             $file = $request->file('logo_image');
             $destinationPath = "assets/img/logo/";
             $pic = $file->hashName();
             // $filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/logo_image/'. $file->hashname();
-            Storage::putFileAs($destinationPath, $file, $pic);
+            Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
             $vendor->logo_image = $pic;
 
             $file = $request->file('header_image');
             $destinationPath = "assets/img/header/";
             $pic = $file->hashName();
             // $filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/header_image/'. $file->hashname();
-            Storage::putFileAs($destinationPath, $file, $pic);
+            Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
             $vendor->header_image = $pic;
 
             // try{
