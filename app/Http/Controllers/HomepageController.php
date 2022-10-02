@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use Storage;
 use App\Models\Vendor;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\DB;
 
 class HomepageController extends Controller
 {
