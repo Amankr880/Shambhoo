@@ -16,13 +16,13 @@ class ReviewsController extends Controller
         if($q = $header) 
         {
             $reviews = new Reviews();
-            $reviews->product_id = $request->input('product_id');
+            // $reviews->product_id = $request->input('product_id');
             $reviews->user_id = $request->input('user_id');
             $reviews->vendor_id = $request->input('vendor_id');
             $reviews->description = $request->input('description');
-            $reviews->product_rating = $request->input('product_rating');
-            $reviews->is_approved = $request->input('is_approved');
-            $reviews->delivery_rating = $request->input('delivery_rating');
+            // $reviews->product_rating = $request->input('product_rating');
+            // $reviews->is_approved = $request->input('is_approved');
+            // $reviews->delivery_rating = $request->input('delivery_rating');
             $reviews->vendor_rating = $request->input('vendor_rating');
 
             // try{
