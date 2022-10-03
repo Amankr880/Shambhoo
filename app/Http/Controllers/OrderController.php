@@ -74,11 +74,29 @@ class OrderController extends Controller
         return $response;
     }
 
+    // public function getOrderByUserId($user_Id)
+    // {
+    //     $order = Order::where('user_id','=',$user_Id)->get();  
+    //     $response = !$order->isEmpty() ? ['order'=>$order] : ["error"=> "order Not found",'msg'=>'order Not Found!!']; 
+    //     return response()->json($response);
+    // }
+
     public function getOrderByUserId($user_Id)
     {
-        $order = Order::where('user_id','=',$user_Id)->get();  
-        $response = !$order->isEmpty() ? ['order'=>$order] : ["error"=> "order Not found",'msg'=>'order Not Found!!']; 
-        return response()->json($response);
+            $orderItems = Order::where('order.user_id','=',$user_Id)->orderBy('order.id','DESC')
+                        ->join('order_item','order.id','=','order_item.order_id')
+                        ->join('products','products.id','=','order_item.product_id')
+                        ->join('vendors','vendors.id','=','order.vendor_id')
+                        ->select('order.*','products.product_name','products.id','vendors.*','order_item.quantity'
+                        ,DB::raw("CONCAT('storage/assets/img/product_img/',products.picture) AS picture"))
+                        ->get();
+            if($orderItems!="[]"){
+                $response = response()->json(['orderItems'=>$orderItems],200);
+            }
+            else{
+                $response = response()->json(['msg'=>'No orders!!'],403);
+            }
+        return $response;
     }
 
     public function updateOrderStatus(Request $request)
