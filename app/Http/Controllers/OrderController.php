@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\User;
 use App\Models\Cart;
+use App\Models\Notification;
 use App\Models\Product;
 use App\Models\order_Item;
+use App\Models\Vendor;
 use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
@@ -61,6 +63,10 @@ class OrderController extends Controller
                     $products[] = Product::where('id',$res->product_id)->get();
                 }
                 $delete_cart_items = Cart::where('user_id',$request->input('user_id'))->delete();
+                $notificaton = Notification::insert([
+                    'description' => "You have a new Order.",
+                    'vendor_id' => $prod->vendor_id
+                ]);
                 $response = response()->json(['order'=>$order,'products'=>$products,'msg'=>'order created successfully!!'],200);
             }
             else{
@@ -105,5 +111,96 @@ class OrderController extends Controller
         $order = Order::where('id','=',$request->id)->update(['order_status'=>$request->order_status]);
         $response = $order ? ['order'=>$order,'msg'=>'order updated successfully!!'] : ["error"=> "order Not found",'msg'=>'order Not Found!!'];
         return response()->json($response);
+    }
+
+    public function updateActiveOrderStatus(Request $request)
+    {
+        $order = Order::where('id','=',$request->id)->update(['status'=>$request->status]);
+        $response = $order ? ['order'=>$order,'msg'=>'Status updated successfully!!'] : ["error"=> "order Not found",'msg'=>'order Not Found!!'];
+        return response()->json($response);
+    }
+
+    public function pendingOrder(Request $request)
+    {
+        $header = $request->bearerToken();
+        $q = User::where('id',$request->user_id)->get('token');
+        if($q = $header) 
+        {
+            $getVendorId = Vendor::where('user_id','=',$request->user_id)->get('id');
+            $orderItems = Order::where([['order.vendor_id','=',$getVendorId[0]['id']],['order_status',0]])->orderBy('order.id','DESC')
+                        ->join('order_item','order.id','=','order_item.order_id')
+                        ->join('products','products.id','=','order_item.product_id')
+                        ->select('order.*','order.id','products.product_name','order_item.quantity'
+                        ,DB::raw("CONCAT('storage/assets/img/product_img/',products.picture) AS picture"))
+                        ->get()
+                        ->groupBy('id');
+            if($orderItems!="[]"){
+                $response = response()->json(['orderItems'=>$orderItems],200);
+            }
+            else{
+                $response = response()->json(['msg'=>'No orders!!'],403);
+            }
+        }
+        else
+        {
+            $response = response()->json(['msg'=>'Token not matched'],403);
+        }
+        return $response;
+    }
+
+    public function activeOrder(Request $request)
+    {
+        $header = $request->bearerToken();
+        $q = User::where('id',$request->user_id)->get('token');
+        if($q = $header) 
+        {
+            $getVendorId = Vendor::where('user_id','=',$request->user_id)->get('id');
+            $orderItems = Order::where([['order.vendor_id','=',$getVendorId[0]['id']],['order_status',1]])->orderBy('order.id','DESC')
+                        ->join('order_item','order.id','=','order_item.order_id')
+                        ->join('products','products.id','=','order_item.product_id')
+                        ->select('order.*','order.id','products.product_name','order_item.quantity'
+                        ,DB::raw("CONCAT('storage/assets/img/product_img/',products.picture) AS picture"))
+                        ->get()
+                        ->groupBy('id');
+            if($orderItems!="[]"){
+                $response = response()->json(['orderItems'=>$orderItems],200);
+            }
+            else{
+                $response = response()->json(['msg'=>'No orders!!'],403);
+            }
+        }
+        else
+        {
+            $response = response()->json(['msg'=>'Token not matched'],403);
+        }
+        return $response;
+    }
+
+    public function historyOrder(Request $request)
+    {
+        $header = $request->bearerToken();
+        $q = User::where('id',$request->user_id)->get('token');
+        if($q = $header) 
+        {
+            $getVendorId = Vendor::where('user_id','=',$request->user_id)->get('id');
+            $orderItems = Order::where([['order.vendor_id','=',$getVendorId[0]['id']],['order_status',2]])->orderBy('order.id','DESC')
+                        ->join('order_item','order.id','=','order_item.order_id')
+                        ->join('products','products.id','=','order_item.product_id')
+                        ->select('order.*','order.id','products.product_name','order_item.quantity'
+                        ,DB::raw("CONCAT('storage/assets/img/product_img/',products.picture) AS picture"))
+                        ->get()
+                        ->groupBy('id');
+            if($orderItems!="[]"){
+                $response = response()->json(['orderItems'=>$orderItems],200);
+            }
+            else{
+                $response = response()->json(['msg'=>'No orders!!'],403);
+            }
+        }
+        else
+        {
+            $response = response()->json(['msg'=>'Token not matched'],403);
+        }
+        return $response;
     }
 }

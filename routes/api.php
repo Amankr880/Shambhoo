@@ -14,6 +14,7 @@ use App\Http\Controllers\PlanController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ReviewsController;
+use App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -90,6 +91,15 @@ Route::controller(OrderController::class)->group(function () {
     Route::post('createOrder', 'createOrder');
     Route::get('getOrderByUserId/{id}', 'getOrderByUserId');
     Route::post('updateOrderStatus', 'updateOrderStatus');
+    Route::post('updateActiveOrderStatus', 'updateActiveOrderStatus');
+    Route::post('pendingOrder', 'pendingOrder');
+    Route::post('historyOrder', 'historyOrder');
+});
+
+Route::controller(NotificationController::class)->group(function () {
+    Route::post('showNotification', 'show');
+    Route::post('notificationData', 'data');
+    Route::post('updateNotification', 'updateNotification');
 });
 
 Route::controller(PaymentController::class)->group(function () {
