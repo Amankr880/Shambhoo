@@ -204,3 +204,35 @@ class OrderController extends Controller
         return $response;
     }
 }
+
+public function getAllOrder(Request $request)
+    {
+        $header = $request->bearerToken();
+        $q = User::where('id',$request->user_id)->get('token');
+        if($q = $header) 
+        {
+            $getVendorId = Vendor::where('user_id','=',$request->user_id)->get('id');
+            $orderItems = Order::where('order.vendor_id','=',$getVendorId[0]['id'])->orderBy('order.id','DESC')
+                        ->join('order_item','order.id','=','order_item.order_id')
+                        ->join('products','products.id','=','order_item.product_id')
+                        ->select('order.*','order.id','products.product_name','order_item.quantity'
+                        ,DB::raw("CONCAT('storage/assets/img/product_img/',products.picture) AS picture"))
+                        ->get()
+                        ->groupBy('id');
+            if($orderItems!="[]"){
+                $response = response()->json(['orderItems'=>$orderItems],200);
+            }
+            else{
+                $response = response()->json(['msg'=>'No orders!!'],403);
+            }
+        }
+        else
+        {
+            $response = response()->json(['msg'=>'Token not matched'],403);
+        }
+        return $response;
+    }
+}
+
+
+}

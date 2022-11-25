@@ -94,6 +94,7 @@ Route::controller(OrderController::class)->group(function () {
     Route::post('updateActiveOrderStatus', 'updateActiveOrderStatus');
     Route::post('pendingOrder', 'pendingOrder');
     Route::post('historyOrder', 'historyOrder');
+    Route::get('getAllOrders', 'getAllOrder');
 });
 
 Route::controller(NotificationController::class)->group(function () {

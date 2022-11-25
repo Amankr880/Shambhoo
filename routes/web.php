@@ -55,4 +55,4 @@ Route::group(['middleware' => 'auth'], function () {
 	 Route::post('/updatead', [App\Http\Controllers\AdminController::class, 'updateAd']);
 });
 
- URL::forceScheme('https');
+// URL::forceScheme('https');
