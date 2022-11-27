@@ -203,7 +203,6 @@ class OrderController extends Controller
         }
         return $response;
     }
-}
 
 public function getAllOrder(Request $request)
     {
