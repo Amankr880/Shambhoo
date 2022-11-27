@@ -66,7 +66,16 @@ class UserController extends Controller
         //$users->password = Hash::make($request->input('password'));
         // $users->user_type = $request->input('user_type');
         // $users->user_type = $request->input('user_status');
-
+        if($users->user_type){
+        $users->user_type = $request->input('user_type');
+        }else{
+            $users->user_type=0;
+        }
+        if($users->user_status){
+        $users->user_status = $request->input('user_status');
+        }else{
+            $users->user_status=0;
+        }
         $file = $request->file('image');
         $destinationPath = "public/assets/img/users";
         $pic = $file->hashName();
@@ -118,10 +127,14 @@ class UserController extends Controller
     public function getMe(Request $request)
     {
         $header = $request->bearerToken();
-        if($header) 
+        if($header)
         {
             $getMe = User::where('token','=',$header)->select('*',DB::raw("CONCAT('storage/assets/img/users/',image) AS image"))->first();
-            $response = response()->json($getMe,200);
+            if($getMe->phone_no==""){
+                $response = response()->json($getMe,200);
+            }else{
+                $response = response()->json(['msg'=>'User not found'],404);
+            }
         }
         else
         {
@@ -165,6 +178,17 @@ class UserController extends Controller
         //$users->password = Hash::make($request->input('password'));
         // $users->user_type = $request->input('user_type');
         // $users->user_type = $request->input('user_status');
+
+        if($users->user_type){
+        $users->user_type = $request->input('user_type');
+        }else{
+            $users->user_type=0;
+        }
+        if($users->user_status){
+        $users->user_status = $request->input('user_status');
+        }else{
+            $users->user_status=0;
+        }
         $users->image = $request->input('image');
         $users->Longitude = $request->input('Longitude');
         $users->Latitude = $request->input('Latitude');

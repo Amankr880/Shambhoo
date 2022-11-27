@@ -40,6 +40,13 @@ class VendorController extends Controller
             $vendor->delivery_slot = $request->input('delivery_slot');
             // $vendor->status = $request->input('status');
             // $vendor->visibility = $request->input('visibility');
+
+            if($vendor->status){
+            $vendor->status = $request->input('status');
+            }else{
+                $vendor->status=0;
+            }
+            
             $vendor->policy = $request->input('policy');
         
             $file = $request->file('id_proof_photo');
