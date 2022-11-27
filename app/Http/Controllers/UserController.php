@@ -130,10 +130,10 @@ class UserController extends Controller
         if($header)
         {
             $getMe = User::where('token','=',$header)->select('*',DB::raw("CONCAT('storage/assets/img/users/',image) AS image"))->first();
-            if($getMe->phone_no==""){
-                $response = response()->json($getMe,200);
-            }else{
+            if($getMe->phone_no==NULL){
                 $response = response()->json(['msg'=>'User not found'],404);
+            }else{
+                $response = response()->json($getMe,200);
             }
         }
         else
