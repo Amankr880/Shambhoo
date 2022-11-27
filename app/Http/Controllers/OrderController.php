@@ -232,6 +232,3 @@ public function getAllOrder(Request $request)
         return $response;
     }
 }
-
-
-}
