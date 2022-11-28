@@ -200,10 +200,10 @@ class VendorController extends Controller
             $vendor = Vendor::where('user_id','=',$request->id)->select('*',DB::raw("CONCAT('storage/assets/img/logo/',logo_image) AS logo_image,CONCAT('storage/assets/img/header/',header_image) AS header_image"))->get();
 
 
-            //$product = Product::where('vendor_id','=',$vendor->id)->select('*',DB::raw("CONCAT('storage/assets/img/product_img/',picture) AS picture"))->get(); 
+            $product = Product::where('vendor_id','=',$vendor[0]->id)->select('*',DB::raw("CONCAT('storage/assets/img/product_img/',picture) AS picture"))->get(); 
             $data = [
                 'vendor'=>$vendor,
-                //'product'=>$product
+                'product'=>$product
                 ]; 
                $response =  response()->json($data);
         }
