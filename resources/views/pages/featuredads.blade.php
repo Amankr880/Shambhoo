@@ -30,11 +30,11 @@
             <a href="{{$ad['url']}}" class="flex-grow-1">
               <img src="{{asset('storage/assets/img/ads/'.$ad['banner'])}}" style="border-radius: 10px;max-width:350px;margin-right: 20px;">
             {{$ad['url']}}</a>
-            <a href="">@if($ad['status']==0)
+            @if($ad['status']==0)
                 Disabled
                 @else
-                &bull;Enabled
-                @endif<a href="featuredads/{{$ad['id']}}">Edit</a>
+                Enabled
+                @endif<a href="featuredads/{{$ad['id']}}" class="btn ml-5"><i class="ni ni-settings"></i>&nbsp;&nbsp;Edit</a>
           </div>
           @endforeach
         </div>
