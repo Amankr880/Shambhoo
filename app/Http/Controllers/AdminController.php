@@ -56,7 +56,7 @@ class AdminController extends Controller
 
     //Shop Management
     public function getAllShops(Request $request){
-        $shops = Vendor::join('users','vendors.user_id', '=', 'users.id')->select('vendors.id','vendors.shopName','vendors.status','vendors.visibility','vendors.logo_image','users.first_name','users.last_name')->get();
+        $shops = Vendor::join('users','vendors.user_id', '=', 'users.id')->select('vendors.id','vendors.user_id','vendors.shopName','vendors.status','vendors.visibility','vendors.logo_image','users.first_name','users.last_name')->get();
         return view('pages.shops',['shops'=>$shops]);
     }
     public function getSingleShop($id){

@@ -40,6 +40,18 @@
                                     <img src="{{asset('storage/assets/img/ads/'.$value)}}" style="max-height: 100px;max-width:500px;margin-right: 20px;"><div>Change icon:<br><br><input type="file" name="banner_file"></div>
                                 </div>
                             </div>
+                            @elseif($key=='status')
+                            <div class="row form-group d-flex align-items-center">
+                                <div class="col-3">
+                                    <label class="form-control-label" for="input-name">{{$key}}</label>
+                                </div>
+                                <div class="col d-flex align-items-center gx-4">
+                                     <select class="form-select" name="{{$key}}">
+                                        <option value="0" @if($value==0)selected @endif>Unavailable</option>
+                                        <option value="1" @if($value==1)selected @endif>Available</option>
+                                    </select>
+                                </div>
+                            </div>
                             @else
                              <div class="row form-group d-flex align-items-center">
                                 <div class="col-3">

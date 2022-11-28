@@ -48,7 +48,7 @@
                       </div>
                     </th>
                     <td>
-                <a href="#">{{$shop['first_name']}} {{$shop['last_name']}}</a>
+                <a href="vendors/{{$shop['user_id']}}">{{$shop['first_name']}} {{$shop['last_name']}}</a>
                     </td>
                     <td class="budget">
                 @if($shop['status']==0)
@@ -63,12 +63,10 @@
                                     </td>
                     <td>
                       <span class="badge badge-dot mr-4">
-                        <i class="bg-success"></i>
                         <span class="status">@if($shop['visibility']==0)
-                        Unavailable
+                        <i class="bg-danger"></i>Unavailable
                         @else
-                        
-                        Available
+                        <i class="bg-success"></i>Available
                         @endif</span>
                       </span>
                     </td>

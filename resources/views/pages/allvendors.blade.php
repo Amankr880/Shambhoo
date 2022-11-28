@@ -28,7 +28,7 @@
                     <th scope="col" class="sort" data-sort="name">Id</th>
                     <th scope="col" class="sort" data-sort="budget">Vendors</th>
                     <th scope="col" class="sort" data-sort="budget">Email</th>
-                    <th scope="col" class="sort" data-sort="budget">Type</th>
+                    <th scope="col" class="sort" data-sort="budget">Phone</th>
                     <th scope="col" class="sort" data-sort="status">Status</th>
                     <th scope="col"></th>
                   </tr>
@@ -51,7 +51,7 @@
                 {{$vendor['email']}}
                     </td>
                     <td class="budget">
-                {{$vendor['user_type']}}
+                {{$vendor['phone_no']}}
                     </td>
                     <td>
                       <span class="badge badge-dot mr-4">
