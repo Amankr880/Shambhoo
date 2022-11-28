@@ -111,8 +111,10 @@ class VendorController extends Controller
             // {
             //     echo 'Message: ' .$e->getMessage();
             // }
-            
+
             $vendor->save();
+	$affected = DB::table('users')->where('user_id',$vendor->user_id)->update(['user_type' => 1]);
+$affected->save();
             $response = response()->json(['vendor'=>$vendor,'msg'=>'vendor created successfully!!'],200);
         }
         else
