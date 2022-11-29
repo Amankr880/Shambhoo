@@ -156,7 +156,7 @@ class ProductController extends Controller
         if($q = $header) 
         {
             $vendor_id = $request->input('vendor_id');
-            $vendor_category = vendor_category::join('categories', 'vendor_category.parent_category', '=', 'categories.id')
+            $vendor_category = vendor_category::join('categories', 'vendor_category.category_id', '=', 'categories.id')
                     ->where([['vendor_category.vendor_id','=',$vendor_id],['categories.status','!=','10']])->distinct()
                     ->select('vendor_category.*', 'categories.*',DB::raw("CONCAT('storage/assets/img/category_icons/',categories.icon) AS icon"))->get(); 
 
