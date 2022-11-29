@@ -46,8 +46,8 @@ class ProductController extends Controller
             $product->picture = $pic;
 
             //$vendor_category = vendor_category::firstOrCreate(['vendor_id' => $request->input('vendor_id'),
-                                                            'category_id' => $request->input('category_id'),
-                                                            'parent_category' => $request->input('parent_category')]);
+              //                                              'category_id' => $request->input('category_id'),
+                //                                            'parent_category' => $request->input('parent_category')]);
             if(vendor_category::where([['vendor_id','=',$request->input('vendor_id')],['category_id','=',$request->input('category_id')]])->first()){
 
             }else{
