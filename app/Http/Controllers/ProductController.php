@@ -45,10 +45,15 @@ class ProductController extends Controller
             Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
             $product->picture = $pic;
 
-            $vendor_category = vendor_category::firstOrCreate(['vendor_id' => $request->input('vendor_id'),
+            //$vendor_category = vendor_category::firstOrCreate(['vendor_id' => $request->input('vendor_id'),
                                                             'category_id' => $request->input('category_id'),
                                                             'parent_category' => $request->input('parent_category')]);
-            $vendor_category->save();
+            if(vendor_category::where([['vendor_id','=',$request->input('vendor_id')],['category_id','=',$request->input('category_id')]])->first()){
+
+            }else{
+            vendor_category::insert(['vendor_id' => $request->input('vendor_id'),'category_id' => $request->input('category_id'),'parent_category' => $request->input('parent_category')]);
+            }
+            //$vendor_category->save();
 
             $product->save();
             $response = response()->json(['product'=>$product,'msg'=>'product created successfully!!'],200);
@@ -154,6 +159,7 @@ class ProductController extends Controller
             $vendor_category = vendor_category::join('categories', 'vendor_category.parent_category', '=', 'categories.id')
                     ->where([['vendor_category.vendor_id','=',$vendor_id],['categories.status','!=','10']])->distinct()
                     ->select('vendor_category.*', 'categories.*',DB::raw("CONCAT('storage/assets/img/category_icons/',categories.icon) AS icon"))->get(); 
+
             $response = response()->json(['vendor_category'=>$vendor_category],200);
         }
         else
