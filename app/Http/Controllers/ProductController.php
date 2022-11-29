@@ -48,6 +48,7 @@ class ProductController extends Controller
             $vendor_category = vendor_category::firstOrCreate(['vendor_id' => $request->input('vendor_id'),
                                                             'category_id' => $request->input('category_id'),
                                                             'parent_category' => $request->input('parent_category')]);
+            $vendor_category->save();
 
             $product->save();
             $response = response()->json(['product'=>$product,'msg'=>'product created successfully!!'],200);
