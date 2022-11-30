@@ -156,11 +156,34 @@ class ProductController extends Controller
         if($q = $header) 
         {
             $vendor_id = $request->input('vendor_id');
-            $vendor_category = vendor_category::join('categories', 'vendor_category.category_id', '=', 'categories.id')
-                    ->where([['vendor_category.vendor_id','=',$vendor_id],['categories.status','!=','10']])->distinct()
-                    ->select('vendor_category.*', 'categories.*',DB::raw("CONCAT('storage/assets/img/category_icons/',categories.icon) AS icon"))->get(); 
 
+            // $cats_ids=vendor_category::where([['vendor_category.vendor_id','=',$vendor_id],['categories.status','!=','10']])->get();
+
+            // $
+            // foreach($cat_ids as $category){
+            //     if($category['parent_category']==NULL || $category['parent_category']>0){
+
+            //     }else{
+
+            //     }
+            // }
+
+            $vendor_category = vendor_category::join('categories', 'vendor_category.category_id', '=', 'categories.id')
+                    -> where([['vendor_category.vendor_id','=',$vendor_id],['categories.status','!=','10']])->distinct()
+                    ->select('vendor_category.*', 'categories.*',DB::raw("CONCAT('storage/assets/img/category_icons/',categories.icon) AS icon"))->get();
+
+                    $vendor_parent="";
+            for ($i=0;$i<count($vendor_category);$i++) {
+                if($vendor_category[$i]['parent_category']==NULL || $vendor_category[$i]['parent_category']==0){
+                    
+                }else{
+                    $vendor_parent=Category::where('id','=',$vendor_category[$i]['parent_category'])->select('categories.*'))->get();
+                    $vendor_category[$i]['category_name']=$vendor_parent[$i]['category_name'];
+                    $vendor_category[$i]['description']=$vendor_parent[$i]['description'];
+                    $vendor_category[$i]['icon']=$vendor_parent[$i]['icon'];
+                }
             $response = response()->json(['vendor_category'=>$vendor_category],200);
+            
         }
         else
         {
