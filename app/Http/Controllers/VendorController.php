@@ -113,8 +113,8 @@ class VendorController extends Controller
             // }
 
             $vendor->save();
-	$affected = DB::table('users')->where('user_id',$vendor->user_id)->update(['user_type' => 1]);
-$affected->save();
+	$affected = User::where('id',$vendor->user_id)->update(['user_type' => 1]);
+//$affected->save();
             $response = response()->json(['vendor'=>$vendor,'msg'=>'vendor created successfully!!'],200);
         }
         else
@@ -128,6 +128,7 @@ $affected->save();
     {
         $vendor = Vendor::where('user_id','=',$user_Id)->select('*',DB::raw("CONCAT('storage/assets/img/logo/',logo_image) AS logo_image,CONCAT('storage/assets/img/header/',header_image) AS header_image,CONCAT('storage/assets/img/gallery/',gallery) AS gallery"))->get(); 
         $response = !$vendor->isEmpty() ? ['vendor'=>$vendor] : ["error"=> "vendor Not found",'msg'=>'vendor Not Found!!']; 
+
         return response()->json($response);
     }
 
@@ -207,6 +208,8 @@ $affected->save();
                 'vendor'=>$vendor,
                 'product'=>$product,
                 ]; 
+        $affected = users::where('user_id',$vendor->user_id)->update(['user_type' => 1]);
+        $affected->save();
                $response =  response()->json($data);
         }
         else
