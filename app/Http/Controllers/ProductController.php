@@ -178,6 +178,7 @@ class ProductController extends Controller
                     
                 }else{
                     $vendor_parent=Categories::where('id','=',$vendor_category[$i]['parent_category'])->select('categories.*')->get();
+                    $vendor_category[$i]['id']=$vendor_parent[$i]['id'];
                     $vendor_category[$i]['category_name']=$vendor_parent[$i]['category_name'];
                     $vendor_category[$i]['description']=$vendor_parent[$i]['description'];
                     $vendor_category[$i]['icon']="storage/assets/img/category_icons/".$vendor_parent[$i]['icon'];
