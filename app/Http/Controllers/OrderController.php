@@ -63,10 +63,10 @@ class OrderController extends Controller
                     $products[] = Product::where('id',$res->product_id)->first();
                 }
                 $delete_cart_items = Cart::where('user_id',$request->input('user_id'))->delete();
-                $notificaton = Notification::insert([
-                    'description' => "You have a new Order.",
-                    'vendor_id' => $prod->vendor_id
-                ]);
+                //$notificaton = Notification::insert([
+                  //  'description' => "You have a new Order.",
+                   // 'vendor_id' => $prod->vendor_id
+                //]);
                 $response = response()->json(['order'=>$order,'products'=>$products,'msg'=>'order created successfully!!'],200);
             }
             else{
