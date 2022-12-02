@@ -114,7 +114,7 @@ class VendorController extends Controller
 
             $vendor->save();
 	$affected = User::where('id',$vendor->user_id)->update(['user_type' => 1]);
-//$affected->save();
+    //$affected->save();
             $response = response()->json(['vendor'=>$vendor,'msg'=>'vendor created successfully!!'],200);
         }
         else

@@ -177,7 +177,7 @@ class ProductController extends Controller
                 if($vendor_category[$i]['parent_category']==NULL || $vendor_category[$i]['parent_category']==0){
                     
                 }else{
-                    $vendor_parent=Category::where('id','=',$vendor_category[$i]['parent_category'])->select('categories.*')->get();
+                    $vendor_parent=Categories::where('id','=',$vendor_category[$i]['parent_category'])->select('categories.*')->get();
                     $vendor_category[$i]['category_name']=$vendor_parent[$i]['category_name'];
                     $vendor_category[$i]['description']=$vendor_parent[$i]['description'];
                     $vendor_category[$i]['icon']=$vendor_parent[$i]['icon'];
