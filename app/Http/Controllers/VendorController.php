@@ -219,16 +219,16 @@ class VendorController extends Controller
         return $response;
     }
 
-    protected function validatorForStore($data){
-        if(isset($data['gallery'])){
-            $rules['gallery.*'] = 'required|mimes:jpg,jpeg,png,mp4,ogx,oga,ogv,ogg,webm|max:20000';
-            $rules['gallery'] = 'max:5';
-        }
+    // protected function validatorForStore($data){
+    //     if(isset($data['gallery'])){
+    //         $rules['gallery.*'] = 'required|mimes:jpg,jpeg,png,mp4,ogx,oga,ogv,ogg,webm|max:20000';
+    //         $rules['gallery'] = 'max:5';
+    //     }
         
-        $messages = [
-            "gallery.max" => "Max 5 images can be attached.",
-        ];
+    //     $messages = [
+    //         "gallery.max" => "Max 5 images can be attached.",
+    //     ];
 
-        return Validator::make($data, $rules, $messages);
-    }
+    //     return Validator::make($data, $rules, $messages);
+    // }
 }
