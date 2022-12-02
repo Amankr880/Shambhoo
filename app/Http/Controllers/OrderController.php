@@ -60,7 +60,7 @@ class OrderController extends Controller
                 }
                 $products = [];
                 foreach($cart_items as $res){
-                    $products[] = Product::where('id',$res->product_id)->get();
+                    $products[] = Product::where('id',$res->product_id)->first();
                 }
                 $delete_cart_items = Cart::where('user_id',$request->input('user_id'))->delete();
                 $notificaton = Notification::insert([
