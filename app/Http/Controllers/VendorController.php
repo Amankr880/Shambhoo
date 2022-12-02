@@ -208,8 +208,6 @@ class VendorController extends Controller
                 'vendor'=>$vendor,
                 'product'=>$product,
                 ]; 
-        $affected = users::where('user_id',$vendor->user_id)->update(['user_type' => 1]);
-        $affected->save();
                $response =  response()->json($data);
         }
         else
