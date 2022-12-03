@@ -47,7 +47,7 @@ class OrderController extends Controller
                 // $order->status = $request->input('status');
                 // $order->discount_applied = $request->input('discount_applied');
                 // $order->discount_type = $request->input('discount_type');
-                // $order->order_details = $request->input('order_details');
+                $order->order_details = $request->input('order_details');
                 $order->save();
 
                 $cart_items = Cart::where('user_id',$request->input('user_id'))->get();
