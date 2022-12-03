@@ -87,7 +87,7 @@ class HomepageController extends Controller
 
     public function getStore(Request $request)
     {
-        $shopDetails = Vendor::where([['pincode','=',$request->pincode],['status','!=',0],['visibility','=',1]])->select('*',DB::raw("CONCAT('storage/assets/img/logo/',logo_image) AS logo_image,CONCAT('storage/assets/img/header/',header_image) AS header_image"))->get();  
+        $shopDetails = Vendor::where([['pincode','=',$request->pincode],['status','!=',0],['visibility','=',1]])->select('*',DB::raw("CONCAT('storage/assets/img/logo/',logo_image) AS logo_image,CONCAT('storage/assets/img/header/',header_image) AS header_image"))->sortByDesc('status')->get();  
         if($shopDetails)
         {
             $response = response()->json($shopDetails,200);
