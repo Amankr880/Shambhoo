@@ -15,10 +15,6 @@ use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ReviewsController;
 use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\Api\SubscriptionController;
-use App\Http\Controllers\Api\PlaceOrderController;
-use Twilio\Rest\Events\V1\SubscriptionContext;
-use Twilio\Rest\Events\V1\SubscriptionList;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,7 +38,7 @@ Route::group([
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
-    Route::get('/user-profile', [AuthController::class, 'userProfile']);
+    Route::get('/user-profile', [AuthController::class, 'userProfile']);    
 });
 
 
@@ -52,7 +48,7 @@ Route::group([
 ], function ($router) {
     Route::post('/sendSMS', [SMSController::class, 'smsSend']);
     Route::post('/sendSMSTest', [SMSController::class, 'smsSend']);
-    Route::post('/verifyOtp', [SMSController::class, 'otpVerify']);
+    Route::post('/verifyOtp', [SMSController::class, 'otpVerify']);  
 });
 //Route::POST('sendSMS', [App\Http\Controllers\TwilioSMSController::class, 'index']);
 // Route::controller(TwilioSMSController::class)->group(function () {
@@ -98,6 +94,8 @@ Route::controller(OrderController::class)->group(function () {
     Route::post('updateActiveOrderStatus', 'updateActiveOrderStatus');
     Route::post('pendingOrder', 'pendingOrder');
     Route::post('historyOrder', 'historyOrder');
+    Route::post('activeOrder', 'activeOrder');
+    Route::get('getAllOrders', 'getAllOrder');
 });
 
 Route::controller(NotificationController::class)->group(function () {
@@ -138,16 +136,6 @@ Route::controller(VendorController::class)->group(function () {
     Route::post('updateVendor/{id}', 'updateVendor');
     Route::post('getVendor', 'getVendor');
 });
-
-Route::controller(SubscriptionController::class)->group(function () {
-    Route::post('getSubscription', 'getSubscription');
-});
-
-Route::controller(PlaceOrderController::class)->group(function () {
-    Route::post('placeOrder', 'placeOrder');
-});
-
-// Route::post('placeOrder', 'PlaceOrderController@placeOrder');
 
 // Route::controller(PlanController::class)->group(function () {
 //     Route::post('createVendor', 'createVendor');
