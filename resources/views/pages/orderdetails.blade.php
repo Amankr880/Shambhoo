@@ -34,6 +34,7 @@
                                         <option value="1" @if($value==1)selected @endif>Confirmed</option>
                                         <option value="2" @if($value==2)selected @endif>Out for Delivery</option>
                                         <option value="3" @if($value==3)selected @endif>Delivered</option>
+                                        <option value="4" @if($value==4)selected @endif>Cancelled</option>
                                     </select>
                                 </div>
                             </div>
