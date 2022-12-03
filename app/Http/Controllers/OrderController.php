@@ -183,7 +183,7 @@ class OrderController extends Controller
         if($q = $header) 
         {
             $getVendorId = Vendor::where('user_id','=',$request->user_id)->get('id');
-            $orderItems = Order::where([['order.vendor_id','=',$getVendorId[0]['id']],['order_status',2]])->orWhere([['order.vendor_id','=',$getVendorId[0]['id']],['order_status',3]])->orderBy('order.id','DESC')
+            $orderItems = Order::where([['order.vendor_id','=',$getVendorId[0]['id']],['order_status',3]])->orWhere([['order.vendor_id','=',$getVendorId[0]['id']],['order_status',4]])->orderBy('order.id','DESC')
                         ->join('order_item','order.id','=','order_item.order_id')
                         ->join('products','products.id','=','order_item.product_id')
                         ->select('order.*','order.id','products.product_name','order_item.quantity'
