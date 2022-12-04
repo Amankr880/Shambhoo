@@ -69,29 +69,29 @@ class OrderController extends Controller
                 //]);
             
             try{
-            $url1 = "https://fcm.googleapis.com/fcm/send";
-            $token1 = $request->device_token;
-            $serverKey1 = 'AAAAx5MCry8:APA91bFjVW3GG0vIaReUN1TugWzzgSvQxONQd1nIhzZnEQBNncYXbVBJqU6hRQmzHs_g9CyRzb2qDAfJsdnCM9gsbSKkAbIQwjI1_45y9yXf8lHHub0D8h8gvcgVMbwlwoDNT0unEam7';
-            $title1 = 'Order Confimation';
-            $body1 = 'Your Order has been placed successfully';
-            $notification1 = array('title' =>$title1 , 'text' => $body1, 'sound' => 'default', 'badge' => '1');
-            $arrayToSend1 = array('to' => $token1, 'notification' => $notification1,'priority'=>'high');
-            $json1 = json_encode($arrayToSend1);
-            $headers1 = array();
-            $headers1[] = 'Content-Type: application/json';
-            $headers1[] = 'Authorization: key='. $serverKey1;
-            $ch1 = curl_init();
-            curl_setopt($ch1, CURLOPT_URL, $url1);
-            curl_setopt($ch1, CURLOPT_CUSTOMREQUEST,"POST");
-            curl_setopt($ch1, CURLOPT_POSTFIELDS, $json1);
-            curl_setopt($ch1, CURLOPT_HTTPHEADER,$headers1);
-            //Send the request
-            $respo = curl_exec($ch1);
-                //echo $respo;
-            curl_close($ch1);
-        }catch(Exception $e){
-            echo $e->getMessage();
-        }
+                $url1 = "https://fcm.googleapis.com/fcm/send";
+                $token1 = $request->device_token;
+                $serverKey1 = 'AAAAx5MCry8:APA91bFjVW3GG0vIaReUN1TugWzzgSvQxONQd1nIhzZnEQBNncYXbVBJqU6hRQmzHs_g9CyRzb2qDAfJsdnCM9gsbSKkAbIQwjI1_45y9yXf8lHHub0D8h8gvcgVMbwlwoDNT0unEam7';
+                $title1 = 'Order Confimation';
+                $body1 = 'Your Order has been placed successfully';
+                $notification1 = array('title' =>$title1 , 'text' => $body1, 'sound' => 'default', 'badge' => '1');
+                $arrayToSend1 = array('to' => $token1, 'notification' => $notification1,'priority'=>'high');
+                $json1 = json_encode($arrayToSend1);
+                $headers1 = array();
+                $headers1[] = 'Content-Type: application/json';
+                $headers1[] = 'Authorization: key='. $serverKey1;
+                $ch1 = curl_init();
+                curl_setopt($ch1, CURLOPT_URL, $url1);
+                curl_setopt($ch1, CURLOPT_CUSTOMREQUEST,"POST");
+                curl_setopt($ch1, CURLOPT_POSTFIELDS, $json1);
+                curl_setopt($ch1, CURLOPT_HTTPHEADER,$headers1);
+                //Send the request
+                $respo = curl_exec($ch1);
+                    //echo $respo;
+                curl_close($ch1);
+            }catch(Exception $e){
+                echo $e->getMessage();
+            }
         $response = response()->json(['order'=>$order,'products'=>$products,'msg'=>'order created successfully!!'],200);
 
             }

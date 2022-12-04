@@ -33,9 +33,10 @@ class PlaceOrderController extends Controller
         $data->user_id = $request->user_id;
         $data->vendor_id = $request->vendor_id;
         $data->status = '0';
+        $data->order_details = $request->description;
         $data->order_date = $current_date;
-        $data->order_otp = $request->order_otp;
-        $data->order_details = $fileNameToStore;
+        $data->order_otp = mt_rand(1000,9999);
+        $data->order_type = $fileNameToStore;
         $response = $data->save();
 
 
