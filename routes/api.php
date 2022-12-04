@@ -97,7 +97,6 @@ Route::controller(OrderController::class)->group(function () {
     Route::post('updateOrderStatus', 'updateOrderStatus');
     Route::post('updateActiveOrderStatus', 'updateActiveOrderStatus');
     Route::post('pendingOrder', 'pendingOrder');
-    Route::post('activeOrder', 'activeOrder');
     Route::post('historyOrder', 'historyOrder');
 });
 
