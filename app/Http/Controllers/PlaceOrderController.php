@@ -15,14 +15,14 @@ class PlaceOrderController extends Controller
     {
 
         if ($request->hasFile('order_type')) {
-            $filenameWithExt = $request->file('image')->getClientOriginalName ();
+            $filenameWithExt = $request->file('order_type')->getClientOriginalName ();
             // Get Filename
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
             // Get just Extension
-            $extension = $request->file('image')->getClientOriginalExtension();
+            $extension = $request->file('order_type')->getClientOriginalExtension();
             // Filename To store
             $fileNameToStore = $filename. '_'. time().'.'.$extension;
-            $path = $request->file('image')->storeAs('public/assets/img/manual_orders', $fileNameToStore);
+            $path = $request->file('order_type')->storeAs('public/assets/img/manual_orders', $fileNameToStore);
             }
             // Else add a dummy image
             else {
