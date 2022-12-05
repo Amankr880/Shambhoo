@@ -85,7 +85,7 @@ class ReviewsController extends Controller
         $q = User::where('id',$request->user_id)->get('token');
         if($q = $header) 
         {
-            $reviews = Reviews::where('vendor_id',$request->vendor_id)->get();
+            $reviews = Reviews::where('vendor_id',$request->vendor_id)->join('users','reviews.user_id','=','users.id')->select('reviews.*','users.first_name','users.last_name')->get();
             if($reviews){
                 $response = response()->json(['rewiews'=>$reviews],200);
             }
