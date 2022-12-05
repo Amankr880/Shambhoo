@@ -15,8 +15,8 @@ use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ReviewsController;
 use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\Api\SubscriptionController;
-use App\Http\Controllers\Api\PlaceOrderController;
+use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\PlaceOrderController;
 use Twilio\Rest\Events\V1\SubscriptionContext;
 use Twilio\Rest\Events\V1\SubscriptionList;
 
