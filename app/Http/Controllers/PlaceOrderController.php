@@ -37,11 +37,6 @@ class PlaceOrderController extends Controller
         $data->order_date = $current_date;
         $data->order_otp = mt_rand(1000,9999);
         $data->order_type = $fileNameToStore;
-
-        //for notification
-        $getvendor = Vendor::find($request->vendor_id);
-        $order->device_token = $getvendor->policy;
-
         $response = $data->save();
 
 
@@ -49,7 +44,6 @@ class PlaceOrderController extends Controller
             $getvendor = Vendor::find($request->vendor_id);
             $token1 = $getvendor->policy;
             $url1 = "https://fcm.googleapis.com/fcm/send";
-            //$token1 = $request->device_token;
             $serverKey1 = 'AAAAx5MCry8:APA91bFjVW3GG0vIaReUN1TugWzzgSvQxONQd1nIhzZnEQBNncYXbVBJqU6hRQmzHs_g9CyRzb2qDAfJsdnCM9gsbSKkAbIQwjI1_45y9yXf8lHHub0D8h8gvcgVMbwlwoDNT0unEam7';
             $title1 = 'Order Confimation';
             $body1 = 'Your Order has been placed successfully';
