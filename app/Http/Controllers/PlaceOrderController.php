@@ -38,9 +38,9 @@ class PlaceOrderController extends Controller
         $data->order_otp = mt_rand(1000,9999);
         $data->order_type = $fileNameToStore;
         
-                //for notification
-                $getvendor = Vendor::find($request->vendor_id);
-                $order->device_token = $getvendor->policy;
+        //for notification
+        $getvendor = Vendor::find($request->vendor_id);
+        $order->device_token = $getvendor->policy;
 
         $response = $data->save();
 
