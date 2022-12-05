@@ -75,8 +75,8 @@ class OrderController extends Controller
                 //]);
             
             try{
-            $getvendor = Vendor::find($prod->vendor_id);
-            $token1 = $getvendor->policy;
+                $getvendor = Vendor::find($prod->vendor_id);
+                $token1 = $getvendor->policy;
                 $url1 = "https://fcm.googleapis.com/fcm/send";
                 //$token1 = $request->device_token;
                 $serverKey1 = 'AAAAx5MCry8:APA91bFjVW3GG0vIaReUN1TugWzzgSvQxONQd1nIhzZnEQBNncYXbVBJqU6hRQmzHs_g9CyRzb2qDAfJsdnCM9gsbSKkAbIQwjI1_45y9yXf8lHHub0D8h8gvcgVMbwlwoDNT0unEam7';
@@ -95,7 +95,7 @@ class OrderController extends Controller
                 curl_setopt($ch1, CURLOPT_POSTFIELDS, $json1);
                 curl_setopt($ch1, CURLOPT_HTTPHEADER,$headers1);
                 //Send the request
-                $respo = curl_exec($ch1);
+                curl_exec($ch1);
                     //echo $respo;
                 curl_close($ch1);
             }catch(Exception $e){
