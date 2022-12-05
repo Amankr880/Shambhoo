@@ -96,6 +96,7 @@ Route::controller(OrderController::class)->group(function () {
     Route::get('getOrderByUserId/{id}', 'getOrderByUserId');
     Route::post('updateOrderStatus', 'updateOrderStatus');
     Route::post('updateActiveOrderStatus', 'updateActiveOrderStatus');
+    Route::post('activeOrder', 'activeOrder');
     Route::post('pendingOrder', 'pendingOrder');
     Route::post('historyOrder', 'historyOrder');
 });
