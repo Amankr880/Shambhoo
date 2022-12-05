@@ -38,6 +38,12 @@ class OrderController extends Controller
                 $order->order_otp = $otp;
                 $orderNo = 'SHMBO-'.mt_rand(100000,999999);
                 $order->order_no = $orderNo;
+
+                //for notification
+                $getvendor = Vendor::find($request->vendor_id);
+                $order->device_token = $getvendor->policy;
+
+
                 // $order->total_order = $request->input('total_order');
                 // $order->order_type = $request->input('order_type');
                 // $order->ship_date = $request->input('ship_date');
