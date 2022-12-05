@@ -37,5 +37,6 @@ class Vendor extends Model
       'status',
       'visibility',
       'policy',
+      'minimum_order',
     ];
 }
