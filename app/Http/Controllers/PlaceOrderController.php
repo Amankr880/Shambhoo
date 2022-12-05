@@ -41,10 +41,10 @@ class PlaceOrderController extends Controller
         $data->order_type = $fileNameToStore;
         $orderNo = 'SHMBO-'.mt_rand(100000,999999);
         $data->order_no = $orderNo;
-        $data->save();
+        $ordersave=$data->save();
 
 
-        if ($response) {
+        if ($ordersave) {
             $getvendor = Vendor::find($request->vendor_id);
             $token1 = $getvendor->policy;
             $url1 = "https://fcm.googleapis.com/fcm/send";
