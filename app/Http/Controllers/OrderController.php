@@ -40,7 +40,7 @@ class OrderController extends Controller
                 $order->order_no = $orderNo;
 
                 //for notification
-                $getvendor = Vendor::find($request->vendor_id);
+                $getvendor = Vendor::find($prod->vendor_id);
                 $order->device_token = $getvendor->policy;
 
 
