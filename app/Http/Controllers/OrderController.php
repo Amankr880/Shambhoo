@@ -82,6 +82,8 @@ class OrderController extends Controller
                 $body1 = 'Your Order has been placed successfully';
                 $notification1 = array('title' =>$title1 , 'text' => $body1, 'sound' => 'default', 'badge' => '1');
                 $arrayToSend1 = array('to' => $token1, 'notification' => $notification1,'priority'=>'high');
+                $getvendor = Vendor::find($request->vendor_id);
+                $token1 = $getvendor->policy;
                 $json1 = json_encode($arrayToSend1);
                 $headers1 = array();
                 $headers1[] = 'Content-Type: application/json';
