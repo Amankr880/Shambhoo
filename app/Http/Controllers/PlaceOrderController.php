@@ -14,7 +14,7 @@ class PlaceOrderController extends Controller
     public function placeOrder(Request $request)
     {
 
-        if ($request->hasFile('image')) {
+        if ($request->hasFile('order_type')) {
             $filenameWithExt = $request->file('image')->getClientOriginalName ();
             // Get Filename
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
@@ -22,11 +22,11 @@ class PlaceOrderController extends Controller
             $extension = $request->file('image')->getClientOriginalExtension();
             // Filename To store
             $fileNameToStore = $filename. '_'. time().'.'.$extension;
-            $path = $request->file('image')->storeAs('public/image', $fileNameToStore);
+            $path = $request->file('image')->storeAs('public/assets/img/manual_orders', $fileNameToStore);
             }
             // Else add a dummy image
             else {
-            $fileNameToStore = 'noimage.jpg';
+            $fileNameToStore = 'public/assets/img/manual_orders/noimage.jpg';
             }
 
         $current_date = Carbon::now()->format('Y-m-d');
