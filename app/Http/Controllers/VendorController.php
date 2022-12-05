@@ -203,6 +203,7 @@ class VendorController extends Controller
 
         $device_token = $request->device_token;
         $data1 = Vendor::find($request->id);
+        dd($data1);
         $data1->policy = $device_token;
         $response = $data1->save();
 
