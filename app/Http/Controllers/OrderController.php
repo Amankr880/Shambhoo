@@ -75,7 +75,7 @@ class OrderController extends Controller
                 //]);
             
             try{
-            $getvendor = Vendor::find($request->vendor_id);
+            $getvendor = Vendor::find($prod->vendor_id);
             $token1 = $getvendor->policy;
                 $url1 = "https://fcm.googleapis.com/fcm/send";
                 //$token1 = $request->device_token;
