@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\Vendor;
 use Illuminate\Support\Carbon;
 
 class PlaceOrderController extends Controller
