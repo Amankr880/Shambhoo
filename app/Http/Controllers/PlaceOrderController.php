@@ -41,7 +41,7 @@ class PlaceOrderController extends Controller
         $data->order_type = $fileNameToStore;
         $orderNo = 'SHMBO-'.mt_rand(100000,999999);
         $data->order_no = $orderNo;
-        $response = $data->save();
+        $data->save();
 
 
         if ($response) {
