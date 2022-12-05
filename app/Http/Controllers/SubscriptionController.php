@@ -23,7 +23,7 @@ class SubscriptionController extends Controller
             $data->vendor_id = $request->vendor_id;
             $data->validity = $validity;
             $data->status = 'success';
-            $data->plan_type = $request->plan_type;
+            $data->plan_type = $request->plan_type; //1-basic, 2-premium
             $data->purchase_date = $current_date;
             $response = $data->save();
 
