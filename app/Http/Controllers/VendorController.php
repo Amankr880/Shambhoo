@@ -201,15 +201,16 @@ class VendorController extends Controller
         if($header) //$q = 
         {
 
-        $device_token = $request->device_token;
-        $data1 = Vendor::find($request->id);
-        dd($data1);
-        $data1->policy = $device_token;
-        $response = $data1->save();
 
         $vendor = Vendor::where('user_id','=',$request->id)->select('*',DB::raw("CONCAT('storage/assets/img/logo/',logo_image) AS logo_image,CONCAT('storage/assets/img/header/',header_image) AS header_image"))->get();
 
         $product = Product::where('vendor_id','=',$vendor[0]->id)->join('categories','products.category_id','=','categories.id')->select('products.*',DB::raw("CONCAT('storage/assets/img/product_img/',picture) AS picture"),'categories.parent_category')->get();
+
+        $device_token = $request->device_token;
+        //$data1 = Vendor::find($vendor[0]['id']);
+        //dd($data1);
+        $vendor[0]->policy = $device_token;
+        $vendor[0]->save();
 
         $data = [
             'vendor'=>$vendor,
