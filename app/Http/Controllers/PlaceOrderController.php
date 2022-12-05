@@ -68,12 +68,12 @@ class PlaceOrderController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => 'Order Placed Successfully'
-            ]);
+            ],200);
         } else {
             return response()->json([
                 'status' => false,
                 'message' => 'Error in order place'
-            ]);
+            ],500);
         }
     }
 }
