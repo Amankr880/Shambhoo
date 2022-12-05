@@ -167,8 +167,7 @@ class OrderController extends Controller
                         ->join('products','products.id','=','order_item.product_id')
                         ->select('order.*','order.id','products.product_name','order_item.quantity'
                         ,DB::raw("CONCAT('storage/assets/img/product_img/',products.picture) AS picture"))
-                        ->get()
-                        ->groupBy('id');
+                        ->get();
             if($orderItems!="[]"){
                 $response = response()->json(['orderItems'=>$orderItems],200);
             }
