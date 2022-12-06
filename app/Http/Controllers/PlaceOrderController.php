@@ -26,7 +26,11 @@ class PlaceOrderController extends Controller
             }
             // Else add a dummy image
             else {
-            $fileNameToStore = 'public/assets/img/manual_orders/noimage.jpg';
+            //$fileNameToStore = 'public/assets/img/manual_orders/noimage.jpg';
+                return response()->json([
+                'status' => false,
+                'message' => 'Image not uploaded'
+            ],501);
             }
 
         $current_date = Carbon::now()->format('Y-m-d');
