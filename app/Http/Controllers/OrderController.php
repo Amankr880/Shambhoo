@@ -163,7 +163,7 @@ class OrderController extends Controller
         {
             $getVendorId = Vendor::where('user_id','=',$request->user_id)->get('id');
             $orderItems = Order::where([['order.vendor_id','=',$getVendorId[0]['id']],['order_status',0]])->orderBy('order.id','DESC')
-                        ->join('order_item','order.id','=','order_item.order_id')
+                        ->leftJoin('order_item','order.id','=','order_item.order_id')
                         ->leftJoin('products','products.id','=','order_item.product_id')
                         ->select('order.*','order.id','products.product_name','order_item.quantity'
                         ,DB::raw("CONCAT('storage/assets/img/product_img/',products.picture) AS picture"))
