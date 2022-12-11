@@ -38,6 +38,7 @@ class VendorController extends Controller
             $vendor->business_doc_no = $request->input('business_doc_no');
             $vendor->about = $request->input('about');
             $vendor->delivery_slot = $request->input('delivery_slot');
+            $vendor->minimum_order = $request->input('minimum_order');
             // $vendor->status = $request->input('status');
             // $vendor->visibility = $request->input('visibility');
 

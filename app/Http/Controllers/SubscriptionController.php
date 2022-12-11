@@ -17,7 +17,9 @@ class SubscriptionController extends Controller
         $data2 = Vendor::find($request->vendor_id);
         if(!empty($data2)){
             $current_date = Carbon::now()->format('Y-m-d');
-            $validity = Carbon::now()->addYear();
+            $month = $request->month;
+            $month = number_format($month);
+            $validity = Carbon::now()->addMonth($month);
             $data = new PlanSubscription();
             $data->plan_id = '2';
             $data->vendor_id = $request->vendor_id;
