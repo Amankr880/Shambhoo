@@ -85,6 +85,13 @@ class VendorController extends Controller
             Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
             $vendor->header_image = $pic;
 
+            $file = $request->file('fssai');
+            $destinationPath = "assets/img/fssai/";
+            $pic = $file->hashName();
+            // $filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/header_image/'. $file->hashname();
+            Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
+            $vendor->fssai = $pic;
+
             // try{
             //     $data= $request->all();
             // $validator = $this->validatorForStore($data)->validate();

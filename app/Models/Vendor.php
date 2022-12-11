@@ -38,5 +38,6 @@ class Vendor extends Model
       'visibility',
       'policy',
       'minimum_order',
+      'fssai',
     ];
 }
