@@ -100,7 +100,7 @@ class HomepageController extends Controller
 
     public function getFeatureStore(Request $request)
     {
-        $shopDetails = Vendor::where([['pincode','=',$request->pincode],['city','=',$request->city],['visibility','=',1]])->inRandomOrder()->select('*',DB::raw("CONCAT('storage/assets/img/logo/',logo_image) AS logo_image,CONCAT('storage/assets/img/header/',header_image) AS header_image"))->get(); 
+        $shopDetails = Vendor::where([['city','=',$request->city],['visibility','=',1]])->inRandomOrder()->select('*',DB::raw("CONCAT('storage/assets/img/logo/',logo_image) AS logo_image,CONCAT('storage/assets/img/header/',header_image) AS header_image"))->get(); 
         if($shopDetails)
         {
             $response = response()->json($shopDetails,200);
