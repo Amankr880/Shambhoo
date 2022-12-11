@@ -57,20 +57,29 @@ class VendorController extends Controller
             Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
             $vendor->id_proof_photo = $pic;
 
+
             $file = $request->file('pancard_photo');
+            if($file!=NULL){
             $destinationPath = "assets/img/pancard/";
             $pic = $file->hashName();
             // $filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/pancard_photo/'. $file->hashname();
             Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
             $vendor->pancard_photo = $pic;
+            }else{
+                $vendor->pancard_photo = NULL;
+            }
+
 
             $file = $request->file('business_doc_photo');
+            if($file!=NULL){
             $destinationPath = "assets/img/business_doc/";
             $pic = $file->hashName();
             // $filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/business_doc_photo/'. $file->hashname();
             Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
             $vendor->business_doc_photo = $pic;
-
+            }else{
+                $vendor->business_doc_photo = NULL;
+            }
             $file = $request->file('logo_image');
             $destinationPath = "assets/img/logo/";
             $pic = $file->hashName();
@@ -86,12 +95,15 @@ class VendorController extends Controller
             $vendor->header_image = $pic;
 
             $file = $request->file('fssai');
+            if($file!=NULL){
             $destinationPath = "assets/img/fssai/";
             $pic = $file->hashName();
             // $filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/header_image/'. $file->hashname();
             Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
             $vendor->fssai = $pic;
-
+            }else{
+                $vendor->fssai = NULL;
+            }
             // try{
             //     $data= $request->all();
             // $validator = $this->validatorForStore($data)->validate();
