@@ -208,7 +208,9 @@ class AdminController extends Controller
     }
     public function orderDetails($id){
         $orderDetails = Order::where('id','=',$id)->select('order.*')->get()->toarray();
-        return view('pages.orderdetails',['orderDetails'=>$orderDetails]);
+        $products = order_Item::where('order_id','=',$orderDetails[0]['id'])->join('products','order_item.product_id','=','products.id')->select('*')->get()->toarray();
+        //$products=Product::where('id','=',$user[0]['id'])->select('*')->get()->toarray();
+        return view('pages.orderdetails',['orderDetails'=>$orderDetails,'products'=>$products]);
     }
     public function updateOrder(Request $request){
         //echo $request['id'];

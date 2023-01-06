@@ -75,10 +75,7 @@
                     <div class="card-header bg-white border-0">
                             <h3 class="mb-0">Products</h3>
                     </div>
-                    @foreach($products as $key=>$value)
-                            
-                        @endforeach
-
+                    
                     <table class="table align-items-center table-flush">
                 <thead class="thead-light">
                   <tr>
