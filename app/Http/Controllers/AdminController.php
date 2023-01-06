@@ -31,6 +31,10 @@ class AdminController extends Controller
     }
     public function getUserDetails($id){
         $user=User::where('id','=',$id)->select('*')->get()->toarray();
+        if($user[0]['user_type']==1){
+            $products=Product::where('vendor_id')->select(*)->get();
+            print_r($products);
+        }
         return view('pages.userdetails',['user'=>$user]);
     }
     public function updateUser(Request $request){
