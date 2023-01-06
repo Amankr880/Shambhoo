@@ -72,6 +72,38 @@
                             <button type="button" class="btn mt-4">Cancel</button>
                         </form>
                     </div>
+                    <div class="card-header bg-white border-0">
+                            <h3 class="mb-0">Products</h3>
+                    </div>
+                    @foreach($products as $key=>$value)
+                            
+                        @endforeach
+
+                    <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col" class="sort" data-sort="name">Id</th>
+                    <th scope="col" class="sort" data-sort="budget">Product Name</th>
+                    <th scope="col" class="sort" data-sort="budget">Price</th>
+                    <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody class="list">
+              @foreach($products as $product)
+                  <tr>
+                    <td>
+                        {{$product['id']}}
+                    </td>
+                    <td>
+                        {{$product['product_name']}}
+                    </td>
+                    <td>
+                        {{$product['MSRP']}}
+                    </td>
+                  </tr>
+              @endforeach
+                </tbody>
+              </table>
                 </div>
             <!-- </div> -->
         

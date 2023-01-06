@@ -31,11 +31,11 @@ class AdminController extends Controller
     }
     public function getUserDetails($id){
         $user=User::where('id','=',$id)->select('*')->get()->toarray();
+        $products=[];
         if($user[0]['user_type']==1){
-            $products=Product::where('vendor_id','=',$user[0]['id'])->select('*')->get();
-            print_r($products);
+            $products=Product::where('vendor_id','=',$user[0]['id'])->select('*')->get()->toarray();
         }
-        return view('pages.userdetails',['user'=>$user]);
+        return view('pages.userdetails',['user'=>$user,'products'=>$products]);
     }
     public function updateUser(Request $request){
 
