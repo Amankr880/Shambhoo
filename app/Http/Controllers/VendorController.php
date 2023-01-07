@@ -222,8 +222,7 @@ class VendorController extends Controller
         {
 
 
-        $vendor = Vendor::where('user_id','=',$request->id)->select('*',DB::raw("CONCAT('storage/assets/img/logo/',logo_image) AS logo_image,CONCAT('storage/assets/img/header/',header_image) AS header_image"))->get();
-
+        $vendor = Vendor::where('user_id','=',$request->id)->join('plan_subscriptions','vendor.id','=','plan_subscriptions.vendor_id')->select('vendor.*','plan_subscriptions.purchase_date',DB::raw("CONCAT('storage/assets/img/logo/',logo_image) AS logo_image,CONCAT('storage/assets/img/header/',header_image) AS header_image"))->get();
         //return $vendor;
 
         if(count($vendor)==0){

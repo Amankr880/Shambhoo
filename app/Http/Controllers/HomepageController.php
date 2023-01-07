@@ -111,6 +111,19 @@ class HomepageController extends Controller
         return $response;
     }
 
+    public function getFeaturedStores(Request $request)
+    {
+        $shopDetails = Vendor::where([['status','=',3],['visibility','=',1]])->select('*',DB::raw("CONCAT('storage/assets/img/logo/',logo_image) AS logo_image,CONCAT('storage/assets/img/header/',header_image) AS header_image"))->get(); 
+        if($shopDetails)
+        {
+            $response = response()->json($shopDetails,200);
+        }
+        else{
+            $response = response()->json(['msg'=>'No shops featured!'],404);
+        } 
+        return $response;
+    }
+
     public function getSingleStore(Request $request)
     {
         $shopDetails = Vendor::where('id','=',$request->id)->select('*',DB::raw("CONCAT('storage/assets/img/logo/',logo_image) AS logo_image,CONCAT('storage/assets/img/header/',header_image) AS header_image"))->first(); 

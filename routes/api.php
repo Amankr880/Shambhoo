@@ -121,6 +121,7 @@ Route::controller(HomepageController::class)->group(function () {
     Route::get('featureImageShow', 'featureImageShow');
     Route::post('getStore', 'getStore');
     Route::post('getFeatureStore', 'getFeatureStore');
+    Route::post('getFeaturedStores', 'getFeaturedStores');
     Route::post('getSingleStore', 'getSingleStore');
     Route::post('getVendorByCategoryId', 'getVendorByCategoryId');
 });
