@@ -92,7 +92,14 @@
                         {{$product['id']}}
                     </td>
                     <td>
-                        {{$product['product_name']}}
+                        <div class="row" style="width:300px">
+                            <div class="col">
+                                <img src="{{asset('storage/assets/img/product_img/'.$product['picture'])}}" width="100%">
+                            </div>
+                            <div class="col d-flex align-items-center">
+                                {{$product['product_name']}}
+                            </div>
+                        </div>
                     </td>
                     <td>
                         {{$product['MSRP']}}
