@@ -248,7 +248,7 @@ class ProductController extends Controller
             $product->discount_available = $request->input('discount_available');
             $product->ranking = $request->input('ranking');
             if($request->picture){
-                $image = $request->picture->store('public/product_img');
+                $image = $request->picture->store('assets/img/product_img');
                 $product->picture = $request->picture->hashName();
             }
             
