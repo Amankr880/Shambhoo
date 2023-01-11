@@ -26,7 +26,7 @@ class CartController extends Controller
             if($cartLastItem != ""){
                 if(Cart::where('product_id',$product_id)->where('user_id',$user_id)->count()==0){
                     if($cartLastItem['vendor_id']==$product[0]['vendor_id']){
-                        if($quantity<$product[0]['unit_stock']){
+                        if($$product[0]['product_available']=="1"){
                             $cartItem = new Cart();
                             $cartItem->product_id = $product_id;
                             $cartItem->quantity = $quantity;
