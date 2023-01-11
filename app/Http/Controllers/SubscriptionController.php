@@ -20,7 +20,7 @@ class SubscriptionController extends Controller
             $month = $request->month;
             $month = number_format($month);
             $validity = Carbon::now()->addMonth($month);
-            dd($validity);
+            //dd($month);
             $data = new PlanSubscription();
             $data->plan_id = '2';
             $data->vendor_id = $request->vendor_id;
