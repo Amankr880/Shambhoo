@@ -64,7 +64,7 @@ class AdminController extends Controller
         return view('pages.shops',['shops'=>$shops]);
     }
     public function getSingleShop($id){
-        $shop = Vendor::join('users','vendors.user_id', '=', 'users.id')->where('vendors.id','=',$id)->select('vendors.*','users.first_name','users.last_name')->get()->toarray();
+        $shop = Vendor::join('users','vendors.user_id', '=', 'users.id')->where('vendors.id','=',$id)->leftJoin('plan_subscriptions','vendors.id','=','plan_subscriptions.vendor_id')->select('vendors.*','users.first_name','users.last_name')->get()->toarray();
         return view('pages.shopdetails',['shop'=>$shop]);
     }
     public function updateShop(Request $request){
