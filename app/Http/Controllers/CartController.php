@@ -43,7 +43,7 @@ class CartController extends Controller
                     $response = response()->json(['msg'=> $prod_check->product_name.' Already Added!!'],403);
                 }
             }else{
-                if($quantity<$product[0]['unit_stock']){
+                if($product[0]['product_available']=="1"){
                     $cartItem = new Cart();
                     $cartItem->product_id = $product_id;
                     $cartItem->quantity = $quantity;
