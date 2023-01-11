@@ -16,6 +16,7 @@ class SubscriptionController extends Controller
     {
         $data2 = Vendor::find($request->vendor_id);
         if(!empty($data2)){
+            $deleted = DB::table('plan_subscriptions')->where('vendor_id', '=', $request->vendor_id)->delete();
             $current_date = Carbon::now()->format('Y-m-d');
             $month = $request->month;
             $month = number_format($month);
