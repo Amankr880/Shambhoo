@@ -68,7 +68,7 @@ class ProductController extends Controller
     public function getAllProducts()
     {
         //if(Categories::where('status' => '10'))
-        $product = Product::where('status','!=','10')->select('*',DB::raw("CONCAT('storage/assets/img/product_img/',picture) AS picture"))->get();  
+        $product = Product::where('product_available','!=','0')->select('*',DB::raw("CONCAT('storage/assets/img/product_img/',picture) AS picture"))->get();  
         return response()->json($product);
     }
 
@@ -80,7 +80,7 @@ class ProductController extends Controller
         {
             $product = Product::where([['category_id','=',$request->input('category_id')],
                                     ['vendor_id','=',$request->input('vendor_id')],
-                                    ['status','!=','10']])->select('*',DB::raw("CONCAT('storage/assets/img/product_img/',picture) AS picture"))->get();  
+                                    ['product_available','!=','0']])->select('*',DB::raw("CONCAT('storage/assets/img/product_img/',picture) AS picture"))->get();  
                             
             $cart = Cart::where('user_id',$request->user_id)->get();
             foreach($product as $product_item){
@@ -273,7 +273,7 @@ class ProductController extends Controller
 
     public function deleteProduct($id)
     {
-        $product = Product::where('id','=',$id)->delete();
+        $product = Product::where('id','=',$id)->update(['product_available'=>'0']);
         $response = $product ? ['product'=>$product,'msg'=>'product deleted successfully!!'] : ["error"=> "product Not found",'msg'=>'product Not Found!!'];
         return response()->json($response);
     }
