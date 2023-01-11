@@ -40,7 +40,7 @@ class VendorController extends Controller
             $vendor->delivery_slot = $request->input('delivery_slot');
             $vendor->minimum_order = $request->input('minimum_order');
             // $vendor->status = $request->input('status');
-            // $vendor->visibility = $request->input('visibility');
+            $vendor->visibility = 1;
 
             if($vendor->status){
             $vendor->status = $request->input('status');
@@ -193,7 +193,7 @@ class VendorController extends Controller
             $vendor->gallery = $request->gallery->hashName();
             $vendor->delivery_slot = $request->input('delivery_slot');
             $vendor->status = $request->input('status');
-            $vendor->visibility = $request->input('visibility');
+            //$vendor->visibility = $request->input('visibility');
             $vendor->policy = $request->input('policy');
             $image = $request->picture->store('public/vendor_img');
             $vendor->picture = $request->picture->hashName();
