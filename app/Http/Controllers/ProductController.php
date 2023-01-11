@@ -273,7 +273,7 @@ class ProductController extends Controller
 
     public function deleteProduct($id)
     {
-        $product = Product::where('id','=',$id)->update(['status'=>'10']);
+        $product = Product::where('id','=',$id)->delete();
         $response = $product ? ['product'=>$product,'msg'=>'product deleted successfully!!'] : ["error"=> "product Not found",'msg'=>'product Not Found!!'];
         return response()->json($response);
     }
