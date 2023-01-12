@@ -230,7 +230,7 @@ class VendorController extends Controller
             return $response;
         }
 
-        $product = Product::where([['vendor_id','=',$vendor[0]->id],['status','!=',0]])->leftJoin('categories','products.category_id','=','categories.id')->select('products.*',DB::raw("CONCAT('storage/assets/img/product_img/',picture) AS picture"),'categories.parent_category')->get();
+        $product = Product::where([['vendor_id','=',$vendor[0]->id],['status','!=',0]])->rightJoin('categories','products.category_id','=','categories.id')->select('products.*',DB::raw("CONCAT('storage/assets/img/product_img/',picture) AS picture"),'categories.parent_category')->get();
         $device_token = $request->device_token;
         //$data1 = Vendor::find($vendor[0]['id']);
         //dd($data1);
