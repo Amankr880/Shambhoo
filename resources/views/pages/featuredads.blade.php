@@ -28,10 +28,10 @@
           @foreach($featuredads as $ad)
           <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
             <div class="row w-100">
-              <div class="col"><a href="{{$ad['url']}}" class="flex-grow-1">
+              <div class="col-12 col-md-6"><a href="{{$ad['url']}}" class="flex-grow-1">
               <img src="{{asset('storage/assets/img/ads/'.$ad['banner'])}}" style="border-radius: 10px;max-width:350px;max-height:100px;margin-right: 20px;">
             {{$ad['url']}}</a></div>
-              <div class="col text-right">
+              <div class="col-12 col-md-6 text-right">
                     @if($ad['status']==0)
                     Disabled
                     @else
