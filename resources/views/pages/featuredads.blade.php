@@ -29,7 +29,7 @@
           <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
             <div class="row w-100">
               <div class="col"><a href="{{$ad['url']}}" class="flex-grow-1">
-              <img src="{{asset('storage/assets/img/ads/'.$ad['banner'])}}" style="border-radius: 10px;max-width:350px;max-height:150px;margin-right: 20px;">
+              <img src="{{asset('storage/assets/img/ads/'.$ad['banner'])}}" style="border-radius: 10px;max-width:350px;max-height:100px;margin-right: 20px;">
             {{$ad['url']}}</a></div>
               <div class="col text-right">
                     @if($ad['status']==0)
