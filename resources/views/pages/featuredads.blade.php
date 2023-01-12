@@ -27,23 +27,17 @@
             <div class="list-group">
           @foreach($featuredads as $ad)
           <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-            <div class="row">
+            <div class="row w-100">
               <div class="col"><a href="{{$ad['url']}}" class="flex-grow-1">
-              <img src="{{asset('storage/assets/img/ads/'.$ad['banner'])}}" style="border-radius: 10px;max-width:350px;margin-right: 20px;">
+              <img src="{{asset('storage/assets/img/ads/'.$ad['banner'])}}" style="border-radius: 10px;max-width:350px;max-height:150px;margin-right: 20px;">
             {{$ad['url']}}</a></div>
-              <div class="col">
-                <div class="row">
-                  <div class="col">
+              <div class="col text-right">
                     @if($ad['status']==0)
                     Disabled
                     @else
                     Enabled
                     @endif
-                  </div>
-                  <div class="col">
                     <a href="featuredads/{{$ad['id']}}" class="btn ml-5"><i class="ni ni-settings"></i>&nbsp;&nbsp;Edit</a>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
