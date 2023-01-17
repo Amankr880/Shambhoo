@@ -84,6 +84,15 @@
                                         <input type="text" name="{{$key}}" class="form-control form-control-alternative" value="{{$value}}" readonly>
                                     </div>
                                 </div>
+                                @elseif($key=='delivery_slot')
+                             <div class="row form-group d-flex align-items-center">
+                                <div class="col-3">
+                                    <label class="form-control-label" for="input-name">Registrar ID:</label>
+                                </div>
+                                <div class="col">
+                                        <input type="text" name="{{$key}}" class="form-control form-control-alternative" value="{{$value}}">
+                                    </div>
+                            </div>
                             @elseif($key=='id_proof_photo')
                              <div class="row form-group d-flex align-items-center">
                                 <div class="col-3">
