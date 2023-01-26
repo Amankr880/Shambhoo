@@ -48,7 +48,7 @@ class PlaceOrderController extends Controller
         $ordersave=$data->save();
 
 
-        if ($ordersave) {
+        if ($ordersave)     {
             $getvendor = Vendor::find($request->vendor_id);
             $token1 = $getvendor->policy;
             $url1 = "https://fcm.googleapis.com/fcm/send";
