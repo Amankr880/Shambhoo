@@ -33,7 +33,6 @@ class AdminController extends Controller
         if($request['search']){
             $users=$users->where('phone_no','=',$request['search']);
         }
-        }
         $users=$users->get();
         return view('pages.allusers',['users'=>$users]);
     }
