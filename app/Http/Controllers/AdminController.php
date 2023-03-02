@@ -30,8 +30,10 @@ class AdminController extends Controller
     //User Management
     public function getAllUsers(Request $request){
         $users = User::where('user_type','!=',1)->orWhereNull('user_type')->select('users.id','users.first_name','users.last_name','users.user_status','users.email','users.phone_no');
-        if($request['search'])
+        if($request['search']){
             $users=$users->where('phone_no','=',$request['search']);
+        }
+        }
         $users=$users->get();
         return view('pages.allusers',['users'=>$users]);
     }
