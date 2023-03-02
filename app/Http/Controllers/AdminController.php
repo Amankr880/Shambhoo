@@ -19,14 +19,20 @@ class AdminController extends Controller
 {
 
     //Vendor Management
-    public function getAllVendors(){
-        $vendors = User::where('user_type','=',1)->select('users.id','users.first_name','users.last_name','users.user_status','users.user_type','users.email','users.image')->get();
+    public function getAllVendors(Request $request){
+        $vendors = User::where('user_type','=',1)->select('users.id','users.first_name','users.last_name','users.user_status','users.user_type','users.email','users.image');
+        if($request['search'])
+            $vendors=$vendors->where('phone_no','=',$request['search']);
+        $vendors=$vendors->get();
         return view('pages.allvendors',['vendors'=>$vendors]);
     }
 
     //User Management
-    public function getAllUsers(){
-        $users = User::where('user_type','!=',1)->orWhereNull('user_type')->select('users.id','users.first_name','users.last_name','users.user_status','users.email','users.phone_no')->get();
+    public function getAllUsers(Request $request){
+        $users = User::where('user_type','!=',1)->orWhereNull('user_type')->select('users.id','users.first_name','users.last_name','users.user_status','users.email','users.phone_no');
+        if($request['search'])
+            $users=$users->where('phone_no','=',$request['search']);
+        $users=$users->get();
         return view('pages.allusers',['users'=>$users]);
     }
     public function getUserDetails($id){
@@ -65,7 +71,8 @@ class AdminController extends Controller
     }
     public function getSingleShop($id){
         $shop = Vendor::join('users','vendors.user_id', '=', 'users.id')->where('vendors.id','=',$id)->leftJoin('plan_subscriptions','vendors.id','=','plan_subscriptions.vendor_id')->select('vendors.*','plan_subscriptions.validity','users.first_name','users.last_name')->get()->toarray();
-        return view('pages.shopdetails',['shop'=>$shop]);
+        $products = Product::where('vendor_id','=',$id)->select('products.product_name','products.product_desc','products.picture')->get()->toarray();
+        return view('pages.shopdetails',['shop'=>$shop,'products'=>$products]);
     }
     public function updateShop(Request $request){
 
@@ -202,8 +209,12 @@ class AdminController extends Controller
 
 
     //Order Management
-    public function orders(){
-        $orders = Order::join('users','order.user_id', '=', 'users.id')->join('vendors','order.vendor_id', '=', 'vendors.id')->select('order.id','order.order_no','order.order_status','order.total_order','users.first_name','users.last_name','vendors.shopName')->get();
+    public function orders(Request $request){
+        $orders = Order::join('users','order.user_id', '=', 'users.id')->join('vendors','order.vendor_id', '=', 'vendors.id')->select('order.id','order.order_no','order.order_status','order.total_order','users.first_name','users.last_name','vendors.shopName');
+        if($request['search']){
+            $orders=$orders->where('order_no','=',$request['search']);
+        }
+        $orders=$orders->get();
         return view('pages.orders',['orders'=>$orders]);
     }
     public function orderDetails($id){

@@ -72,42 +72,7 @@
                             <button type="button" class="btn mt-4">Cancel</button>
                         </form>
                     </div>
-                    <div class="card-header bg-white border-0">
-                            <h3 class="mb-0">Products</h3>
-                    </div>
                     
-                    <table class="table align-items-center table-flush">
-                <thead class="thead-light">
-                  <tr>
-                    <th scope="col" class="sort" data-sort="name">Id</th>
-                    <th scope="col" class="sort" data-sort="budget">Product Name</th>
-                    <th scope="col" class="sort" data-sort="budget">Price</th>
-                    <th scope="col"></th>
-                  </tr>
-                </thead>
-                <tbody class="list">
-              @foreach($products as $product)
-                  <tr>
-                    <td>
-                        {{$product['id']}}
-                    </td>
-                    <td>
-                        <div class="row" style="width:300px">
-                            <div class="col">
-                                <img src="{{asset('storage/assets/img/product_img/'.$product['picture'])}}" width="100%">
-                            </div>
-                            <div class="col d-flex align-items-center">
-                                {{$product['product_name']}}
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        {{$product['MSRP']}}
-                    </td>
-                  </tr>
-              @endforeach
-                </tbody>
-              </table>
                 </div>
             <!-- </div> -->
         

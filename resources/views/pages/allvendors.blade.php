@@ -18,7 +18,19 @@
           <div class="card">
             <!-- Card header -->
             <div class="card-header border-0">
+              <div class="row">
+                <div class="col-3">
               <h3 class="mb-0">Vendors</h3>
+            </div>
+              <div class="col">
+              <form method="get" action="vendors">
+                <div class="input-group mb-3">
+                <input type="text" name="search" placeholder="Search Vendors" class="form-control" />
+                <input type="submit" class="btn btn-primary" value="Search">
+              </div>  
+              </form>
+            </div>
+              </div>
             </div>
             <!-- Light table -->
             <div class="table-responsive">

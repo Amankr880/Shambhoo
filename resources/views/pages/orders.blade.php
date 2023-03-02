@@ -15,7 +15,19 @@
   <div class="card">
     <!-- Card header -->
     <div class="card-header border-0">
+      <div class="row">
+        <div class="col-3">
       <h3 class="mb-0">Orders</h3>
+    </div>
+      <div class="col">
+      <form method="get" action="orders">
+        <div class="input-group mb-3">
+        <input type="text" name="search" placeholder="Search Orders" class="form-control" />
+        <input type="submit" class="btn btn-primary" value="Search">
+      </div>  
+      </form>
+    </div>
+      </div>
     </div><!-- Light table -->
     <div class="table-responsive text-center">
           <table class="table align-items-center table-flush">
