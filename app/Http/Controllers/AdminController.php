@@ -151,6 +151,10 @@ class AdminController extends Controller
         $input['logo_image']=$logo_image;
         $input['header_image']=$header_image;
         $input['gallery']=$gallery_image;
+        if($shop['status']==0 && $input['status']==1){
+                $shop->fill($input)->save();
+                return Redirect::to('https://wa.me/'.ltrim($shop['phone_no'],"+91").'?text=Your%20Shop%20Has%20Been%20Verified');
+            }
         $shop->fill($input)->save();
         return redirect()->route('table');
     }
