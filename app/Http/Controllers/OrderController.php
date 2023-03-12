@@ -73,12 +73,6 @@ class OrderController extends Controller
                   //  'description' => "You have a new Order.",
                    // 'vendor_id' => $prod->vendor_id
                 //]);
-
-                $curl = curl_init();
-                $vendor=User::where('id','=',$prod->vendor_id)->first();
-                curl_setopt_array($curl, array( CURLOPT_URL => 'https://api.whatsapp.com/send?phone='+$vendor['phone_no']+'&text=orderplaced', CURLOPT_RETURNTRANSFER => true, CURLOPT_ENCODING => ”, CURLOPT_MAXREDIRS => 10, CURLOPT_TIMEOUT => 0, CURLOPT_FOLLOWLOCATION => true, CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1, CURLOPT_CUSTOMREQUEST => ‘GET’, )); $response = curl_exec($curl);
-                curl_close($curl);
-                echo $response;
             
             try{
                 $getvendor = Vendor::find($prod->vendor_id);

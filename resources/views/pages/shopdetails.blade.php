@@ -161,9 +161,9 @@
                                 <div class="col d-flex align-items-center gx-4">
                                      <select class="form-select" name="{{$key}}">
                                         <option value="0" @if($value==0)selected @endif>Unverified</option>
-                                        <option value="1" @if($value==1)selected @endif>Verfied, Non Premium</option>
-                                        <option value="2" @if($value==2)selected @endif>Verified, Premium, Non Featured</option>
-                                        <option value="3" @if($value==3)selected @endif>Verified, Premium, Featured</option>
+                                        <option value="1" @if($value==1)selected @endif>Verfied but Not Premium</option>
+                                        <option value="2" @if($value==2)selected @endif>Verified & Premium</option>
+                                        <!-- <option value="3" @if($value==3)selected @endif>Verified, Premium, Featured</option> -->
                                     </select>
                                 </div>
                             </div>

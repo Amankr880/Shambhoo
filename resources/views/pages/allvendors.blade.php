@@ -76,7 +76,6 @@
                         @endif</span>
                       </span>
                     </td>
-                    </td>
                     <td class="text-right">
                       <!-- <div class="dropdown">
                         <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

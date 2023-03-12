@@ -54,11 +54,9 @@
                 @if($shop['status']==0)
                 Unverified
                 @elseif($shop['status']==1)
-                Verified<br>Non Premium
-                @elseif($shop['status']==2)
-                Verified<br>Premium<br>Non Featured
-                @else
-                Verified<br>Premium<br>Featured
+                Verified but Not Premium
+                @else($shop['status']==2)
+                Verified & Premium
                 @endif
                                     </td>
                     <td>

@@ -20,7 +20,7 @@ class AdminController extends Controller
 
     //Vendor Management
     public function getAllVendors(Request $request){
-        $vendors = User::where('user_type','=',1)->select('users.id','users.first_name','users.last_name','users.user_status','users.user_type','users.email','users.image');
+        $vendors = User::where('user_type','=',1)->select('users.id','users.first_name','users.last_name','users.user_status','users.phone_no','users.user_type','users.email','users.image');
         if($request['search'])
             $vendors=$vendors->where('phone_no','=',$request['search']);
         $vendors=$vendors->get();
@@ -29,7 +29,7 @@ class AdminController extends Controller
 
     //User Management
     public function getAllUsers(Request $request){
-        $users = User::where('user_type','!=',1)->orWhereNull('user_type')->select('users.id','users.first_name','users.last_name','users.user_status','users.email','users.phone_no');
+        $users = User::where('user_type','!=',1)->select('users.id','users.first_name','users.last_name','users.user_status','users.email','users.phone_no');
         if($request['search']){
             $users=$users->where('phone_no','=',$request['search']);
         }
