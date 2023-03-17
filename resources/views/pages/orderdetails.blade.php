@@ -74,7 +74,7 @@
                     <td>
                         <div class="row" style="width:300px">
                             <div class="col">
-                                <img src="{{asset('assets/img/manual_orders/'.$orderDetails[0]['order_type'])}}" width="100%">
+                                <img src="{{asset('storage/assets/img/manual_orders/'.$orderDetails[0]['order_type'])}}" width="100%">
                             </div>
                             <div class="col d-flex align-items-center">
                                 Manual Order
