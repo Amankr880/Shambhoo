@@ -124,7 +124,7 @@ class OrderController extends Controller
 
     public function getOrderByUserId($user_Id)
     {
-            $orderItems = Order::where('order.user_id','=',$user_Id)->orderBy('order.id','DESC')
+            $orderItems = Order::where('order.user_id','=',$user_Id)->orderBy('order.id','ASC')
                         ->leftJoin('order_item','order.id','=','order_item.order_id')
                         ->leftJoin('products','products.id','=','order_item.product_id')
                         ->leftJoin('vendors','vendors.id','=','order.vendor_id')
