@@ -66,6 +66,27 @@
                   </tr>
                 </thead>
                 <tbody class="list">
+                    @if($orderDetails[0]['order_type'])
+                    <tr>
+                    <td>
+                        {{$product['id']}}
+                    </td>
+                    <td>
+                        <div class="row" style="width:300px">
+                            <div class="col">
+                                <img src="{{asset('assets/img/manual_orders/'.$orderDetails[0]['order_type'])}}" width="100%">
+                            </div>
+                            <div class="col d-flex align-items-center">
+                                {{$product['product_name']}}
+                            </div>
+                        </div>
+
+                    </td>
+                    <td>
+                        {{$product['quantity']}}
+                    </td>
+                  </tr>
+                  @else
               @foreach($products as $product)
                   <tr>
                     <td>
@@ -87,6 +108,7 @@
                     </td>
                   </tr>
               @endforeach
+                  @endif
                 </tbody>
               </table>
                 </div>
