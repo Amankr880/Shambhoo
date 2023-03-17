@@ -83,7 +83,7 @@
 
                     </td>
                     <td>
-                        {{$product['quantity']}}
+                        -
                     </td>
                   </tr>
                   @else
