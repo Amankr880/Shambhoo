@@ -219,7 +219,7 @@ class AdminController extends Controller
         if($request['search']){
             $orders=$orders->where('order_no','=',$request['search']);
         }
-        $orders=$orders->get();
+        $orders=$orders->orderBy('order.created_at','DESC')->get();
         return view('pages.orders',['orders'=>$orders]);
     }
     public function orderDetails($id){
