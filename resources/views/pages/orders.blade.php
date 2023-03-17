@@ -51,7 +51,13 @@
                   {{$order['first_name']}} {{$order['last_name']}}
                 </td>
                 <td class="budget">{{$order['shopName']}}</td>
-                <td>₹{{$order['total_order']}}</td>
+                <td>
+                @if($order['total_order']==0)
+                  Manual Order
+                @else
+                  ₹{{$order['total_order']}}
+                @endif
+                </td>
                 <td><span class="badge badge-dot mr-4"><span class="status">
                   @if($order['order_status']==0)
                     Received
