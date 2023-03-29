@@ -13,6 +13,8 @@ class PlaceOrderController extends Controller
 
     public function placeOrder(Request $request)
     {
+        $current_date = Carbon::now()->format('Y-m-d');
+        $data = new Order();
 
         if ($request->hasFile('order_type')) {
             $filenameWithExt = $request->file('order_type')->getClientOriginalName ();
@@ -30,8 +32,7 @@ class PlaceOrderController extends Controller
             }
 
 
-        $current_date = Carbon::now()->format('Y-m-d');
-        $data = new Order();
+        
         $data->user_id = $request->user_id;
         $data->vendor_id = $request->vendor_id;
         $data->status = '0';
