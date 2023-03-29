@@ -142,7 +142,7 @@ class HomepageController extends Controller
         $q = User::where('id',$request->user_id)->get('token');
         if($q = $header) 
         {
-            $vendors=Product::where([['products.category_id','=',$request->id],['vendors.city','=',$request->city],['vendors.status','>',1]
+            $vendors=Product::where([['products.category_id','=',$request->id],['vendors.city','=',$request->city],['vendors.status','>',1],
                                     ['vendors.visibility','=',1],['products.status','!=',0]])
                                     ->distinct()->leftJoin('vendors','products.vendor_id','=','vendors.id')
                                     ->select('vendors.shopName','vendors.id','vendors.logo_image',DB::raw("CONCAT('storage/assets/img/logo/',vendors.logo_image) AS logo_image"))
