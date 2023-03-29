@@ -65,8 +65,7 @@ class HomepageController extends Controller
 
     public function featureImageShow()
     {
-        $data = Ads::where('status','=',1)->select('banner','url')->orderBy('id', 'desc')->limit(3)
-        ->select('*',DB::raw("CONCAT('storage/assets/img/ads/',banner) AS banner"))
+        $data = Ads::where('status','=',1)->select('banner','url')->orderBy('id', 'desc')->select('*',DB::raw("CONCAT('storage/assets/img/ads/',banner) AS banner"))
         ->get();
         echo $data;exit();
         // $arr = [];
@@ -100,7 +99,7 @@ class HomepageController extends Controller
 
     public function getFeatureStore(Request $request)
     {
-        $shopDetails = Vendor::where([['city','=',$request->city],['visibility','=',1]])->select('*',DB::raw("CONCAT('storage/assets/img/logo/',logo_image) AS logo_image,CONCAT('storage/assets/img/header/',header_image) AS header_image"))->get(); 
+        $shopDetails = Vendor::where([['city','=',$request->city],['status','>',1],['visibility','=',1]])->select('*',DB::raw("CONCAT('storage/assets/img/logo/',logo_image) AS logo_image,CONCAT('storage/assets/img/header/',header_image) AS header_image"))->get(); 
         if($shopDetails)
         {
             $response = response()->json($shopDetails,200);
@@ -143,7 +142,7 @@ class HomepageController extends Controller
         $q = User::where('id',$request->user_id)->get('token');
         if($q = $header) 
         {
-            $vendors=Product::where([['products.category_id','=',$request->id],['vendors.pincode','=',$request->pincode],
+            $vendors=Product::where([['products.category_id','=',$request->id],['vendors.city','=',$request->city],['vendors.status','>',1]
                                     ['vendors.visibility','=',1],['products.status','!=',0]])
                                     ->distinct()->leftJoin('vendors','products.vendor_id','=','vendors.id')
                                     ->select('vendors.shopName','vendors.id','vendors.logo_image',DB::raw("CONCAT('storage/assets/img/logo/',vendors.logo_image) AS logo_image"))

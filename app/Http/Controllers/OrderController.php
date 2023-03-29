@@ -129,7 +129,7 @@ class OrderController extends Controller
                         ->leftJoin('products','products.id','=','order_item.product_id')
                         ->leftJoin('vendors','vendors.id','=','order.vendor_id')
                         ->select('order.*','order.id','products.product_name','vendors.shopName','vendors.address','order_item.quantity'
-                        ,DB::raw("CONCAT('storage/assets/img/product_img/',products.picture) AS picture,CONCAT('storage/assets/img/logo/',vendors.logo_image) AS logo_image, CONCAT('storage/assets/img/manual_orders/',order.order_type) AS order_type"))
+                        ,DB::raw("CONCAT('storage/assets/img/product_img/',products.picture) AS picture,CONCAT('storage/assets/img/logo/',vendors.logo_image) AS logo_image"))
                         ->get()
                         ->groupBy('id');
             if($orderItems!="[]"){

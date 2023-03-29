@@ -172,30 +172,30 @@ class UserController extends Controller
         $users = User::find($request->input('id'));
         $users->first_name = $request->input('first_name');
         $users->last_name = $request->input('last_name');
-        $users->DOB = $request->input('DOB');
-        $users->email = $request->input('email');
-        $users->address = $request->input('address');
-        $users->phone_no = $request->input('phone_no');
+        // $users->DOB = $request->input('DOB');
+        // $users->email = $request->input('email');
+        // $users->address = $request->input('address');
+        // $users->phone_no = $request->input('phone_no');
         //$users->password = Hash::make($request->input('password'));
         // $users->user_type = $request->input('user_type');
         // $users->user_type = $request->input('user_status');
 
-        if($users->user_type){
-        $users->user_type = $request->input('user_type');
-        }else{
-            $users->user_type=0;
-        }
-        if($users->user_status){
-        $users->user_status = $request->input('user_status');
-        }else{
-            $users->user_status=0;
-        }
-        $users->image = $request->input('image');
-        $users->Longitude = $request->input('Longitude');
-        $users->Latitude = $request->input('Latitude');
-        $users->city = $request->input('city');
-        $users->state = $request->input('state');
-        $users->pincode = $request->input('pincode');
+        // if($users->user_type){
+        // $users->user_type = $request->input('user_type');
+        // }else{
+        //     $users->user_type=0;
+        // }
+        // if($users->user_status){
+        // $users->user_status = $request->input('user_status');
+        // }else{
+        //     $users->user_status=0;
+        // }
+        // $users->image = $request->input('image');
+        // $users->Longitude = $request->input('Longitude');
+        // $users->Latitude = $request->input('Latitude');
+        // $users->city = $request->input('city');
+        // $users->state = $request->input('state');
+        // $users->pincode = $request->input('pincode');
         $result = $users->save();
         if($result)
         {

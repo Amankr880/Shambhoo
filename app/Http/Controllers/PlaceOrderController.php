@@ -23,15 +23,12 @@ class PlaceOrderController extends Controller
             // Filename To store
             $fileNameToStore = $filename. '_'. time().'.'.$extension;
             $path = $request->file('order_type')->storeAs('public/assets/img/manual_orders', $fileNameToStore);
+            $data->order_type = "public/assets/img/manual_orders/".$fileNameToStore;
             }
-            // Else add a dummy image
-            else {
-            //$fileNameToStore = 'public/assets/img/manual_orders/noimage.jpg';
-                return response()->json([
-                'status' => false,
-                'message' => 'Image not uploaded'
-            ],501);
+            else{
+                $data->order_type = 'assets/img/brand/blue.png';
             }
+
 
         $current_date = Carbon::now()->format('Y-m-d');
         $data = new Order();
@@ -42,7 +39,6 @@ class PlaceOrderController extends Controller
         $data->delivery_address = $request->delivery_address;
         $data->order_date = $current_date;
         $data->order_otp = mt_rand(1000,9999);
-        $data->order_type = $fileNameToStore;
         $orderNo = 'SHMBO-'.mt_rand(100000,999999);
         $data->order_no = $orderNo;
         $ordersave=$data->save();
