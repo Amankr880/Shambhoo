@@ -24,8 +24,8 @@ class PlaceOrderController extends Controller
             $extension = $request->file('order_type')->getClientOriginalExtension();
             // Filename To store
             $fileNameToStore = $filename. '_'. time().'.'.$extension;
-            $path = $request->file('order_type')->storeAs('public/assets/img/manual_orders', $fileNameToStore);
-            $data->order_type = "public/assets/img/manual_orders/".$fileNameToStore;
+            $path = $request->file('order_type')->storeAs('storage/assets/img/manual_orders', $fileNameToStore);
+            $data->order_type = "storage/assets/img/manual_orders/".$fileNameToStore;
             }
             else{
                 $data->order_type = 'assets/img/brand/blue.png';
