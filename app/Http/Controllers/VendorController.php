@@ -7,6 +7,7 @@ use App\Models\Vendor;
 use App\Models\Product;
 use App\Models\User;
 use Storage;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
@@ -146,8 +147,24 @@ class VendorController extends Controller
 
     public function getVendorByUserId($user_Id)
     {
+        $dateCheck = PlanSubscription::where('vendor_id', '=', $user_Id)->get();
+
+        $date1 = Carbon::createFromFormat('Y-m-d H:i:s', $dateCheck->validity);
+        $date2 = Carbon::now();
+        $date2->gte($date1);
+
+        if(!$date2->gte($date1)){
+            $vendor = Vendor::where('user_id','=',$user_Id)->get();
+            if($vendor->visibility == 2){
+                $vendor->visibility = 1;
+            }
+            $vendor->save();
         $vendor = Vendor::where('user_id','=',$user_Id)->select('*',DB::raw("CONCAT('storage/assets/img/logo/',logo_image) AS logo_image,CONCAT('storage/assets/img/header/',header_image) AS header_image,CONCAT('storage/assets/img/gallery/',gallery) AS gallery"))->get(); 
-        $response = !$vendor->isEmpty() ? ['vendor'=>$vendor] : ["error"=> "vendor Not found",'msg'=>'vendor Not Found!!']; 
+        $response = !$vendor->isEmpty() ? ['vendor'=>$vendor] : ["error"=> "vendor Not found",'msg'=>'vendor Not Found!!'];
+        }else{
+        $vendor = Vendor::where('user_id','=',$user_Id)->select('*',DB::raw("CONCAT('storage/assets/img/logo/',logo_image) AS logo_image,CONCAT('storage/assets/img/header/',header_image) AS header_image,CONCAT('storage/assets/img/gallery/',gallery) AS gallery"))->get(); 
+        $response = !$vendor->isEmpty() ? ['vendor'=>$vendor] : ["error"=> "vendor Not found",'msg'=>'vendor Not Found!!'];
+        }
 
         return response()->json($response);
     }
