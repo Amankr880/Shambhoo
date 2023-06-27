@@ -155,8 +155,8 @@ class VendorController extends Controller
 
         if(!$date2->gte($date1)){
             $vendor = Vendor::where('user_id','=',$user_Id)->get();
-            if($vendor->visibility == 2){
-                $vendor->visibility = 1;
+            if($vendor->status == 2){
+                $vendor->status = 1;
             }
             $vendor->save();
         $vendor = Vendor::where('user_id','=',$user_Id)->select('*',DB::raw("CONCAT('storage/assets/img/logo/',logo_image) AS logo_image,CONCAT('storage/assets/img/header/',header_image) AS header_image,CONCAT('storage/assets/img/gallery/',gallery) AS gallery"))->get(); 
