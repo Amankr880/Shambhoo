@@ -147,14 +147,13 @@ class VendorController extends Controller
 
     public function getVendorByUserId($user_Id)
     {
-        $dateCheck = PlanSubscription::where('vendor_id', '=', $user_Id)->get();
+        $vendor = Vendor::where('vendor_id', '=', $user_Id)->get();
 
-        $date1 = Carbon::createFromFormat('Y-m-d H:i:s', $dateCheck->validity);
+        $date1 = Carbon::createFromFormat('Y-m-d H:i:s', $vendor->validity);
         $date2 = Carbon::now();
         $date2->gte($date1);
 
         if(!$date2->gte($date1)){
-            $vendor = Vendor::where('user_id','=',$user_Id)->get();
             if($vendor->status == 2){
                 $vendor->status = 1;
             }
