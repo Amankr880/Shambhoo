@@ -185,7 +185,7 @@
                                     <label class="form-control-label" for="input-name">Validity:</label>
                                 </div>
                                 <div class="col">
-                                        <input type="date" name="{{$key}}" class="form-control form-control-alternative" value="{{$value}}">
+                                        <input type="date" name="{{$key}}" class="form-control form-control-alternative" value="{{substr($value,0,10)}}">
                                     </div>
                             </div>
                             @else
