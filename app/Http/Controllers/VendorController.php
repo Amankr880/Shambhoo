@@ -149,20 +149,8 @@ class VendorController extends Controller
     {
         $vendor = Vendor::where('vendor_id', '=', $user_Id)->get();
 
-        $date1 = Carbon::createFromFormat('Y-m-d H:i:s', $vendor->validity);
-        $date2 = Carbon::now();
-        if($date2->gte($date1)==1){
-            if($vendor->status == 2){
-                $vendor->status = 1;
-            $vendor->save();
-                $vendor = Vendor::where('user_id','=',$user_Id)->select('*',DB::raw("CONCAT('storage/assets/img/logo/',logo_image) AS logo_image,CONCAT('storage/assets/img/header/',header_image) AS header_image,CONCAT('storage/assets/img/gallery/',gallery) AS gallery"))->get(); 
-        $response = !$vendor->isEmpty() ? ['vendor'=>$vendor] : ["error"=> "vendor Not found",'msg'=>'vendor Not Found!!'];
-            }
-        
-        }else{
         $vendor = Vendor::where('user_id','=',$user_Id)->select('*',DB::raw("CONCAT('storage/assets/img/logo/',logo_image) AS logo_image,CONCAT('storage/assets/img/header/',header_image) AS header_image,CONCAT('storage/assets/img/gallery/',gallery) AS gallery"))->get(); 
         $response = !$vendor->isEmpty() ? ['vendor'=>$vendor] : ["error"=> "vendor Not found",'msg'=>'vendor Not Found!!'];
-        }
 
         return response()->json($response);
     }
@@ -239,6 +227,15 @@ class VendorController extends Controller
 
         $vendor = Vendor::where('user_id','=',$request->id)->leftJoin('plan_subscriptions','vendors.id','=','plan_subscriptions.vendor_id')->select('vendors.*','plan_subscriptions.validity',DB::raw("CONCAT('storage/assets/img/logo/',logo_image) AS logo_image,CONCAT('storage/assets/img/header/',header_image) AS header_image"))->get();
         //return $vendor;
+
+        $date1 = Carbon::createFromFormat('Y-m-d H:i:s', $vendor->validity);
+        $date2 = Carbon::now();
+        if($date2->gte($date1)==1){
+            if($vendor->status == 2){
+                $vendor->status = 1;
+                $vendor->save();
+            }
+        }
 
         if(count($vendor)==0){
             $response = response()->json(['msg'=>'Vendor not found.'],403);
