@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Cart;
 use App\Models\Product;
 use App\Models\Ads;
+use App\Models\PlanSubscription;
 use App\Models\order_Item;
 use Storage;
 use Illuminate\Support\Facades\DB;
@@ -156,6 +157,7 @@ class AdminController extends Controller
                 return Redirect::to('https://wa.me/'.ltrim($shop['phone_no'],"+91").'?text=Your%20Shop%20Has%20Been%20Verified');
             }
         $shop->fill($input)->save();
+        $plan = PlanSubscription::where('vendor_id','=',$request['id'])->update(['validity' => $request['validity']]);
         return redirect()->route('table');
     }
 
