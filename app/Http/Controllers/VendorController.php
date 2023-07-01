@@ -151,9 +151,7 @@ class VendorController extends Controller
 
         $date1 = Carbon::createFromFormat('Y-m-d H:i:s', $vendor->validity);
         $date2 = Carbon::now();
-        $date2->gte($date1);
-
-        if(!$date2->gte($date1)){
+        if($date2->gte($date1)){
             if($vendor->status == 2){
                 $vendor->status = 1;
             }
