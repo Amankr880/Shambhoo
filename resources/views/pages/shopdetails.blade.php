@@ -179,6 +179,15 @@
                                     </select>
                                 </div>
                             </div>
+                            @elseif($key=='validity')
+                             <div class="row form-group d-flex align-items-center">
+                                <div class="col-3">
+                                    <label class="form-control-label" for="input-name">Validity:</label>
+                                </div>
+                                <div class="col">
+                                        <input type="date" name="{{$key}}" class="form-control form-control-alternative" value="{{$value}}">
+                                    </div>
+                            </div>
                             @else
                              <div class="row form-group d-flex align-items-center">
                                 <div class="col-3">
