@@ -159,7 +159,7 @@ class SMSController extends Controller
         $otp = mt_rand(1000,9999);
         //Your authentication key
         $api_key = 'M8vmX7P9FeLZkhRe';
-        $sender_id = 'SHMBHO';
+        $sender_id = 'KALKIl';
         //API URL
         $url="http://sms.osdigital.in/V2/http-api.php";
         //Your message to send, Add URL encoding here.
