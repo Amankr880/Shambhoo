@@ -151,10 +151,9 @@ class VendorController extends Controller
             $data->plan_type = '1'; //1-basic, 2-premium
             $data->purchase_date = $current_date;
             $data->save();
+            $vendor->shopName = $validity;
+            $vendor->save();
 
-                $vendor = Vendor::where('user_id','=',$request->vendor_id)->get();
-                $vendor->shopName = $validity;
-                $vendor->save();
             $response = response()->json(['vendor'=>$vendor,'msg'=>'vendor created successfully!!'],200);
         }
         else
