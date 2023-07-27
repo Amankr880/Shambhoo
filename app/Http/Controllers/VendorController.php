@@ -139,7 +139,7 @@ class VendorController extends Controller
             //$affected->save();
             $vendor = Vendor::where('user_id','=',$request->input('user_id'))->first();
             $current_date = Carbon::now()->format('Y-m-d');
-            $month = $request->month;
+            $month = '0';
             $month = number_format($month);
             $validity = Carbon::now()->addMonth($month);
             //dd($month);
@@ -148,7 +148,7 @@ class VendorController extends Controller
             $data->vendor_id = $vendor->id;
             $data->validity = $validity;
             $data->status = 'success';
-            $data->plan_type = $request->plan_type; //1-basic, 2-premium
+            $data->plan_type = '1'; //1-basic, 2-premium
             $data->purchase_date = $current_date;
             $data->save();
 
