@@ -34,9 +34,9 @@ class SubscriptionController extends Controller
             $data->purchase_date = $current_date;
             $response = $data->save();
 
-            $vendor = Vendor::where('user_id','=',$request->vendor_id)->get();
-            $vendor->shopName = $validity;
-            $vendor->save();
+            // $vendor = Vendor::where('user_id','=',$request->vendor_id)->get();
+            // $vendor->shopName = $validity;
+            // $vendor->save();
 
 
             if ($response) {
