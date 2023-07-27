@@ -261,7 +261,7 @@ class VendorController extends Controller
 
             }
         catch(Exception $e) {
-         $response = response()->json(['error'=>$e->getMessage()],200);
+         $response = response()->json(['error'=>'abcd'],200);
         }
         }
         else
