@@ -260,9 +260,9 @@ class VendorController extends Controller
                $response =  response()->json($data);
 
             }
-        }
         catch(Exception $e) {
          $response = response()->json(['error'=>$e->getMessage()],200);
+        }
         }
         else
         {
