@@ -245,9 +245,9 @@ class VendorController extends Controller
             $vendor = Vendor::where('user_id','=',$request->id)->leftJoin('plan_subscriptions','vendors.id','=','plan_subscriptions.vendor_id')->select('vendors.*','plan_subscriptions.validity',DB::raw("CONCAT('storage/assets/img/logo/',logo_image) AS logo_image,CONCAT('storage/assets/img/header/',header_image) AS header_image"))->get();
             //return $vendor;
 
-            dd($vendor);
+            
 
-            $date1 = Carbon::createFromFormat('Y-m-d H:i:s', $vendor[0]->validity);
+            $date1 = Carbon::createFromFormat('Y-m-d', $vendor[0]->validity);
             $date2 = Carbon::now();
             if($date2->gte($date1)==1){
                 if($vendor[0]->status == 2){
