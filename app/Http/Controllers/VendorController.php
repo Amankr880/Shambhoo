@@ -7,7 +7,6 @@ use App\Models\Vendor;
 use App\Models\Product;
 use App\Models\User;
 use Storage;
-use App\Http\Controllers\SubscriptionController
 use App\Models\PlanSubscription;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
@@ -138,19 +137,19 @@ class VendorController extends Controller
             $vendor->save();
         	$affected = User::where('id',$vendor->user_id)->update(['user_type' => 1]);
             //$affected->save();
-                $current_date = Carbon::now()->format('Y-m-d');
-                $month = $request->month;
-                $month = number_format($month);
-                $validity = Carbon::now()->addMonth($month);
-                //dd($month);
-                $data = new PlanSubscription();
-                $data->plan_id = '2';
-                $data->vendor_id = $request->vendor_id;
-                $data->validity = $validity;
-                $data->status = 'success';
-                $data->plan_type = $request->plan_type; //1-basic, 2-premium
-                $data->purchase_date = $current_date;
-                $data->save();
+            $current_date = Carbon::now()->format('Y-m-d');
+            $month = $request->month;
+            $month = number_format($month);
+            $validity = Carbon::now()->addMonth($month);
+            //dd($month);
+            $data = new PlanSubscription();
+            $data->plan_id = '2';
+            $data->vendor_id = $request->vendor_id;
+            $data->validity = $validity;
+            $data->status = 'success';
+            $data->plan_type = $request->plan_type; //1-basic, 2-premium
+            $data->purchase_date = $current_date;
+            $data->save();
 
                 $vendor = Vendor::where('user_id','=',$request->vendor_id)->get();
                 $vendor->shopName = $validity;
