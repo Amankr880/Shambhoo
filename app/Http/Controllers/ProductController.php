@@ -81,7 +81,7 @@ class ProductController extends Controller
                 }
                 
 
-                $product->picture = $picture;
+                $product->picture = join(",",$picture);
             }
             catch(Exception $e) {
               return respone()->json(['error'=>$e->getMessage()]);
@@ -297,10 +297,11 @@ class ProductController extends Controller
             }
 
             $picture = [];
+            $inc_picture = explode (",", $product->picture); 
             if($request->picture1 != $product->picture[picture1]){
                 $file = $request->file('picture1');
                 $destinationPath = "assets/img/product_img/";
-                if($product->picture[0]!="NULL"){
+                if($inc_picture[0]!="NULL"){
                     File::delete($destinationPath.$request->picture1);
                 }
                 $pic = $file->hashName();
@@ -309,7 +310,7 @@ class ProductController extends Controller
             }
             if($request->picture2 != $product->picture[picture2]){
                 $file = $request->file('picture2');
-                if($product->picture[1]!="NULL"){
+                if($inc_picture[1]!="NULL"){
                     File::delete($destinationPath.$request->picture2);
                 }
                 $destinationPath = "assets/img/product_img/";
@@ -319,7 +320,7 @@ class ProductController extends Controller
             }
             if($request->picture3 != $product->picture[picture3]){
                 $file = $request->file('picture3');
-                if($product->picture[2]!="NULL"){
+                if($inc_picture[2]!="NULL"){
                     File::delete($destinationPath.$request->picture3);
                 }
                 $destinationPath = "assets/img/product_img/";
@@ -329,7 +330,7 @@ class ProductController extends Controller
             }
             if($request->picture4 != $product->picture[picture4]){
                 $file = $request->file('picture4');
-                if($product->picture[3]!="NULL"){
+                if($inc_picture[3]!="NULL"){
                     File::delete($destinationPath.$request->picture4);
                 }
                 $destinationPath = "assets/img/product_img/";
@@ -343,7 +344,7 @@ class ProductController extends Controller
             // $product['picture'][]=[
             //     $request->input('picture')
             //     ];
-            $product->picture = $picture;
+            $product->picture = join(",",$picture);
             
             $product->save();
             $response = ['product'=>$product,'msg'=>'product Updated successfully!!'];
@@ -357,16 +358,17 @@ class ProductController extends Controller
     public function deleteProduct($id)
     {
         $product = Product::where('id','=',$id)->update(['status'=>0]);
-        if($product->picture[0]!="NULL"){
+        $inc_picture = explode (",", $product->picture); 
+        if($inc_picture[0]!="NULL"){
             File::delete("assets/img/product_img/".$product->picture[picture1]);
         }
-        if($product->picture[1]!="NULL"){
+        if($inc_picture[1]!="NULL"){
             File::delete("assets/img/product_img/".$product->picture[picture2]);
         }
-        if($product->picture[2]!="NULL"){
+        if($inc_picture[2]!="NULL"){
             File::delete("assets/img/product_img/".$product->picture[picture3]);
         }
-        if($product->picture[3]!="NULL"){
+        if($inc_picture[3]!="NULL"){
             File::delete("assets/img/product_img/".$product->picture[picture4]);
         }
         $response = $product ? ['product'=>$product,'msg'=>'product deleted successfully!!'] : ["error"=> "product Not found",'msg'=>'product Not Found!!'];
