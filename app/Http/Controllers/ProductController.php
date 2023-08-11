@@ -52,6 +52,7 @@ class ProductController extends Controller
 
                 if($request->file('picture2')){
                     $file = $request->file('picture2');
+                    dd($file)
                     $destinationPath = "assets/img/product_img/";
                     $pic = $file->hashName();
                     Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
