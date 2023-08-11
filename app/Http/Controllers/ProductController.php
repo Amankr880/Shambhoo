@@ -275,39 +275,39 @@ class ProductController extends Controller
                 $product->picture = $pic;
             }
 
-            $picture = []
-            if($request->picture1 != $product->picture[picture1])
+            $picture = [];
+            if($request->picture1 != $product->picture[picture1]){
                 $file = $request->file('picture1');
                 $destinationPath = "assets/img/product_img/";
                 File::delete($destinationPath.$request->picture1);
                 $pic = $file->hashName();
                 Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
                 $picture["picture1"] = $pic;
-
-            if($request->picture2 != $product->picture[picture1])
+            }
+            if($request->picture2 != $product->picture[picture2]){
                 $file = $request->file('picture2');
                 File::delete($destinationPath.$request->picture2);
                 $destinationPath = "assets/img/product_img/";
                 $pic = $file->hashName();
                 Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
                 $picture["picture2"] = $pic;
-
-            if($request->picture3 != $product->picture[picture1])
+            }
+            if($request->picture3 != $product->picture[picture3]){
                 $file = $request->file('picture3');
                 File::delete($destinationPath.$request->picture3);
                 $destinationPath = "assets/img/product_img/";
                 $pic = $file->hashName();
                 Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
                 $picture["picture3"] = $pic;
-
-            if($request->picture4 != $product->picture[picture1])
+            }
+            if($request->picture4 != $product->picture[picture4]){
                 $file = $request->file('picture4');
                 File::delete($destinationPath.$request->picture4);
                 $destinationPath = "assets/img/product_img/";
                 $pic = $file->hashName();
                 Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
                 $picture["picture4"] = $pic;
-
+            }
             //$product->picture = $request->input('picture');
             // $image = $request->icon->store('public/product_icon');
             // $product->icon = $request->icon->hashName();
