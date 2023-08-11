@@ -38,7 +38,7 @@ class ProductController extends Controller
             $product->discount_available = $request->input('discount_available');
             $product->ranking = $request->input('ranking');
 
-            $picture = []
+            $picture = [];
             $file = $request->file('picture1');
             $destinationPath = "assets/img/product_img/";
             $pic = $file->hashName();
