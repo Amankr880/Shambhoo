@@ -38,30 +38,30 @@ class ProductController extends Controller
             $product->discount_available = $request->input('discount_available');
             $product->ranking = $request->input('ranking');
 
-            $picture = {}
+            $picture = ""
             $file = $request->file('picture1');
             $destinationPath = "assets/img/product_img/";
             $pic = $file->hashName();
             Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
-            $picture["picture1"] = $pic
+            $picture = $picture.$pic
 
             $file = $request->file('picture2');
             $destinationPath = "assets/img/product_img/";
             $pic = $file->hashName();
             Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
-            $picture["picture2"] = $pic
+            $picture = $picture.",".$pic
 
             $file = $request->file('picture3');
             $destinationPath = "assets/img/product_img/";
             $pic = $file->hashName();
             Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
-            $picture["picture3"] = $pic
+            $picture = $picture.",".$pic
 
             $file = $request->file('picture4');
             $destinationPath = "assets/img/product_img/";
             $pic = $file->hashName();
             Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
-            $picture["picture4"] = $pic
+            $picture = $picture.",".$pic
 
             $product->picture = $picture;
 
