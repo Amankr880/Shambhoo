@@ -38,30 +38,30 @@ class ProductController extends Controller
             $product->discount_available = $request->input('discount_available');
             $product->ranking = $request->input('ranking');
 
-            $picture = ""
+            $picture = {}
             $file = $request->file('picture1');
             $destinationPath = "assets/img/product_img/";
             $pic = $file->hashName();
             Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
-            $picture = $picture.$pic
+            $picture["picture1"] = $pic
 
             $file = $request->file('picture2');
             $destinationPath = "assets/img/product_img/";
             $pic = $file->hashName();
             Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
-            $picture = $picture.",".$pic
+            $picture["picture2"] = $pic
 
             $file = $request->file('picture3');
             $destinationPath = "assets/img/product_img/";
             $pic = $file->hashName();
             Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
-            $picture = $picture.",".$pic
+            $picture["picture3"] = $pic
 
             $file = $request->file('picture4');
             $destinationPath = "assets/img/product_img/";
             $pic = $file->hashName();
             Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
-            $picture = $picture.",".$pic
+            $picture["picture4"] = $pic
 
             $product->picture = $picture;
 
@@ -274,13 +274,47 @@ class ProductController extends Controller
                 Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
                 $product->picture = $pic;
             }
-            
+
+            $picture = {}
+            if($request->picture1 != $product->picture[picture1])
+                $file = $request->file('picture1');
+                $destinationPath = "assets/img/product_img/";
+                File::delete($destinationPath.$request->picture1);
+                $pic = $file->hashName();
+                Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
+                $picture["picture1"] = $pic
+
+            if($request->picture2 != $product->picture[picture1])
+                $file = $request->file('picture2');
+                File::delete($destinationPath.$request->picture2);
+                $destinationPath = "assets/img/product_img/";
+                $pic = $file->hashName();
+                Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
+                $picture["picture2"] = $pic
+
+            if($request->picture3 != $product->picture[picture1])
+                $file = $request->file('picture3');
+                File::delete($destinationPath.$request->picture3);
+                $destinationPath = "assets/img/product_img/";
+                $pic = $file->hashName();
+                Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
+                $picture["picture3"] = $pic
+
+            if($request->picture4 != $product->picture[picture1])
+                $file = $request->file('picture4');
+                File::delete($destinationPath.$request->picture4);
+                $destinationPath = "assets/img/product_img/";
+                $pic = $file->hashName();
+                Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
+                $picture["picture4"] = $pic
+
             //$product->picture = $request->input('picture');
             // $image = $request->icon->store('public/product_icon');
             // $product->icon = $request->icon->hashName();
             // $product['picture'][]=[
             //     $request->input('picture')
             //     ];
+            $product->picture = $picture;
             
             $product->save();
             $response = ['product'=>$product,'msg'=>'product Updated successfully!!'];
@@ -294,6 +328,10 @@ class ProductController extends Controller
     public function deleteProduct($id)
     {
         $product = Product::where('id','=',$id)->update(['status'=>0]);
+        File::delete("assets/img/product_img/".$product->picture[picture1]);
+        File::delete("assets/img/product_img/".$product->picture[picture2]);
+        File::delete("assets/img/product_img/".$product->picture[picture3]);
+        File::delete("assets/img/product_img/".$product->picture[picture4]);
         $response = $product ? ['product'=>$product,'msg'=>'product deleted successfully!!'] : ["error"=> "product Not found",'msg'=>'product Not Found!!'];
         return response()->json($response);
     }
