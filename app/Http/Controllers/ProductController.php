@@ -38,50 +38,54 @@ class ProductController extends Controller
             $product->discount_available = $request->input('discount_available');
             $product->ranking = $request->input('ranking');
 
-            $picture = [];
-            if($request->file('picture1')){
-                $file = $request->file('picture1');
-                $destinationPath = "assets/img/product_img/";
-                $pic = $file->hashName();
-                Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
-                $picture["picture1"] = $pic;
-            }else{
-                $picture["picture1"] = "NULL";
+            try {
+                $picture = [];
+                if($request->file('picture1')){
+                    $file = $request->file('picture1');
+                    $destinationPath = "assets/img/product_img/";
+                    $pic = $file->hashName();
+                    Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
+                    $picture["picture1"] = $pic;
+                }else{
+                    $picture["picture1"] = "NULL";
+                }
+
+                if($request->file('picture2')){
+                    $file = $request->file('picture2');
+                    $destinationPath = "assets/img/product_img/";
+                    $pic = $file->hashName();
+                    Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
+                    $picture["picture2"] = $pic;
+                }else{
+                    $picture["picture2"] = "NULL";
+                }
+
+                if($request->file('picture3')){
+                    $file = $request->file('picture3');
+                    $destinationPath = "assets/img/product_img/";
+                    $pic = $file->hashName();
+                    Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
+                    $picture["picture3"] = $pic;
+                }else{
+                    $picture["picture3"] = "NULL";
+                }
+
+                if($request->file('picture4')){
+                    $file = $request->file('picture4');
+                    $destinationPath = "assets/img/product_img/";
+                    $pic = $file->hashName();
+                    Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
+                    $picture["picture4"] = $pic;
+                }else{
+                    $picture["picture4"] = "NULL";
+                }
+                
+
+                $product->picture = $picture;
             }
-
-            if($request->file('picture2')){
-                $file = $request->file('picture2');
-                $destinationPath = "assets/img/product_img/";
-                $pic = $file->hashName();
-                Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
-                $picture["picture2"] = $pic;
-            }else{
-                $picture["picture2"] = "NULL";
+            catch(Exception $e) {
+              return respone()->json(['error'=>$e->getMessage()]);
             }
-
-            if($request->file('picture3')){
-                $file = $request->file('picture3');
-                $destinationPath = "assets/img/product_img/";
-                $pic = $file->hashName();
-                Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
-                $picture["picture3"] = $pic;
-            }else{
-                $picture["picture3"] = "NULL";
-            }
-
-            if($request->file('picture4')){
-                $file = $request->file('picture4');
-                $destinationPath = "assets/img/product_img/";
-                $pic = $file->hashName();
-                Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
-                $picture["picture4"] = $pic;
-            }else{
-                $picture["picture4"] = "NULL";
-            }
-            
-
-            $product->picture = $picture;
-
             //$vendor_category = vendor_category::firstOrCreate(['vendor_id' => $request->input('vendor_id'),
               //                                              'category_id' => $request->input('category_id'),
                 //                                            'parent_category' => $request->input('parent_category')]);
