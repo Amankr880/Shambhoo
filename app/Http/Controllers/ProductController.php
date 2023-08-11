@@ -275,14 +275,14 @@ class ProductController extends Controller
                 $product->picture = $pic;
             }
 
-            $picture = {}
+            $picture = []
             if($request->picture1 != $product->picture[picture1])
                 $file = $request->file('picture1');
                 $destinationPath = "assets/img/product_img/";
                 File::delete($destinationPath.$request->picture1);
                 $pic = $file->hashName();
                 Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
-                $picture["picture1"] = $pic
+                $picture["picture1"] = $pic;
 
             if($request->picture2 != $product->picture[picture1])
                 $file = $request->file('picture2');
@@ -290,7 +290,7 @@ class ProductController extends Controller
                 $destinationPath = "assets/img/product_img/";
                 $pic = $file->hashName();
                 Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
-                $picture["picture2"] = $pic
+                $picture["picture2"] = $pic;
 
             if($request->picture3 != $product->picture[picture1])
                 $file = $request->file('picture3');
@@ -298,7 +298,7 @@ class ProductController extends Controller
                 $destinationPath = "assets/img/product_img/";
                 $pic = $file->hashName();
                 Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
-                $picture["picture3"] = $pic
+                $picture["picture3"] = $pic;
 
             if($request->picture4 != $product->picture[picture1])
                 $file = $request->file('picture4');
@@ -306,7 +306,7 @@ class ProductController extends Controller
                 $destinationPath = "assets/img/product_img/";
                 $pic = $file->hashName();
                 Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
-                $picture["picture4"] = $pic
+                $picture["picture4"] = $pic;
 
             //$product->picture = $request->input('picture');
             // $image = $request->icon->store('public/product_icon');
