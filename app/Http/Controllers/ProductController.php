@@ -38,12 +38,32 @@ class ProductController extends Controller
             $product->discount_available = $request->input('discount_available');
             $product->ranking = $request->input('ranking');
 
-            $file = $request->file('picture');
+            $picture = {}
+            $file = $request->file('picture1');
             $destinationPath = "assets/img/product_img/";
             $pic = $file->hashName();
-            //$filename = 'https://shambhoo-app-pfm6i.ondigitalocean.app/storage/product_img/'. $file->hashname();
             Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
-            $product->picture = $pic;
+            $picture["picture1"] = $pic
+
+            $file = $request->file('picture2');
+            $destinationPath = "assets/img/product_img/";
+            $pic = $file->hashName();
+            Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
+            $picture["picture2"] = $pic
+
+            $file = $request->file('picture3');
+            $destinationPath = "assets/img/product_img/";
+            $pic = $file->hashName();
+            Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
+            $picture["picture3"] = $pic
+
+            $file = $request->file('picture4');
+            $destinationPath = "assets/img/product_img/";
+            $pic = $file->hashName();
+            Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
+            $picture["picture4"] = $pic
+
+            $product->picture = $picture;
 
             //$vendor_category = vendor_category::firstOrCreate(['vendor_id' => $request->input('vendor_id'),
               //                                              'category_id' => $request->input('category_id'),
