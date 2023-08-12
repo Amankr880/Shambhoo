@@ -268,6 +268,9 @@ class VendorController extends Controller
             foreach ($product as $key) {
                 $inc_picture = explode (",", $key["picture"]);
                 $product[$count]["picture0"] = "storage/assets/img/product_img/".$inc_picture[0];
+                $product[$count]["picture1"] = "storage/assets/img/product_img/".$inc_picture[1];
+                $product[$count]["picture2"] = "storage/assets/img/product_img/".$inc_picture[2];
+                $product[$count]["picture3"] = "storage/assets/img/product_img/".$inc_picture[3];
                 // $inc_picture[0] = "storage/assets/img/product_img/".$inc_picture[0];
                 // $inc_picture[1] = "storage/assets/img/product_img/".$inc_picture[1];
                 // $inc_picture[2] = "storage/assets/img/product_img/".$inc_picture[2];
