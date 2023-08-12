@@ -264,18 +264,6 @@ class VendorController extends Controller
             
             $product = Product::where([['products.vendor_id','=',$vendor[0]->id],['products.status','!=',0]])->leftJoin('categories','products.category_id','=','categories.id')->select('products.*','categories.parent_category')->get();
 
-            foreach ($product as $key) {
-                $inc_picture = explode (",", $product[$key]->picture);
-                $inc_picture[0] = "storage/assets/img/product_img/".$inc_picture[0];
-                $inc_picture[1] = "storage/assets/img/product_img/".$inc_picture[1];
-                $inc_picture[2] = "storage/assets/img/product_img/".$inc_picture[2];
-                $inc_picture[3] = "storage/assets/img/product_img/".$inc_picture[3];
-                $product[$key]["product0"] = $inc_picture[0];
-                $product[$key]["product1"] = $inc_picture[1];
-                $product[$key]["product2"] = $inc_picture[2];
-                $product[$key]["product3"] = $inc_picture[3]; 
-            }
-
             $device_token = $request->device_token;
             //$data1 = Vendor::find($vendor[0]['id']);
             //dd($data1);
