@@ -266,11 +266,11 @@ class VendorController extends Controller
 
             foreach ($product as $key) {
                 $inc_picture = explode (",", $key["picture"]);
-                $inc_picture[0] = "storage/assets/img/product_img/".$inc_picture[0];
+                // $inc_picture[0] = "storage/assets/img/product_img/".$inc_picture[0];
                 // $inc_picture[1] = "storage/assets/img/product_img/".$inc_picture[1];
                 // $inc_picture[2] = "storage/assets/img/product_img/".$inc_picture[2];
                 // $inc_picture[3] = "storage/assets/img/product_img/".$inc_picture[3];
-                $product[$key]["product0"] = $inc_picture[0];
+                // $product[$key]["product0"] = $inc_picture[0];
             }
 
             $device_token = $request->device_token;
