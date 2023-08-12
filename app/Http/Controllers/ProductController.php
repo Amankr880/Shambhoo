@@ -38,54 +38,47 @@ class ProductController extends Controller
             $product->discount_available = $request->input('discount_available');
             $product->ranking = $request->input('ranking');
 
-            try {
-                $picture = [];
-                if($request->file('picture1')){
-                    $file = $request->file('picture1');
-                    $destinationPath = "assets/img/product_img/";
-                    $pic = $file->hashName();
-                    Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
-                    $picture[0] = $pic;
-                }else{
-                    $picture[0] = "NULL";
-                }
-
-                if($request->file('picture2')){
-                    $file = $request->file('picture2');
-                    $destinationPath = "assets/img/product_img/";
-                    $pic = $file->hashName();
-                    Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
-                    $picture[1] = $pic;
-                }else{
-                    $picture[1] = "NULL";
-                }
-
-                if($request->file('picture3')){
-                    $file = $request->file('picture3');
-                    $destinationPath = "assets/img/product_img/";
-                    $pic = $file->hashName();
-                    Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
-                    $picture[2] = $pic;
-                }else{
-                    $picture[2] = "NULL";
-                }
-
-                if($request->file('picture4')){
-                    $file = $request->file('picture4');
-                    $destinationPath = "assets/img/product_img/";
-                    $pic = $file->hashName();
-                    Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
-                    $picture[3] = $pic;
-                }else{
-                    $picture[3] = "NULL";
-                }
-                
-
-                $product->picture = join(",",$picture);
+            $picture = [];
+            if($request->file('picture1')){
+                $file = $request->file('picture1');
+                $destinationPath = "assets/img/product_img/";
+                $pic = $file->hashName();
+                Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
+                $picture[0] = $pic;
+            }else{
+                $picture[0] = "NULL";
             }
-            catch(Exception $e) {
-              return respone()->json(['error'=>$e->getMessage()]);
+
+            if($request->file('picture2')){
+                $file = $request->file('picture2');
+                $destinationPath = "assets/img/product_img/";
+                $pic = $file->hashName();
+                Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
+                $picture[1] = $pic;
+            }else{
+                $picture[1] = "NULL";
             }
+
+            if($request->file('picture3')){
+                $file = $request->file('picture3');
+                $destinationPath = "assets/img/product_img/";
+                $pic = $file->hashName();
+                Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
+                $picture[2] = $pic;
+            }else{
+                $picture[2] = "NULL";
+            }
+
+            if($request->file('picture4')){
+                $file = $request->file('picture4');
+                $destinationPath = "assets/img/product_img/";
+                $pic = $file->hashName();
+                Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
+                $picture[3] = $pic;
+            }else{
+                $picture[3] = "NULL";
+            }
+            $product->picture = join(",",$picture);
             //$vendor_category = vendor_category::firstOrCreate(['vendor_id' => $request->input('vendor_id'),
               //                                              'category_id' => $request->input('category_id'),
                 //                                            'parent_category' => $request->input('parent_category')]);
@@ -109,7 +102,17 @@ class ProductController extends Controller
     public function getAllProducts()
     {
         //if(Categories::where('status' => '10'))
-        $product = Product::where([['product_available','!=','0'],['status','!=',0]])->select('*',DB::raw("CONCAT('storage/assets/img/product_img/',picture) AS picture"))->get();  
+
+        $product = Product::where([['product_available','!=','0'],['status','!=',0]])->select('*')->get();  
+        $inc_picture = explode (",", $product->picture);
+        $inc_picture[0] = "storage/assets/img/product_img/".$inc_picture[0];
+        $inc_picture[1] = "storage/assets/img/product_img/".$inc_picture[1];
+        $inc_picture[2] = "storage/assets/img/product_img/".$inc_picture[2];
+        $inc_picture[3] = "storage/assets/img/product_img/".$inc_picture[3];
+        $product["product0"] = $inc_picture[0]
+        $product["product1"] = $inc_picture[1]
+        $product["product2"] = $inc_picture[2]
+        $product["product3"] = $inc_picture[3]
         return response()->json($product);
     }
 
@@ -302,7 +305,7 @@ class ProductController extends Controller
                 $file = $request->file('picture1');
                 $destinationPath = "assets/img/product_img/";
                 if($inc_picture[0]!="NULL"){
-                    File::delete($destinationPath.$request->picture1);
+                    File::delete($destinationPath.$inc_picture[0]);
                 }
                 $pic = $file->hashName();
                 Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
@@ -311,7 +314,7 @@ class ProductController extends Controller
             if($request->picture2 != $product->picture[picture2]){
                 $file = $request->file('picture2');
                 if($inc_picture[1]!="NULL"){
-                    File::delete($destinationPath.$request->picture2);
+                    File::delete($destinationPath.$inc_picture[1]);
                 }
                 $destinationPath = "assets/img/product_img/";
                 $pic = $file->hashName();
@@ -321,7 +324,7 @@ class ProductController extends Controller
             if($request->picture3 != $product->picture[picture3]){
                 $file = $request->file('picture3');
                 if($inc_picture[2]!="NULL"){
-                    File::delete($destinationPath.$request->picture3);
+                    File::delete($destinationPath.$inc_picture[2]);
                 }
                 $destinationPath = "assets/img/product_img/";
                 $pic = $file->hashName();
@@ -331,7 +334,7 @@ class ProductController extends Controller
             if($request->picture4 != $product->picture[picture4]){
                 $file = $request->file('picture4');
                 if($inc_picture[3]!="NULL"){
-                    File::delete($destinationPath.$request->picture4);
+                    File::delete($destinationPath.$inc_picture[3]);
                 }
                 $destinationPath = "assets/img/product_img/";
                 $pic = $file->hashName();
