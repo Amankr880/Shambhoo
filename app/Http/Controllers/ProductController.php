@@ -288,13 +288,13 @@ class ProductController extends Controller
             $product->product_available = $request->input('product_available');
             $product->discount_available = $request->input('discount_available');
             $product->ranking = $request->input('ranking');
-            if($request->picture){
-                $file = $request->file('picture');
-                $destinationPath = "assets/img/product_img/";
-                $pic = $file->hashName();
-                Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
-                $product->picture = $pic;
-            }
+            // if($request->picture){
+            //     $file = $request->file('picture');
+            //     $destinationPath = "assets/img/product_img/";
+            //     $pic = $file->hashName();
+            //     Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
+            //     $product->picture = $pic;
+            // }
 
             $picture = [];
             $inc_picture = explode (",", $product->picture); 
