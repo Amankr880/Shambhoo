@@ -78,9 +78,9 @@ class SMSController extends Controller
             User::where('phone_no','=',$qw['mobile'])->update(['token' => $qw['token']]);
             $response = response()->json(['message' => 'otp verified','exists' => $isExists,'token' => $qw['token']],200);
         }elseif($otp == $data->otp){
-            $response = response()->json(['message' => 'otp verified','token' => $qw['token']],200);
+            $response = response()->json(['message' => 'otp verified'],200);
         }else{
-            $response = response()->json(['message' => 'otp mismatched','token' => $qw['token']],400);
+            $response = response()->json(['message' => 'otp mismatched'],400);
         }  
 
         return $response; 
