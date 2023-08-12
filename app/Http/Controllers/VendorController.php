@@ -273,7 +273,7 @@ class VendorController extends Controller
                 // $inc_picture[2] = "storage/assets/img/product_img/".$inc_picture[2];
                 // $inc_picture[3] = "storage/assets/img/product_img/".$inc_picture[3];
                 // $product[$key]["product0"] = $inc_picture[0];
-                count+=1;
+                $count+=1;
             }
 
             $device_token = $request->device_token;
