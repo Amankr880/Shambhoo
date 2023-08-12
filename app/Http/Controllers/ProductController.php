@@ -109,10 +109,10 @@ class ProductController extends Controller
         $inc_picture[1] = "storage/assets/img/product_img/".$inc_picture[1];
         $inc_picture[2] = "storage/assets/img/product_img/".$inc_picture[2];
         $inc_picture[3] = "storage/assets/img/product_img/".$inc_picture[3];
-        $product["product0"] = $inc_picture[0]
-        $product["product1"] = $inc_picture[1]
-        $product["product2"] = $inc_picture[2]
-        $product["product3"] = $inc_picture[3]
+        $product["product0"] = $inc_picture[0];
+        $product["product1"] = $inc_picture[1];
+        $product["product2"] = $inc_picture[2];
+        $product["product3"] = $inc_picture[3];
         return response()->json($product);
     }
 
