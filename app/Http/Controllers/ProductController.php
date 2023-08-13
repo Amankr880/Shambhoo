@@ -124,7 +124,7 @@ class ProductController extends Controller
         {
             $product = Product::where([['category_id','=',$request->input('category_id')],
                                     ['vendor_id','=',$request->input('vendor_id')],
-                                    ['product_available','!=','0'],['status','!=',0]])->select('*',DB::raw("CONCAT('storage/assets/img/product_img/',picture) AS picture"))->get();
+                                    ['product_available','!=','0'],['status','!=',0]])->select('*')->get();
 
             $count = 0;
             foreach ($product as $key) {
