@@ -312,7 +312,7 @@ class ProductController extends Controller
 
             $picture = [];
             $inc_picture = explode (",", $product->picture); 
-            if($request->picture1 != $product->picture[picture1]){
+            if($request->file('picture1') != $inc_picture[0]){
                 $file = $request->file('picture1');
                 $destinationPath = "assets/img/product_img/";
                 if($inc_picture[0]!="NULL"){
@@ -322,7 +322,7 @@ class ProductController extends Controller
                 Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
                 $picture[0] = $pic;
             }
-            if($request->picture2 != $product->picture[picture2]){
+            if($request->file('picture2') != $inc_picture[1]){
                 $file = $request->file('picture2');
                 if($inc_picture[1]!="NULL"){
                     File::delete($destinationPath.$inc_picture[1]);
@@ -332,7 +332,7 @@ class ProductController extends Controller
                 Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
                 $picture[1] = $pic;
             }
-            if($request->picture3 != $product->picture[picture3]){
+            if($request->file('picture3') != $inc_picture[2]){
                 $file = $request->file('picture3');
                 if($inc_picture[2]!="NULL"){
                     File::delete($destinationPath.$inc_picture[2]);
@@ -342,7 +342,7 @@ class ProductController extends Controller
                 Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
                 $picture[2] = $pic;
             }
-            if($request->picture4 != $product->picture[picture4]){
+            if($request->file('picture4') != $inc_picture[3]){
                 $file = $request->file('picture4');
                 if($inc_picture[3]!="NULL"){
                     File::delete($destinationPath.$inc_picture[3]);
