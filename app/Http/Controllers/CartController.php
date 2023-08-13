@@ -24,6 +24,7 @@ class CartController extends Controller
             
             $cartLastItem = Cart::where('user_id',$user_id)->join('products','products.id','=','carts.product_id')->latest('carts.id')->first();
             $product = Product::where('id',$product_id)->select('*')->get();
+            $count=0;
             foreach ($product as $key) {
                 $inc_picture = explode (",", $key["picture"]);
                 $product[$count]["picture0"] = "storage/assets/img/product_img/".$inc_picture[0];
@@ -63,48 +64,6 @@ class CartController extends Controller
                     $response = response()->json(['msg'=>'Product out of stock!!'],400);
                 }
             }
-
-            // if($prod_check)
-            // {
-            //     if(Cart::where('product_id',$product_id)->where('user_id',$user_id)->exists())
-            //     {
-            //         $response = response()->json(['msg'=> $prod_check->product_name.' Already Added!!'],403);
-            //     }else{
-            //         if($quantity<$prod_check['unit_stock']){
-            //             if(Cart::where([['user_id',$user_id],['vendor_id',$prod_check->vendor_id]])->exists())
-            //             {
-            //                 $cartItem = new Cart();
-            //                 $cartItem->product_id = $product_id;
-            //                 $cartItem->quantity = $quantity;
-            //                 $cartItem->user_id = $user_id;
-            //                 $cartItem->price = $prod_check->MSRP;
-            //                 $cartItem->vendor_id = $prod_check->vendor_id;
-            //                 $cartItem->save();
-            //                 $response = response()->json(['msg'=> $prod_check->product_name.' Added to cart!!'],201);
-            //             }
-            //             elseif(Cart::where([['user_id',$user_id],['vendor_id','!=',$prod_check->vendor_id]])->exists())
-            //             {
-            //                 $response = response()->json(['msg'=>'Cannot add product from different vendor!!'],400);
-            //             }
-            //             else
-            //             {
-            //                 $cartItem = new Cart();
-            //                 $cartItem->product_id = $product_id;
-            //                 $cartItem->quantity = $quantity;
-            //                 $cartItem->user_id = $user_id;
-            //                 $cartItem->price = $prod_check->MSRP;
-            //                 $cartItem->vendor_id = $prod_check->vendor_id;
-            //                 $cartItem->save();
-            //                 $response = response()->json(['msg'=> $prod_check->product_name.' Added to cart!!'],201);
-            //             }
-            //         }else{
-            //             $response = response()->json(['msg'=>'Product out of stock!!'],400);
-            //         }
-            //     }
-            // }
-            // else{
-            //     $response = response()->json(['msg'=>'Product is not there'],403);
-            // }
         }
         else
         {
