@@ -313,44 +313,68 @@ class ProductController extends Controller
             $picture = [];
             $inc_picture = explode (",", $product->picture); 
             if($request->file('picture1') != $inc_picture[0]){
-                $file = $request->file('picture1');
-                $destinationPath = "assets/img/product_img/";
-                if($inc_picture[0]!="NULL"){
-                    File::delete($destinationPath.$inc_picture[0]);
+                if($request->file('picture1')!=NULL){
+                    $file = $request->file('picture1');
+                    $destinationPath = "assets/img/product_img/";
+                    if($inc_picture[0]!="NULL"){
+                        File::delete($destinationPath.$inc_picture[0]);
+                    }
+                    $pic = $file->hashName();
+                    Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
+                    $picture[0] = $pic;
+                }else{
+                    $picture[0] = "NULL";
                 }
-                $pic = $file->hashName();
-                Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
-                $picture[0] = $pic;
+            }else{
+                $picture[0] = $inc_picture[0];
             }
             if($request->file('picture2') != $inc_picture[1]){
-                $file = $request->file('picture2');
-                if($inc_picture[1]!="NULL"){
-                    File::delete($destinationPath.$inc_picture[1]);
+                if($request->file('picture2')!=NULL){
+                    $file = $request->file('picture2');
+                    if($inc_picture[1]!="NULL"){
+                        File::delete($destinationPath.$inc_picture[1]);
+                    }
+                    $destinationPath = "assets/img/product_img/";
+                    $pic = $file->hashName();
+                    Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
+                    $picture[1] = $pic;
+                }else{
+                    $picture[1] = "NULL";
                 }
-                $destinationPath = "assets/img/product_img/";
-                $pic = $file->hashName();
-                Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
-                $picture[1] = $pic;
+            }else{
+                $picture[1] = $inc_picture[1];
             }
             if($request->file('picture3') != $inc_picture[2]){
-                $file = $request->file('picture3');
-                if($inc_picture[2]!="NULL"){
-                    File::delete($destinationPath.$inc_picture[2]);
+                if($request->file('picture3')!=NULL){
+                    $file = $request->file('picture3');
+                    if($inc_picture[2]!="NULL"){
+                        File::delete($destinationPath.$inc_picture[2]);
+                    }
+                    $destinationPath = "assets/img/product_img/";
+                    $pic = $file->hashName();
+                    Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
+                    $picture[2] = $pic;
+                }else{
+                    $picture[2] = "NULL";
                 }
-                $destinationPath = "assets/img/product_img/";
-                $pic = $file->hashName();
-                Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
-                $picture[2] = $pic;
+            }else{
+                $picture[2] = $inc_picture[2];
             }
             if($request->file('picture4') != $inc_picture[3]){
-                $file = $request->file('picture4');
-                if($inc_picture[3]!="NULL"){
-                    File::delete($destinationPath.$inc_picture[3]);
+                if($request->file('picture4')!=NULL){
+                    $file = $request->file('picture4');
+                    if($inc_picture[3]!="NULL"){
+                        File::delete($destinationPath.$inc_picture[3]);
+                    }
+                    $destinationPath = "assets/img/product_img/";
+                    $pic = $file->hashName();
+                    Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
+                    $picture[3] = $pic;
+                }else{
+                    $picture[3] = "NULL";
                 }
-                $destinationPath = "assets/img/product_img/";
-                $pic = $file->hashName();
-                Storage::disk('public')->putFileAs($destinationPath, $file, $pic);
-                $picture[3] = $pic;
+            }else{
+                $picture[3] = $inc_picture[3];
             }
             //$product->picture = $request->input('picture');
             // $image = $request->icon->store('public/product_icon');
