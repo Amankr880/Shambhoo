@@ -73,7 +73,7 @@ class CartController extends Controller
             $cartItems = Cart::where([['carts.user_id',$request->user_id]])
                         ->join('products','products.id','=','carts.product_id')
                         ->join('vendors','vendors.id','=','products.vendor_id')
-                        ->select('products.product_name','vendors.shopName','vendors.minimum_order','vendors.delivery_slot','products.MSRP','carts.quantity','products.unit_stock','products.id')->get();
+                        ->select('products.product_name','vendors.shopName','vendors.minimum_order','vendors.delivery_slot','products.MSRP','carts.quantity','products.unit_stock','products.id','products.picture')->get();
 
             if($cartItems!="[]"){
                 $response = response()->json(['cartItem'=>$cartItems],200);
