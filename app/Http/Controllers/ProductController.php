@@ -171,7 +171,7 @@ class ProductController extends Controller
             $product = Product::where([['id','=',$request->product_id],['status','!=',0]])->select('*',DB::raw("CONCAT('storage/assets/img/product_img/',picture) AS picture"))->get();
             if($product)
             {
-                $inc_picture = explode (",", $key["picture"]);
+                $inc_picture = explode (",", $product[0]["picture"]);
                 $product[0]["picture0"] = "storage/assets/img/product_img/".$inc_picture[0];
                 $product[0]["picture1"] = "storage/assets/img/product_img/".$inc_picture[1];
                 $product[0]["picture2"] = "storage/assets/img/product_img/".$inc_picture[2];
