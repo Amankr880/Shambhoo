@@ -24,15 +24,6 @@ class CartController extends Controller
             
             $cartLastItem = Cart::where('user_id',$user_id)->join('products','products.id','=','carts.product_id')->latest('carts.id')->first();
             $product = Product::where('id',$product_id)->select('*')->get();
-            $count=0;
-            foreach ($product as $key) {
-                $inc_picture = explode (",", $key["picture"]);
-                $product[$count]["picture0"] = "storage/assets/img/product_img/".$inc_picture[0];
-                $product[$count]["picture1"] = "storage/assets/img/product_img/".$inc_picture[1];
-                $product[$count]["picture2"] = "storage/assets/img/product_img/".$inc_picture[2];
-                $product[$count]["picture3"] = "storage/assets/img/product_img/".$inc_picture[3];
-                $count+=1;
-            }
             if($cartLastItem != ""){
                 if(Cart::where('product_id',$product_id)->where('user_id',$user_id)->count()==0){
                     if($cartLastItem['vendor_id']==$product[0]['vendor_id']){
