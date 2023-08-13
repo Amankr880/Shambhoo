@@ -147,14 +147,6 @@ class HomepageController extends Controller
                                     ->distinct()->leftJoin('vendors','products.vendor_id','=','vendors.id')
                                     ->select('vendors.shopName','vendors.id','vendors.logo_image',DB::raw("CONCAT('storage/assets/img/logo/',vendors.logo_image) AS logo_image"))
                                     ->get();
-            foreach ($product as $key) {
-                $inc_picture = explode (",", $key["picture"]);
-                $product[$count]["picture0"] = "storage/assets/img/product_img/".$inc_picture[0];
-                $product[$count]["picture1"] = "storage/assets/img/product_img/".$inc_picture[1];
-                $product[$count]["picture2"] = "storage/assets/img/product_img/".$inc_picture[2];
-                $product[$count]["picture3"] = "storage/assets/img/product_img/".$inc_picture[3];
-                $count+=1;
-            }
                 if($vendors){
                     $response = response()->json($vendors,200);
                 }
