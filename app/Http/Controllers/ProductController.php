@@ -104,15 +104,15 @@ class ProductController extends Controller
         //if(Categories::where('status' => '10'))
 
         $product = Product::where([['product_available','!=','0'],['status','!=',0]])->select('*')->get();  
-        $inc_picture = explode (",", $product->picture);
-        $inc_picture[0] = "storage/assets/img/product_img/".$inc_picture[0];
-        $inc_picture[1] = "storage/assets/img/product_img/".$inc_picture[1];
-        $inc_picture[2] = "storage/assets/img/product_img/".$inc_picture[2];
-        $inc_picture[3] = "storage/assets/img/product_img/".$inc_picture[3];
-        $product["product0"] = $inc_picture[0];
-        $product["product1"] = $inc_picture[1];
-        $product["product2"] = $inc_picture[2];
-        $product["product3"] = $inc_picture[3];
+        $count = 0;
+            foreach ($product as $key) {
+                $inc_picture = explode (",", $key["picture"]);
+                $product[$count]["picture0"] = "storage/assets/img/product_img/".$inc_picture[0];
+                $product[$count]["picture1"] = "storage/assets/img/product_img/".$inc_picture[1];
+                $product[$count]["picture2"] = "storage/assets/img/product_img/".$inc_picture[2];
+                $product[$count]["picture3"] = "storage/assets/img/product_img/".$inc_picture[3];
+                $count+=1;
+            }
         return response()->json($product);
     }
 
@@ -124,7 +124,13 @@ class ProductController extends Controller
         {
             $product = Product::where([['category_id','=',$request->input('category_id')],
                                     ['vendor_id','=',$request->input('vendor_id')],
-                                    ['product_available','!=','0'],['status','!=',0]])->select('*',DB::raw("CONCAT('storage/assets/img/product_img/',picture) AS picture"))->get();  
+                                    ['product_available','!=','0'],['status','!=',0]])->select('*',DB::raw("CONCAT('storage/assets/img/product_img/',picture) AS picture"))->get();
+
+            $inc_picture = explode (",", $key["picture"]);
+            $product[0]["picture0"] = "storage/assets/img/product_img/".$inc_picture[0];
+            $product[0]["picture1"] = "storage/assets/img/product_img/".$inc_picture[1];
+            $product[0]["picture2"] = "storage/assets/img/product_img/".$inc_picture[2];
+            $product[0]["picture3"] = "storage/assets/img/product_img/".$inc_picture[3];
                             
             $cart = Cart::where('user_id',$request->user_id)->get();
             foreach($product as $product_item){
@@ -161,6 +167,11 @@ class ProductController extends Controller
             $product = Product::where([['id','=',$request->product_id],['status','!=',0]])->select('*',DB::raw("CONCAT('storage/assets/img/product_img/',picture) AS picture"))->get();
             if($product)
             {
+                $inc_picture = explode (",", $key["picture"]);
+                $product[0]["picture0"] = "storage/assets/img/product_img/".$inc_picture[0];
+                $product[0]["picture1"] = "storage/assets/img/product_img/".$inc_picture[1];
+                $product[0]["picture2"] = "storage/assets/img/product_img/".$inc_picture[2];
+                $product[0]["picture3"] = "storage/assets/img/product_img/".$inc_picture[3];
                 $response = response()->json($product,200);
             }
             else{
@@ -363,16 +374,16 @@ class ProductController extends Controller
         $product = Product::where('id','=',$id)->update(['status'=>0]);
         $inc_picture = explode (",", $product->picture); 
         if($inc_picture[0]!="NULL"){
-            File::delete("assets/img/product_img/".$product->picture[picture1]);
+            File::delete("assets/img/product_img/".$inc_picture[0]);
         }
         if($inc_picture[1]!="NULL"){
-            File::delete("assets/img/product_img/".$product->picture[picture2]);
+            File::delete("assets/img/product_img/".$inc_picture[1]);
         }
         if($inc_picture[2]!="NULL"){
-            File::delete("assets/img/product_img/".$product->picture[picture3]);
+            File::delete("assets/img/product_img/".$inc_picture[2]);
         }
         if($inc_picture[3]!="NULL"){
-            File::delete("assets/img/product_img/".$product->picture[picture4]);
+            File::delete("assets/img/product_img/".$inc_picture[3]);
         }
         $response = $product ? ['product'=>$product,'msg'=>'product deleted successfully!!'] : ["error"=> "product Not found",'msg'=>'product Not Found!!'];
         return response()->json($response);

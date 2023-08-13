@@ -271,11 +271,6 @@ class VendorController extends Controller
                 $product[$count]["picture1"] = "storage/assets/img/product_img/".$inc_picture[1];
                 $product[$count]["picture2"] = "storage/assets/img/product_img/".$inc_picture[2];
                 $product[$count]["picture3"] = "storage/assets/img/product_img/".$inc_picture[3];
-                // $inc_picture[0] = "storage/assets/img/product_img/".$inc_picture[0];
-                // $inc_picture[1] = "storage/assets/img/product_img/".$inc_picture[1];
-                // $inc_picture[2] = "storage/assets/img/product_img/".$inc_picture[2];
-                // $inc_picture[3] = "storage/assets/img/product_img/".$inc_picture[3];
-                // $product[$key]["product0"] = $inc_picture[0];
                 $count+=1;
             }
 
