@@ -387,7 +387,11 @@ class ProductController extends Controller
             //     $request->input('picture')
             //     ];
             $product->picture = join(",",$picture);
-            
+            if(vendor_category::where([['vendor_id','=',$request->input('vendor_id')],['category_id','=',$request->input('category_id')]])->first()){
+
+            }else{
+            vendor_category::insert(['vendor_id' => $request->input('vendor_id'),'category_id' => $request->input('category_id'),'parent_category' => $request->input('parent_category')]);
+            }
             $product->save();
             $response = ['product'=>$product,'msg'=>'product Updated successfully!!'];
         } else {
